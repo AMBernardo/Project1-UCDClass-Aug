@@ -9,7 +9,7 @@ body {
 
 .brand-logo {
     font-weight: bold;
-    font-size: 4rem !important;
+    font-size: 3rem !important;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .knockout {
@@ -19,5 +19,9 @@ body {
     -webkit-background-clip: text;
     /* width: 100vw; */
     /* margin: 50px auto; */
+    text-align: center;
+}
+
+.cardTitle {
     text-align: center;
 }
