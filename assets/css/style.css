@@ -1,0 +1,44 @@
+body {
+    background-image: url("../images/vichy_@2X.png");
+    width: 100vw;
+    height: 100vh;
+    background-repeat: repeat;
+    background-position: center top;
+    /* background-size: cover; */
+}
+
+/* div.container-fluid {
+    padding-left: 0;
+    padding-right: 0;
+} */
+.navbar {
+    padding: 0rem 3rem 0rem 3rem;
+}
+.bg-light {
+    background: #ffffff;
+    border: #cccccc;
+}
+.navbar-brand, .navbar-light {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    background: red;
+    color: #ffffff;
+    font-size: 1.5rem;
+    font-weight: bolder;
+    padding: 1rem 1rem 1rem 1rem;
+    margin: 0 0 0 0;
+}
+
+/* Footer for eveyone */
+div.card.footer {
+    text-align: center;
+    background: #666666;
+    color: #ffffff;
+    border-top: 0.25rem solid red;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%
+}
+.card-header {
+    padding: 0;
+}
