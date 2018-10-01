@@ -7,38 +7,21 @@ body {
     /* background-size: cover; */
 }
 
-/* div.container-fluid {
-    padding-left: 0;
-    padding-right: 0;
-} */
-.navbar {
-    padding: 0rem 3rem 0rem 3rem;
+.brand-logo {
+    font-weight: bold;
+    font-size: 3rem !important;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
-.bg-light {
-    background: #ffffff;
-    border: #cccccc;
-}
-.navbar-brand, .navbar-light {
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    background: red;
-    color: #ffffff;
-    font-size: 1.5rem;
-    font-weight: bolder;
-    padding: 1rem 1rem 1rem 1rem;
-    margin: 0 0 0 0;
+.knockout {
+    background: url(http://apod.nasa.gov/apod/image/0603/coma_misti.jpg) -80px -80px;
+    color: red;
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    /* width: 100vw; */
+    /* margin: 50px auto; */
+    text-align: center;
 }
 
-/* Footer for eveyone */
-div.card.footer {
+.cardTitle {
     text-align: center;
-    background: #666666;
-    color: #ffffff;
-    border-top: 0.25rem solid red;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%
-}
-.card-header {
-    padding: 0;
 }
