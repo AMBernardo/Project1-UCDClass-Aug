@@ -94,45 +94,8 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="assets/javascript/materialize.min.js"></script>
     <script src="assets/javascript/main.js"></script>
-    <script>     
-            var map;
-function initMap()
-{
- map = new google.maps.Map(document.getElementById('map'), {
-   center: new google.maps.LatLng(37.773972,-122.431297),
-   zoom: 9
- });
-}
-
-function newLocation(newLat,newLng)
-{
-   map.setCenter({
-       lat : newLat,
-       lng : newLng
-   });
-}
-
-$(document).ready(function ()
-{
-   $("#1").on('click', function ()
-   {
-     newLocation(37.773972,-122.431297);
-   });
- 
-   $("#2").on('click', function ()
-   {
-     newLocation(32.715736,-117.161087);
-   });
- 
-   $("#3").on('click', function ()
-   {
-     newLocation(30.267153, -97.7430608);
-   });
-});
-</script>
-       <script
-        async defer
-       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIvN_N1h7gY8ih2nVVstwEwxqNDh1ktZY&callback=initMap">
-       </script>
+    <script
+    async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIvN_N1h7gY8ih2nVVstwEwxqNDh1ktZY&callback=initMap"></script>
 </body>
 </html>
