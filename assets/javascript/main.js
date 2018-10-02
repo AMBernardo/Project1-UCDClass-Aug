@@ -47,7 +47,7 @@ $(".news").on('click' , function (){
 
 $(".stats").on('click' , function (){
     $("#post-to").append("hello 2");
-    nyAjax();
+    
 })
 
 $(".card-reveal").on('click' , function() {
