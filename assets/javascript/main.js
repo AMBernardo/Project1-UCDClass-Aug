@@ -22,3 +22,36 @@ $('.sidenav').sidenav();
 });
 
 
+function nyAjax (){
+var url = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
+url += '?' + $.param({
+  'api-key': "e31a2759eca74b7d93ed0c48fa573df8"
+});
+$.ajax({
+  url: url,
+  method: 'GET',
+}).then(function(resultNy) {
+    result = resultNy.response.docs[0].headline.main
+  console.log(result);
+  
+  if($(".news")) {
+    $("#post-to").append(result);
+  }
+})
+};
+
+$(".news").on('click' , function (){
+    nyAjax();
+    
+})
+
+$(".stats").on('click' , function (){
+    $("#post-to").append("hello 2");
+    nyAjax();
+})
+
+$(".card-reveal").on('click' , function() {
+    $("#post-to").empty();
+    
+})
+
