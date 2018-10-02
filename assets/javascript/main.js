@@ -31,14 +31,17 @@ $.ajax({
   url: url,
   method: 'GET',
 }).then(function(resultNy) {
-    result = resultNy.response.docs[0].headline.main
-  console.log(result);
-  
-  if($(".news")) {
-    $("#post-to").append(result);
-  }
-})
-};
+  console.log(resultNy);
+   
+    for (i = 0; i < resultNy.response.docs.length; i++) {
+        var article = resultNy.response.docs[i];
+
+    };
+      
+    
+});
+}
+
 
 $(".news").on('click' , function (){
     nyAjax();
