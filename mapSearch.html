@@ -61,28 +61,24 @@
         </div>
 
         <div class="row">
-            <div class="col s6">
-                <form>
-                    Location
-                    <br>
-                    <input type="text" name="enterLoc" value><br>
-                </form>
-            </div>
-
-            <div class="col s3 offset-s3">
-                <button class="waves-effect waves-light btn">Start Over</button>
+            <div class="col s8">
+                    <input class="waves-effect waves-light btn" id="1" type="submit" value="San Francisco">    
+                    <input class="waves-effect waves-light btn" id="2" type="submit" value="San Diego">  
+                    <input class="waves-effect waves-light btn" id="3" type="submit" value="Texas">  
             </div>
         </div>
 
         <div class="row">
-            <div class="col s12">
-                <div id="map">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d105793.08961564963!2d-118.3372942254969!3d34.04299764179336!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c2c7b85dea2a93%3A0x1ff47c3ceb7bb2d5!2sSTAPLES+Center!5e0!3m2!1sen!2sus!4v1538429853594" width="790" height="500" frameborder="1" style="border:0" allowfullscreen></iframe>
-                </div>
+            <style>
+            #map {
+                height: 500px;
+                width: 100%;
+            }
+            </style>
+            <div class="col s12" id="map">
+
             </div>
         </div>
-
-
     </div>
 
 
@@ -98,5 +94,45 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="assets/javascript/materialize.min.js"></script>
     <script src="assets/javascript/main.js"></script>
+    <script>     
+            var map;
+function initMap()
+{
+ map = new google.maps.Map(document.getElementById('map'), {
+   center: new google.maps.LatLng(37.773972,-122.431297),
+   zoom: 9
+ });
+}
+
+function newLocation(newLat,newLng)
+{
+   map.setCenter({
+       lat : newLat,
+       lng : newLng
+   });
+}
+
+$(document).ready(function ()
+{
+   $("#1").on('click', function ()
+   {
+     newLocation(37.773972,-122.431297);
+   });
+ 
+   $("#2").on('click', function ()
+   {
+     newLocation(32.715736,-117.161087);
+   });
+ 
+   $("#3").on('click', function ()
+   {
+     newLocation(30.267153, -97.7430608);
+   });
+});
+</script>
+       <script
+        async defer
+       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIvN_N1h7gY8ih2nVVstwEwxqNDh1ktZY&callback=initMap">
+       </script>
 </body>
 </html>
