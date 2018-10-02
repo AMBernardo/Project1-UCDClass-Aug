@@ -24,3 +24,8 @@ select{
     border-radius: 10px !important;
     background-color: White !important;
 }
+
+label{
+    font-size: 15px;
+    color: black;
+}
