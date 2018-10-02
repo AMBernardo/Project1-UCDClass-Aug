@@ -11,6 +11,18 @@
     <link rel="stylesheet" type="text/css" media="screen" href="assets/css/materialize.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+
+    <style>
+
+    input[type=text] {
+    margin-top: 3px !important;
+    -webkit-border-radius: 10px !important;
+    -moz-border-radius: 10px !;
+    border-radius: 10px !important;
+    background-color: White !important;
+    
+}
+    </style>
 </head>
 <body>
     <nav>
@@ -34,6 +46,42 @@
                     <li><a href="findAnAgent.html">Find An Agent</a></li>
                     <li><a href="Login.html">Log In</a></li>
                 </ul>
+
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col s12">
+                <h4>Map Search</h4>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col s6">
+                <form>
+                    Location
+                    <br>
+                    <input type="text" name="enterLoc" value><br>
+                </form>
+            </div>
+
+            <div class="col s3 offset-s3">
+                <button class="waves-effect waves-light btn">Start Over</button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col s12">
+                <div id="map">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d105793.08961564963!2d-118.3372942254969!3d34.04299764179336!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c2c7b85dea2a93%3A0x1ff47c3ceb7bb2d5!2sSTAPLES+Center!5e0!3m2!1sen!2sus!4v1538429853594" width="900" height="600" frameborder="1" style="border:0" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
 
 
     <footer class="page-footer">
