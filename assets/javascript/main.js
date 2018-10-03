@@ -46,6 +46,7 @@ function generateCards(data){
     var a = $('div#rowPost');
     for(var i = 0; i < data.bundle.length; i++){
         var result = data.bundle[i];
+        //image fallback
         if(result.Media[0]) var imgurl = result.Media[0].MediaURL;
         else var imgurl = './assets/images/image.png';
         
@@ -66,15 +67,15 @@ function generateCards(data){
                         ).append(
                             $('<div/>',{'class':'card-content'}).append(
                                 $('<span/>',{'class':'card-title activator grey-text text-darken-4'}).text('Housing Data').append(
-                                    $('<i/>', {'class':'material-icons right'}).text('more_vert')
+                                    $('<i/>', {'class':'material-icons right'}).text('more_vert').attr('id', 'hData')
                                 )
                             ).append(
                                 $('<span/>',{'class':'card-title activator grey-text text-darken-4'}).text('Agent Data').append(
-                                    $('<i/>', {'class':'material-icons right'}).text('more_vert')
+                                    $('<i/>', {'class':'material-icons right'}).text('more_vert').attr('id', 'aData')
                                 )
                             ).append(
                                 $('<span/>',{'class':'card-title activator grey-text text-darken-4'}).text('Lot Data').append(
-                                    $('<i/>', {'class':'material-icons right'}).text('more_vert')
+                                    $('<i/>', {'class':'material-icons right'}).text('more_vert').attr('id', 'lData')
                                 )
                             ).append(
                                 $('<p/>').append(
@@ -95,7 +96,35 @@ function generateCards(data){
                                     $('<span/><br>',{'class':'lotData'}).attr('style', 'display:none').text('Lot Info')
                                 )
                             ).append(
-                                $('<p/>',{'class':'postPoint'}).text('text for blades here')
+                                $('<p/>',{'class':'postPoint'}).append(
+                                    $('<ul/>',{'class':'housingData'}).attr('style', 'display: inline').text(result.UnparsedAddress).append(
+                                        $('<li/>').text(' Beds: ' + result.BedroomsTotal)
+                                    ).append(
+                                        $('<li/>').text(' Full Baths: ' + result.BathroomsFull)
+                                    ).append(
+                                        $('<li/>').text(' Half Baths: ' + result.BathroomsHalf)
+                                    ).append(
+                                        $('<li/>').text(' ')
+                                    )//appliances, utilities, 
+                                ).append(
+                                    $('<ul/>',{'class':'agentData'}).attr('style','display: none').text(result.ListAgentFullName).append(
+                                        $('<li/>').text('Contact Number: ' + result.ListAgentPreferredPhone)
+                                    ).append(
+                                        $('<li/>').text('Showing Agent: ' + result.ShowingContactName)
+                                    ).append(
+                                        $('<li/>').text('Showing Agent Contact Number: ' + result.ShowingContactPhone)
+                                    ).append(
+                                        $('<li/>').text('Listing Office: ' + result.ListOfficeName)
+                                    )
+                                ).append(
+                                    $('<ul/>',{'class':'lotData'}).attr('style','display:none').append(
+                                        $('<li/>').text('Lot Size: ' + result.LotSizeSquareFeet + ' SqFt.')
+                                    ).append(
+                                        $('<li/>').text('Living Area: ' + result.LivingArea + ' SqFt.' )
+                                    ).append(
+                                        $('<li/>').text('Exterior Features: ' + result.ExteriorFeatures)
+                                    )//
+                                )
                             )
                         )
                     )
