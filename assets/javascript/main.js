@@ -4,17 +4,33 @@ $('.sidenav').sidenav();
 
 });
 
-
+//We will use this function once we have the pub dataset
+// $('#submit').on('click',function (event){
+//     event.preventDefault();
+//     var URL =  ' https://rets.io/api/v2/test/listings?access_token=520a691140619b70d86de598796f13c1&limit=9' 
+//     URL += '&' + $.param({
+//         'near': $('#city').val(),
+        
+//     });
+//     $.ajax({ 
+//         url: URL,
+//         type: "GET", /* or type:"GET" or type:"PUT" */
+//         dataType: "json",
+//         data: {
+//         },
+//         success: function (result) {
+//             console.log(result);    
+//         },
+//         error: function () {
+//             console.log("error");
+//         }
+//     });
+// });
 
 $('#submit').on('click',function (event){
     event.preventDefault();
-    var URL =  ' https://rets.io/api/v2/test/listings?access_token=520a691140619b70d86de598796f13c1&limit=9' 
-    URL += '&' + $.param({
-        'near': $('#city').val(),
-        
-    });
     $.ajax({ 
-        url: URL,
+        url: ' https://rets.io/api/v2/' + $('#city').val() + '/listings?access_token=520a691140619b70d86de598796f13c1&limit=9',
         type: "GET", /* or type:"GET" or type:"PUT" */
         dataType: "json",
         data: {
@@ -26,7 +42,9 @@ $('#submit').on('click',function (event){
             console.log("error");
         }
     });
-});
+        
+    });
+  
 
 
 
