@@ -1,0 +1,13 @@
+input[type=text] {
+    margin-top: 3px !important;
+    -webkit-border-radius: 10px !important;
+    -moz-border-radius: 10px !;
+    border-radius: 10px !important;
+    background-color: White !important;
+    
+}
+
+input[type=submit] {
+    color: White !important;   
+    width: 400px;
+}
