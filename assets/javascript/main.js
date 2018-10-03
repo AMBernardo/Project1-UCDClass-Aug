@@ -85,9 +85,8 @@ function initMap(){
 map = new google.maps.Map(document.getElementById('map'), {
 center: new google.maps.LatLng(37.773972,-122.431297),
 zoom: 11
-
 })
-
+}
 $('#1').on('click',function (event){
     event.preventDefault();
     $.ajax({
@@ -138,8 +137,10 @@ $('#3').on('click',function (event){
             });
         }
 }});
-})
-})
-})
-};
+});
+});
+});
+
+
+
 // end of Map script
