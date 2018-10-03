@@ -6,14 +6,15 @@ $('.sidenav').sidenav();
 
 
 
-function getDataBridge(){
-    var URL =  ' https://rets.io/api/v2/test/listings?access_token=520a691140619b70d86de598796f13c1' 
-    URL += '?' + $.param({
-        'near': $('#locationname').val().trim(),
+$('#submit').on('click',function (event){
+    event.preventDefault();
+    var URL =  ' https://rets.io/api/v2/test/listings?access_token=520a691140619b70d86de598796f13c1&limit=9' 
+    URL += '&' + $.param({
+        'near': $('#city').val(),
         
     });
-    $.ajax({
-        url: queryURL,
+    $.ajax({ 
+        url: URL,
         type: "GET", /* or type:"GET" or type:"PUT" */
         dataType: "json",
         data: {
@@ -25,9 +26,17 @@ function getDataBridge(){
             console.log("error");
         }
     });
-};
+});
 
 
+
+
+
+
+
+
+
+//Map api location data
 function newLocation(newLat,newLng)
 {
 map.setCenter({
@@ -111,11 +120,8 @@ $('#3').on('click',function (event){
             });
         }
 }});
-      // Loop through the results array and place a marker for each
-      // set of coordinates.
-     
-
 })
 })
 })
 };
+// end of Map script

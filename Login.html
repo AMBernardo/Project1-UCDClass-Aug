@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>index of Project1</title>
+    <title>Log In</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="assets/css/reset.css">
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
@@ -15,8 +15,8 @@
 <body>
     <nav>
         <div class="nav-wrapper">
-            <a href="#!" class="brand-logo knockout">Doorsteppe.info</a>
-            <a href="#" data-target="mobile-demo" class="sidenav-trigger">
+            <a href="index.html" class="brand-logo knockout">Doorsteppe.info</a>
+            <a href="index.html" data-target="mobile-demo" class="sidenav-trigger">
                 <i class="material-icons">menu</i>
             </a>
                 <ul class="right hide-on-med-and-down">
@@ -39,27 +39,29 @@
 
     <div class="container">
 
-        <div class="card-panel white">
-    <div class="row">
-        <div class="col s12">
+    <div class="card-panel white">
+        <div class="row">
+            <div class="col s12">
                 <div class="row">
                     <div class="col s4">
-                        <span class="grey-text">Registered Users</span>
+                        <h4><span class="grey-text"><i class="material-icons small left">person</i>Registered Users</span></h4>
                     </div>
                     <div class="col s4">
                         <input id="email" type="email" class="validate">
                         <label for="email">Email</label>
+                        <input id="password" type="password" class="validate">
+                        <label for="password">Password</label>
                     </div>
                     <div class="col s4">
-                        <a class="waves-effect waves-light btn">Sign in</a>
+                        <a class="waves-effect waves-light btn">Sign in<i class="material-icons right">send</i></a>
                         <br><br>
                         <form action="#">
-                                <p>
-                                  <label>
+                            <p>
+                                <label>
                                     <input id="indeterminate-checkbox" type="checkbox" >
                                     <span>Remember Me!</span>
-                                  </label>
-                                </p>
+                                </label>
+                            </p>
                         </form>
 
                     </div>
@@ -69,45 +71,57 @@
         </div>
     </div>
     <div class="card-panel white">
-    <div class="row">
+        <div class="row">
         <form class="col s12">
             <div class="row">
                 <div class="col s4">
-                    <h5>New Users</h5>
+                    <h4><i class="material-icons small left">person_add</i>New Users</h4>
                     <p>Create and Manage saved searches and properties with the Property Organizer</p>
                 </div>
                 <div class="input-field col s4">
                     <input id="first_name" type="text" class="validate">
-                    <label for="first_name">First Name</label>
+                    <label for="first_name">First Name <i class="tiny material-icons">create</i></label>
                 </div>
                 <div class=" input-field col s4">
                     <input id="last_name" type="text" class="validate">
-                    <label for="last_name">Last Name</label>
+                    <label for="last_name">Last Name <i class="tiny material-icons">create</i></label>
                 </div>
                 <div class="col s4"></div>
                 <div class="input-field col s8">
                     <input id="email" type="email" class="validate">
-                    <label for="email">Email</label>
+                    <label for="email">Email <i class="tiny material-icons">create</i></label>
                 </div>
             <div class="row">
                 <div class="col s4"></div>
                 <div class="input-field col s8">
                         <input id="password" type="password" class="validate">
-                        <label for="password">Password</label>
+                        <label for="password">Password <i class="tiny material-icons">create</i></label>
                 </div>
+            </div>
+            <div class="row">
+                <div class="col s4"></div>
+                <div class="col s4">
+                    <button class="btn waves-effect waves-light" type="submit" name="action">Sign Up!
+                        <i class="material-icons right">create</i>
+                    </button>
+                </div>
+                <div class="col s4"></div>
             </div>
             </div>
         </form>
-    </div>
-    </div>
+        </div>
     </div>
 
-                <footer class="page-footer">
-                        <div class="container">
-                          © 2018 Copyright
-                          <a class="grey-text text-lighten-4 right" href="results.html">Results</a>
-                        </div>
-                </footer>
+    </div>
+
+    <footer class="page-footer">
+            <div class="container">
+                <div class="col s12">
+              © 2018 Copyright
+              <a class="grey-text text-lighten-4 right" href="results.html">Results</a>
+                </div>
+            </div>
+    </footer>
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="assets/javascript/materialize.min.js"></script>
