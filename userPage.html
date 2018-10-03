@@ -37,7 +37,135 @@
     
     <div class="container">
         <div class="row">
-            <h3>First Name, Age</h3>
+            <h3>Welcome, First Name!</h3>
+                <div class="card">
+                <div class="card-content">
+                    <a href="#" data-target="slide-out" class="sidenav-trigger"><button class="btn waves-effect waves-light" type="submit" name="action">View Profile</button></a>
+                </div>
+                <div class="card-tabs">
+                    <ul class="tabs tabs-fixed-width">
+                        <li class="tab"><a href="#savedSearches"><i class="material-icons">grade</i>Saved Searches</a></li>
+                        <li class="tab"><a class="active" href="#myListings"><i class="material-icons">home</i>My Listings</a></li>
+                        <li class="tab"><a href="#modifyProfile"><i class="material-icons">create</i>Modify Profile</a></li>
+                    </ul>
+                </div>
+                <div class="card-content grey lighten-4">
+                    <div id="savedSearches">
+                        <div class="row">
+                            <div class="col s12 m10"></div>
+                            <div class="col s12 m2 right">
+                                <span><a class='dropdown-trigger btn' href='#' data-target='dropdown2'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sort&nbsp;&nbsp;<i class="material-icons tiny right">sort</i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></span>
+                                <ul id='dropdown2' class='dropdown-content'>
+                                    <li><a href="#!">Price (High to Low)</a></li>
+                                    <li><a href="#!">Price (Low to High)</a></li>
+                                    <li><a href="#!">City</a></li>
+                                </ul>
+                            </div>
+                            <h5>0 saved searches</h5>
+                            <br><br>
+                            <ul class="pagination">
+                                <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+                                <li class="active"><a href="#!">1</a></li>
+                                <li class="waves-effect"><a href="#!">2</a></li>
+                                <li class="waves-effect"><a href="#!">3</a></li>
+                                <li class="waves-effect"><a href="#!">4</a></li>
+                                <li class="waves-effect"><a href="#!">5</a></li>
+                                <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div id="myListings">
+                        <div class="row">
+                            <div class="col s12 m10"></div>
+                            <div class="col s12 m2 right">
+                                <span><a class='dropdown-trigger btn' href='#' data-target='dropdown1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sort&nbsp;&nbsp;<i class="material-icons tiny right">sort</i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></span>
+                                <ul id='dropdown1' class='dropdown-content'>
+                                    <li><a href="#!">Price (High to Low)</a></li>
+                                    <li><a href="#!">Price (Low to High)</a></li>
+                                    <li><a href="#!">City</a></li>
+                                </ul>
+                            </div>
+                            <h5>0 saved listings</h5>
+                            <br><br>
+                            <ul class="pagination">
+                                <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+                                <li class="active"><a href="#!">1</a></li>
+                                <li class="waves-effect"><a href="#!">2</a></li>
+                                <li class="waves-effect"><a href="#!">3</a></li>
+                                <li class="waves-effect"><a href="#!">4</a></li>
+                                <li class="waves-effect"><a href="#!">5</a></li>
+                                <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+                            </ul>
+                        </div>
+                        </div>
+                      <div id="modifyProfile">
+                            <div class="row">
+                                <form class="col s12">
+                                    <div class="row">
+                                        <div class="col s12">
+                                        <div class="input-field col s6">
+                                            <input id="first_name" type="text" class="validate">
+                                            <label for="first_name">First Name* <i class="tiny material-icons">account_circle</i></label>
+                                        </div>
+                                        <div class=" input-field col s6">
+                                            <input id="last_name" type="text" class="validate">
+                                            <label for="last_name">Last Name* <i class="tiny material-icons">account_circle</i></label>
+                                        </div>
+                                        <div class="input-field col s6">
+                                            <input id="email" type="email" class="validate">
+                                            <label for="email">Email* <i class="tiny material-icons">email</i></label>
+                                        </div>
+                                        <div class="input-field col s6">
+                                            <input id="password" type="password" class="validate">
+                                            <label for="password">Password* <i class="tiny material-icons">security</i></label>
+                                        </div>
+                                    <div class="row">
+                                        <div class="col s12">
+                                        <div class="input-field col s8">
+                                            <input id="additionalEmail" type="email" class="validate">
+                                            <label for="additionalEmail">Additional Email <i class="tiny material-icons">create</i></label>
+                                        </div>
+                                        <div class="input-field col s4">
+                                            <input id="phoneNumber" type="text" class="validate">
+                                            <label for="phoneNumber">Phone Number <i class="tiny material-icons">phone</i></label>
+                                        </div>
+                                        <div class="input-field col s8">
+                                            <input id="userAddress" type="text" class="validate">
+                                            <label for="userAddress">Address <i class="tiny material-icons">create</i></label>
+                                        </div>
+                                        <div class="input-field col s4">
+                                            <input id="userCity" type="text" class="validate">
+                                            <label for="userCity">City <i class="tiny material-icons">create</i></label>
+                                        </div>
+                                        <div class="input-field col s4">
+                                            <input id="userState" type="text" class="validate">
+                                            <label for="userState">State <i class="tiny material-icons">create</i></label>
+                                        </div>
+                                        <div class="input-field col s4">
+                                            <input id="userZipCode" type="text" class="validate">
+                                            <label for="userZipCode">Zip Code <i class="tiny material-icons">create</i></label>
+                                        </div>
+                                        <div class="col s4">
+                                            <p>*Required Fields. Your personal information is strictly confidential and will not be shared with any outside organization.</p><br>
+                                            <p>By submitting this form with your telephone number you are consenting and authorizing representatives to contact you even if your name is on the Federal "Do-not-call-list"</p> 
+                                        </div>
+                                        <div class="col s4">
+                                            <a class="waves-effect" href="#!">Delete this Account</a>
+                                        </div>
+                                        <div class="col s4">
+                                            <button class="btn waves-effect waves-light" type="submit" name="action">Save Settings<i class="material-icons right">save</i>
+                                            </button>   
+                                        </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+                
         <ul id="slide-out" class="sidenav">
             <li><div class="user-view">
               <div class="background">
@@ -47,29 +175,34 @@
               <a href="#name"><span class="black-text name">First Name Last Name</span></a>
               <a href="#email"><span class="black-text email">email@email.com</span></a>
             </div></li>
-            <li><a href="#!"><i class="material-icons">grade</i>Saved Properties</a></li>
-            <li><a href="#!">Second Link</a></li>
+            <li><a href="#!"><i class="material-icons">grade</i>Saved Searches</a></li>
+            <li><a href="#!"><i class="material-icons">home</i>My Listings</a></li>
+            <li><a href="#!"><i class="material-icons">create</i>Modify Profile</a></li>
             <li><div class="divider"></div></li>
             <li><a class="subheader"><i class="material-icons">build</i>Settings</a></li>
-            <
-            <li><a class="waves-effect" href="#!">Sign out</a></li>
-          </ul>
-          <a href="#" data-target="slide-out" class="sidenav-trigger"><button class="btn waves-effect waves-light" type="submit" name="action">View Profile</button></a>
-        </div>
-        <div class="row">
-            <div class="col s4"></div>
-            <div class="col s8"></div>
-        </div>
-    </div>
+            <li><a class="waves-effect" href="#!">About Us</a></li>
+            <li><a class="waves-effect" href="#!">Contact Us</a></li>
+            <li><a class="waves-effect" href="#!">Privacy Policy</a></li>
+            <li><a class="waves-effect" href="#!">Digital Millenium Copyright Act</a></li>
+            <li><a class="waves-effect" href="#!">Delete this Account</a></li>
+            <li><a class="waves-effect" href="#!"></a></li>
+            <li><div class="divider"></div></li>
+            <li><a class="waves-effect" href="Sign Out.html">Sign out</a></li>
+        </ul>
 
-                <footer class="page-footer">
-                        <div class="container">
-                            <div class="col s12">
-                          © 2018 Copyright
-                          <a class="grey-text text-lighten-4 right" href="results.html">Results</a>
-                            </div>
-                        </div>
-                </footer>
+
+    </div>
+</div>
+    
+
+    <footer class="page-footer">
+        <div class="container">
+            <div class="col s12">
+                 © 2018 Copyright
+                <a class="grey-text text-lighten-4 right" href="results.html">Results</a>
+            </div>
+        </div>
+    </footer>
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="assets/javascript/materialize.min.js"></script>

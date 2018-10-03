@@ -1,5 +1,6 @@
 jQuery(document).ready(function(){
 $('.dropdown-trigger').dropdown();
-$('.sidenav').sidenav();
+$(".sidenav").sidenav();
+$(".tabs").tabs();
 
 });
