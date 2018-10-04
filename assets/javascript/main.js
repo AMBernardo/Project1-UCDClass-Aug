@@ -18,17 +18,13 @@ jQuery(document).ready(function(){
     });
 
 
-
+var start = 0;
+var working = false;
 //Text Search Ajax Call
 function getDataBridge(){
-    var URL = ' https://rets.io/api/v2/test/listings?access_token=520a691140619b70d86de598796f13c1' 
+    var URL = ' https://rets.io/api/v2/test/listings?access_token=520a691140619b70d86de598796f13c1&offset=' + start;
     URL += '&' + $.param({
-        'near': $('#city').val(),
-        // 'filterpricegt': $('').val(),
-        // 'filterpricele': $('.').val(),
-
-
-
+       //query param
     });
     $.ajax({
         url: URL,
@@ -39,18 +35,31 @@ function getDataBridge(){
         success: function (result) {
             console.log(result); 
             generateCards(result);
-
+            start += 10
         },
         error: function () {
             console.log("error");
         }
     });
 };
-//getDataBridge();
 
-function openResults(){
-    window.open('results.html','_self');
-}
+//inifite scroll=========
+$(window).scroll(function(){
+    if($(this).scrollTop() + 1>= $('body').height() - $(window).height()){
+        if (working == false){
+            working = true;
+            getDataBridge();
+            setTimeout(function(){
+                working = false;
+            }, 10000)
+        }
+    }
+})
+
+
+// function openResults(){
+//     window.open('results.html','_self');
+// }
 
 $('div.card').on("click", function(event){
     //on click if postPoint>child.attr('display'==none) set child.display = inline & set otherchildren.display = none
@@ -187,6 +196,7 @@ function generateCards(data){
              )
         )
     );
+    M.AutoInit();
     $(".tabs").tabs();
                             }//loop close===========
 };
