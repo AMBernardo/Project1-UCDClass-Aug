@@ -4,7 +4,18 @@ jQuery(document).ready(function(){
     $(".tabs").tabs();
     $(".modal").modal();
     $(".parallax").parallax();
-});
+    $('.dropdown-trigger').dropdown();
+    $(".sidenav").sidenav();
+    $(".tabs").tabs();
+    $('.parallax').parallax();
+    $('.carousel').carousel();
+    $('.slider').slider({full_width: true});
+    $('.carousel-slider').slider({full_width: true});
+    $('.carousel.carousel-slider').carousel({
+        fullWidth: true
+        });
+    });
+
 
 
 //Text Search Ajax Call
@@ -67,7 +78,7 @@ function generateCards(data){
     for(var i = 0; i < data.bundle.length; i++){
         var result = data.bundle[i];
         //image fallback
-        if(result.Media[0]) var imgurl = result.Media[0].MediaURL;
+        if(result.Media[0]) {var imgurl = result.Media[0].MediaURL;}
         //if(street view) show street view
         else var imgurl = './assets/images/image.png';
         
@@ -160,5 +171,7 @@ function generateCards(data){
     );
                             }//loop close===========
 };
+
+
 
 
