@@ -3,6 +3,13 @@ jQuery(document).ready(function(){
     $(".sidenav").sidenav();
     $(".tabs").tabs();
 
+
+    // $(".sidenav").on("click", function(){
+    //     if ($(".sidenav").isOpen) {
+    //         $(".savedSearches").html($("#savedSearches"))
+    //         instance.close()
+    //     }
+    // })
     // $(".sidenav").isOpen({
 
 
