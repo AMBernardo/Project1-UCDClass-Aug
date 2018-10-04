@@ -1,8 +1,9 @@
 jQuery(document).ready(function(){
-$('.dropdown-trigger').dropdown();
-$(".sidenav").sidenav();
-$(".tabs").tabs();
+    $('.dropdown-trigger').dropdown();
+    $(".sidenav").sidenav();
+    $(".tabs").tabs();
 
+<<<<<<< HEAD
 });
 
 //We will use this function once we have the pub dataset
@@ -145,3 +146,17 @@ $('#3').on('click',function (event){
 
 
 // end of Map script
+=======
+
+    // $(".sidenav").on("click", function(){
+    //     if ($(".sidenav").isOpen) {
+    //         $(".savedSearches").html($("#savedSearches"))
+    //         instance.close()
+    //     }
+    // })
+    // $(".sidenav").isOpen({
+
+
+    // })
+});
+>>>>>>> 8ce8f6db87ee447f95f263ef349651500199fc7f
