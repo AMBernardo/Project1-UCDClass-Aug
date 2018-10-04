@@ -1,4 +1,5 @@
 jQuery(document).ready(function(){
+    M.AutoInit();
     $('.dropdown-trigger').dropdown();
     $(".sidenav").sidenav();
     $(".tabs").tabs();
@@ -64,6 +65,12 @@ function arrayDisplay(arry){
         return arry[i]; 
     };
 };
+
+function booleanDisplay(bln){
+    if(bln) return 'Yes';
+    else return 'N/A';
+};
+
 function booleanArrayDisplay(bln, arry){
     if(bln === true){
         for(var i = 0; i< arry.length; i++){
@@ -72,103 +79,115 @@ function booleanArrayDisplay(bln, arry){
     }else return 'N/A';
 };
 
-
 function generateCards(data){
     var a = $('div#rowPost');
     for(var i = 0; i < data.bundle.length; i++){
         var result = data.bundle[i];
         //image fallback
         if(result.Media[0]) {var imgurl = result.Media[0].MediaURL;}
-        //if(street view) show street view
+        //else if(street view) show street view
         else var imgurl = './assets/images/image.png';
         
     //card generation 
     a.append(
-        $('<div/>', {'class': 'col s12 m4'}).append(
-            $('<div/>', {'class': 'card blue-grey darken-1'}).append(
-                $('<div/>', {'class': 'card-content white-text'}).append(
-                    $('<span/>', {'class': 'card-title cardTitle'}).text('$'+result.ListPrice)
+        $('<div/>',{'class': 'col s10 m4'}).append(
+            $('<div/>',{'class':'card hoverable'}).append(
+                $('<div/>',{'class':'card-image waves-effect waves-block waves-light'}).append(
+                //image block=================
+                    $('<img>', {'class':'responsive-img'}).attr('src',imgurl).attr('alt','test pic')
+                ).append(
+                    $('<div/>', {'class': 'caption white black-text text-lighten-2 right-align'}).append(
+                        $('<h4/>').text('$'+result.ListPrice  )//Price Header 
+                    )
                 )
-            ).append(//Price Header 
-                $('<div/>', {'class': 'row'}).append(
-                    $('<div/>',{'class': 'col s10 offset-s1'}).append(
-                        $('<div/>',{'class':'card'}).append(
-                            $('<div/>',{'class':'card-image waves-effect waves-block waves-light'}).append(
-                            //image block=================
-                                $('<img>', {'class':'responsive-img'}).attr('src',imgurl).attr('alt','test pic')
-                            )
-                    //data catagories
-                        ).append(
-                            $('<div/>',{'class':'card-content bladeCallParent'}).append(
-                                $('<span/>',{'class':'card-title activator grey-text text-darken-4'}).text('Housing Data').append(
-                                    $('<i/>', {'class':'material-icons right bladeCall'}).text('more_vert').attr('data-display', 'true')
-                                )
-                            ).append(
-                                $('<span/>',{'class':'card-title activator grey-text text-darken-4'}).text('Agent Data').append(
-                                    $('<i/>', {'class':'material-icons right bladeCall'}).text('more_vert').attr('data-display', 'false')
-                                )
-                            ).append(
-                                $('<span/>',{'class':'card-title activator grey-text text-darken-4'}).text('Lot Data').append(
-                                    $('<i/>', {'class':'material-icons right bladeCall'}).text('more_vert').attr('data-display', 'false')
-                                )
-                            ).append(
-                                $('<p/>').append(
-                                    $('<a/>',{'href': '#'}).text('More information').append(
-                                        $('<i/>', {'class':'small material-icons'}).text('note_add')
-                                    )
-                                )
-                            )
-                        ).append(
-                        //card blades========================
-                            $('<div/>', {'class':'card-reveal'}).append(
-                                $('<span/>',{'class':'card-title grey-text text-darken-4'}).append(
-                                $('<i/>',{'class':'material-icons right'}).text('close')
-                            ).append(
-                                    $('<span/><br>',{'class':'housingData'}).attr('style', 'display:inline').text('Housing Info')
-                                ).append(
-                                    $('<span/><br>',{'class':'agentData'}).attr('style', 'display:none').text('Agent Info')
-                                ).append(
-                                    $('<span/><br>',{'class':'lotData'}).attr('style', 'display:none').text('Lot Info')
-                                )
-                            ).append(// Housing Data====
-                                $('<p/>',{'class':'postPoint'}).append(
-                                    $('<ul/>',{'class':'housingData'}).attr('style', 'display: inline').text(result.UnparsedAddress).append(
-                                        $('<li/>').text(' Beds: ' + result.BedroomsTotal)
-                                    ).append(
-                                        $('<li/>').text(' Full Baths: ' + result.BathroomsFull)
-                                    ).append(
-                                        $('<li/>').text(' Half Baths: ' + result.BathroomsHalf)
-                                    ).append(
-                                        $('<li/>').text('Heating Options: ' + booleanArrayDisplay(result.HeatingYN, result.Heating))
-                                    ).append(
-                                        $('<li/>').text('Laundry Features: ' + arrayDisplay(result.LaundryFeatures))
-                                    )// add appliances, assosiation fees, 
-                                ).append(//Agent Data====
-                                    $('<ul/>',{'class':'agentData'}).attr('style','display: none').text(result.ListAgentFullName).append(
-                                        $('<li/>').text('Contact Number: ' + result.ListAgentPreferredPhone)
-                                    ).append(
-                                        $('<li/>').text('Showing Agent: ' + result.ShowingContactName)
-                                    ).append(
-                                        $('<li/>').text('Showing Agent Contact Number: ' + result.ShowingContactPhone)
-                                    ).append(
-                                        $('<li/>').text('Listing Office: ' + result.ListOfficeName)
-                                    )
-                                ).append(//Lot Data====
-                                    $('<ul/>',{'class':'lotData'}).attr('style','display:none').append(
-                                        $('<li/>').text('Lot Size: ' + result.LotSizeSquareFeet + ' SqFt.')
-                                    ).append(
-                                        $('<li/>').text('Living Area: ' + result.LivingArea + ' SqFt.' )
-                                    ).append(
-                                        $('<li/>').text('Exterior Features: ' + result.ExteriorFeatures)
-                                    )
-                                )
-                            )
+        //data catagories
+            ).append(
+                $('<div/>',{'class':'card-tabs'}).append(
+                    $('<ul/>',{'class':'tabs tabs-fixed-width'}).append(                           
+                        $('<li/>',{'class':'tab'}).append(
+                            $('<a/>',{'class':'active'}).attr('href', '#'+ result.ListingId+'-tab1').text('Housing Data')
+                        )
+                    ).append(
+                        $('<li/>',{'class':'tab'}).append(
+                            $('<a/>').attr('href', '#'+ result.ListingId+'-tab2').text('Agent Data')
+                        )
+                    ).append(
+                        $('<li/>',{'class':'tab'}).append(
+                            $('<a/>').attr('href', '#'+ result.ListingId+'-tab3').text('Lot Data')
                         )
                     )
                 )
-            )
+            ).append(
+            //card blades========================
+                $('<div/>', {'class':'card-content'}).append(
+                            $('<div/>',{'id': result.ListingId+'-tab1'}).append(//house data
+                                $('<ul/>').text(result.UnparsedAddress).append(
+                                    $('<li/>').text(' Beds: ' + result.BedroomsTotal)
+                                ).append(
+                                    $('<li/>').text(' Full Baths: ' + result.BathroomsFull)
+                                ).append(
+                                    $('<li/>').text(' Half Baths: ' + result.BathroomsHalf)
+                                ).append(
+                                    $('<li/>').text('Heating Options: ' + booleanArrayDisplay(result.HeatingYN, result.Heating))
+                                ).append(
+                                    $('<li/>').text('Laundry Features: ' + arrayDisplay(result.LaundryFeatures))
+                                ).append(
+                                    $('<li/>').text('Appliances: ' + arrayDisplay(result.Appliances))
+                                ).append(
+                                    $('<li/>').text('Garage: '+ booleanDisplay(result.GarageYN))
+                                ).append(
+                                    $('<li/>').text('Flooring Types: ' + arrayDisplay(result.Flooring))
+                                )
+                            )
+                        ).append(
+                            $('<div/>',{'id': result.ListingId+'-tab2'}).append(//Agent Data====
+                                $('<ul/>').text('Listing Agent: ' + result.ListAgentFullName).append(
+                                    $('<br>')
+                                ).append(
+                                    $('<li/>').text('Contact Number: ' + result.ListAgentPreferredPhone)
+                                ).append(
+                                    $('<br>')
+                                ).append(
+                                    $('<li/>').text('Showing Agent: ' + result.ShowingContactName)
+                                ).append(
+                                    $('<br>')
+                                ).append(
+                                    $('<li/>').text('Showing Agent Contact Number: ' + result.ShowingContactPhone)
+                                ).append(
+                                    $('<br>')
+                                ).append(
+                                    $('<li/>').text('Listing Office: ' + result.ListOfficeName)
+                                ).append(
+                                    $('<br>')
+                                )
+                            )
+                        ).append(
+                            $('<div/>',{'id': result.ListingId+'-tab3'}).append(//Lot Data====
+                                $('<ul/>').append(
+                                    $('<li/>').text('Lot Size: ' + result.LotSizeSquareFeet + ' SqFt.')
+                                ).append(
+                                    $('<li/>').text('Living Area: ' + result.LivingArea + ' SqFt.' )
+                                ).append(
+                                    $('<li/>').text('Exterior Features: ' + result.ExteriorFeatures)
+                                ).append(
+                                    $('<li/>').text('Year Built: est.'+ result.YearBuilt)
+                                ).append(
+                                    $('<li/>').text('Zoning: ' + result.Zoning)
+                                ).append(
+                                    $('<li/>').text('Building Faces: ' +result.DirectionFaces)
+                                ).append(
+                                    $('<li/>').text('Entry Location: ' +result.EntryLocation)
+                                ).append(
+                                    $('<br>')
+                                ).append(
+                                    $('<li/>').text('Contact For Further Details.')
+                                )
+                        )
+                 )
+             )
         )
     );
+    $(".tabs").tabs();
                             }//loop close===========
 };
 
