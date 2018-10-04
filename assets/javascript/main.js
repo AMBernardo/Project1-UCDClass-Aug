@@ -4,7 +4,16 @@ jQuery(document).ready(function(){
     $(".tabs").tabs();
 
 });
-
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyDU1RNQPTorPNLi0J9wZYXJY_kOwa9_B60",
+    authDomain: "realestate-459b5.firebaseapp.com",
+    databaseURL: "https://realestate-459b5.firebaseio.com",
+    projectId: "realestate-459b5",
+    storageBucket: "realestate-459b5.appspot.com",
+    messagingSenderId: "770633504288"
+  };
+  firebase.initializeApp(config);
 //We will use this function once we have the pub dataset
 // $('#submit').on('click',function (event){
 //     event.preventDefault();
@@ -37,7 +46,8 @@ $('#submit').on('click',function (event){
         data: {
         },
         success: function (result) {
-            console.log(result);    
+            console.log(result);   
+            // window.location.replace("results.html"); 
         },
         error: function () {
             console.log("error");
@@ -47,8 +57,20 @@ $('#submit').on('click',function (event){
     });
   
 
-
-
+    $('#submit').on('click',function (event){
+        event.preventDefault();
+        $.ajax({
+            url: ' https://rets.io/api/v2/' + $('#city').val() + '/listings?access_token=520a691140619b70d86de598796f13c1&limit=1000&BathroomsFull.eq=' + $('#bathroom').val() + '&BedroomsTotal.eq=' + $('#bed').val() + '&LotSizeSquareFeet.gte=' + $('#minsqft').val().trim() + '&ListPrice.lte=' + $('#maxprice').val().trim(),
+            dataType: "json",
+            success: function (e) {
+    
+                localStorage.result = (JSON.stringify(e));
+                var result = localStorage.result;
+                var result = $.parseJSON(result)
+                console.log(result)
+            }
+        });
+    })
 
 
 
