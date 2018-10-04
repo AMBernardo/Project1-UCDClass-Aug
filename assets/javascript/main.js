@@ -2,7 +2,7 @@ jQuery(document).ready(function(){
     $('.dropdown-trigger').dropdown();
     $(".sidenav").sidenav();
     $(".tabs").tabs();
-
+});
 
 
 
@@ -67,6 +67,7 @@ function generateCards(data){
         var result = data.bundle[i];
         //image fallback
         if(result.Media[0]) var imgurl = result.Media[0].MediaURL;
+        //if(street view) show street view
         else var imgurl = './assets/images/image.png';
         
     //card generation 
@@ -160,14 +161,3 @@ function generateCards(data){
 };
 
 
-    // $(".sidenav").on("click", function(){
-    //     if ($(".sidenav").isOpen) {
-    //         $(".savedSearches").html($("#savedSearches"))
-    //         instance.close()
-    //     }
-    // })
-    // $(".sidenav").isOpen({
-
-
-    // })
-});
