@@ -47,7 +47,7 @@
         </div>
 
         <div class="row">
-            <!-- <div class="col s4">
+            <div class="col s4">
                     <form>
                         City
                         <br>
@@ -65,25 +65,9 @@
                     <form>
                         Zip code
                         <br>
-<<<<<<< HEAD
-                        <input id="locationname" type="text" name="locationname" value><br>
-=======
                         <input type="text" name="zip" value><br>
->>>>>>> 6b7d98ac74ad3008929b94f078f5b9d5e37c8eab
-                    </form>
-            </div> -->
-
-            <div class="col s6">
-                    <form>
-                        City<br>
-                        <select class="browser-default" name="cityName">
-                            <option value="sf">San Francisco</option>
-                            <option value="sd">San Diego</option>
-                            <option value="tx">Texas</option>
-                        </select>
                     </form>
             </div>
-
         </div>
 
         <div class="row">
@@ -172,7 +156,7 @@
 
         <div class="row">
             <div class="col s6 offset-s6">
-                <input class="waves-effect waves-light btn" id="submit" type="submit" action="assets/" value="Search">
+                <input class="waves-effect waves-light btn" id="submit big-button" type="submit" onclick="getDataBridge(), openResults()" value="Search">
             </div>
         </div>
 
@@ -193,14 +177,16 @@
 
 
     <footer class="page-footer">
+        <div class="footer-copyright">
             <div class="container">
               © 2018 Copyright
               <a class="grey-text text-lighten-4 right" href="results.html">Results</a>
             </div>
+        </div>
     </footer>
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="assets/javascript/materialize.min.js"></script>
-    <script src="assets/javascript/Propertysearch.js"></script>
+    <script src="assets/javascript/main.js"></script>
 </body>
 </html>
