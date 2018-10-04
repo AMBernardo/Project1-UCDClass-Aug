@@ -31,7 +31,7 @@ jQuery(document).ready(function(){
 $('#submit').on('click',function (event){
     event.preventDefault();
     $.ajax({ 
-        url: ' https://rets.io/api/v2/' + $('#city').val() + '/listings?access_token=520a691140619b70d86de598796f13c1&BathroomsFull.eq=' + $('#bathroom').val() + '&BedroomsTotal.eq=' + $('#bed').val() + '&LotSizeSquareFeet.gte=' + $('#minsqft').val().trim() + '&ListPrice.gte=' + $('#minprice').val().trim() + '&ListPrice.eq=' + $('#maxprice').val().trim(),
+        url: ' https://rets.io/api/v2/' + $('#city').val() + '/listings?access_token=520a691140619b70d86de598796f13c1&BathroomsFull.eq=' + $('#bathroom').val() + '&BedroomsTotal.eq=' + $('#bed').val() + '&LotSizeSquareFeet.gte=' + $('#minsqft').val().trim() + '&ListPrice.lte=' + $('#maxprice').val().trim(),
         type: "GET", /* or type:"GET" or type:"PUT" */
         dataType: "json",
         data: {
