@@ -3,7 +3,7 @@ jQuery(document).ready(function(){
     $(".sidenav").sidenav();
     $(".tabs").tabs();
 
-});
+
 
 
 //Text Search Ajax Call
@@ -129,7 +129,7 @@ function generateCards(data){
                                         $('<li/>').text('Heating Options: ' + booleanArrayDisplay(result.HeatingYN, result.Heating))
                                     ).append(
                                         $('<li/>').text('Laundry Features: ' + arrayDisplay(result.LaundryFeatures))
-                                    )// add appliances, utilities, 
+                                    )// add appliances, assosiation fees, 
                                 ).append(//Agent Data====
                                     $('<ul/>',{'class':'agentData'}).attr('style','display: none').text(result.ListAgentFullName).append(
                                         $('<li/>').text('Contact Number: ' + result.ListAgentPreferredPhone)
@@ -170,4 +170,4 @@ function generateCards(data){
 
 
     // })
-// });
+});
