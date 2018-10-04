@@ -1,7 +1,7 @@
 jQuery(document).ready(function(){
-$('.dropdown-trigger').dropdown();
-$(".sidenav").sidenav();
-$(".tabs").tabs();
+    $('.dropdown-trigger').dropdown();
+    $(".sidenav").sidenav();
+    $(".tabs").tabs();
 
 });
 
@@ -159,3 +159,15 @@ function generateCards(data){
                             }//loop close===========
 };
 
+
+    // $(".sidenav").on("click", function(){
+    //     if ($(".sidenav").isOpen) {
+    //         $(".savedSearches").html($("#savedSearches"))
+    //         instance.close()
+    //     }
+    // })
+    // $(".sidenav").isOpen({
+
+
+    // })
+// });
