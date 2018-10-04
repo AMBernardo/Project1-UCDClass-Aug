@@ -3,7 +3,6 @@ jQuery(document).ready(function(){
     $(".sidenav").sidenav();
     $(".tabs").tabs();
 
-<<<<<<< HEAD
 });
 
 //We will use this function once we have the pub dataset
@@ -32,7 +31,7 @@ jQuery(document).ready(function(){
 $('#submit').on('click',function (event){
     event.preventDefault();
     $.ajax({ 
-        url: ' https://rets.io/api/v2/' + $('#city').val() + '/listings?access_token=520a691140619b70d86de598796f13c1&limit=9',
+        url: ' https://rets.io/api/v2/' + $('#city').val() + '/listings?access_token=520a691140619b70d86de598796f13c1&BathroomsFull.eq=' + $('#bathroom').val() + '&BedroomsTotal.eq=' + $('#bed').val() + '&LotSizeSquareFeet.gte=' + $('#minsqft').val().trim() + '&ListPrice.gte=' + $('#minprice').val().trim() + '&ListPrice.eq=' + $('#maxprice').val().trim(),
         type: "GET", /* or type:"GET" or type:"PUT" */
         dataType: "json",
         data: {
@@ -146,17 +145,3 @@ $('#3').on('click',function (event){
 
 
 // end of Map script
-=======
-
-    // $(".sidenav").on("click", function(){
-    //     if ($(".sidenav").isOpen) {
-    //         $(".savedSearches").html($("#savedSearches"))
-    //         instance.close()
-    //     }
-    // })
-    // $(".sidenav").isOpen({
-
-
-    // })
-});
->>>>>>> 8ce8f6db87ee447f95f263ef349651500199fc7f

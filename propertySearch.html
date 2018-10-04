@@ -120,19 +120,19 @@
             <div class="col s3">
                 <form>
                     Min. Price<br>
-                        <input type="text" name="lowestPrice" value><br>
+                        <input type="text" id="minprice" name="lowestPrice" value><br>
                 </form>
             </div>
             <div class="col s3">
                 <form>
                     Max Price<br>
-                        <input type="text" name="highestPrice" value><br>
+                        <input type="text" id="maxprice" name="highestPrice" value><br>
                 </form>
             </div>
             <div class="col s2">
                 <form>
                     Min. SqFt.<br>
-                        <input type="text" name="minSq" value><br>
+                        <input type="text" id="minsqft" name="minSq" value><br>
                 </form>
             </div>
             <div class="col s2">
@@ -140,7 +140,6 @@
                     Beds<br>
                         <!-- <input type="text" name="minSq" value><br> -->
                         <select class="browser-default" id="bed" name="bedCount">
-                                <option>Any</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
@@ -153,8 +152,7 @@
                 <form>
                     Baths<br>
                         <!-- <input type="text" name="minSq" value><br> -->
-                        <select class="browser-default" name="bedCount">
-                                <option>Any</option>
+                        <select class="browser-default" id="bathroom" name="bath">
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
