@@ -84,7 +84,7 @@
         
            <div id="floating-panel">
             <input id="address" type="textbox" value="">
-            <input id="submit" type="button" value="Go Here">
+            <input id="submitMap" type="button" value="Go Here">
           </div>
           <div id="map"></div>
 
@@ -124,7 +124,7 @@
           });
           var geocoder = new google.maps.Geocoder();
   
-          document.getElementById('submit').addEventListener('click', function() {
+          document.getElementById('submitMap').addEventListener('click', function() {
             geocodeAddress(geocoder, map);
           });
         }
