@@ -1,14 +1,13 @@
-
   // Initialize Firebase
-//   var config = {
-//     apiKey: "AIzaSyDU1RNQPTorPNLi0J9wZYXJY_kOwa9_B60",
-//     authDomain: "realestate-459b5.firebaseapp.com",
-//     databaseURL: "https://realestate-459b5.firebaseio.com",
-//     projectId: "realestate-459b5",
-//     storageBucket: "realestate-459b5.appspot.com",
-//     messagingSenderId: "770633504288"
-//   };
-//   firebase.initializeApp(config);
+  var config = {
+    apiKey: "AIzaSyDR2-15Tdhu7iFhT4MbpbyoxP157PtISIk",
+    authDomain: "doorsteppe.firebaseapp.com",
+    databaseURL: "https://doorsteppe.firebaseio.com",
+    projectId: "doorsteppe",
+    storageBucket: "doorsteppe.appspot.com",
+    messagingSenderId: "808880878005"
+  };
+  firebase.initializeApp(config);
 //We will use this function once we have the pub dataset
 // $('#submit').on('click',function (event){
 //     event.preventDefault();
@@ -112,7 +111,7 @@ $('#1').on('click',function (event){
     event.preventDefault();
     $.ajax({
         type: "GET",
-        url: "https://rets.io/api/v2/test_sf/listings?access_token=520a691140619b70d86de598796f13c1",
+        url: "https://rets.io/api/v2/test_sf/listings?access_token=520a691140619b70d86de598796f13c1&limit=100",
         data: "",
         success: function(results) {
             for (var i = 0; i < results.bundle.length; i++) {
@@ -129,7 +128,7 @@ $('#2').on('click',function (event){
     event.preventDefault();
     $.ajax({
         type: "GET",
-        url: "https://rets.io/api/v2/test_sd/listings?access_token=520a691140619b70d86de598796f13c1",
+        url: "https://rets.io/api/v2/test_sd/listings?access_token=520a691140619b70d86de598796f13c1&limit=100",
         data: "",
         success: function(results) {
             for (var i = 0; i < results.bundle.length; i++) {
@@ -146,7 +145,7 @@ $('#3').on('click',function (event){
     event.preventDefault();
     $.ajax({
         type: "GET",
-        url: "https://rets.io/api/v2/abor_ref/listings?access_token=520a691140619b70d86de598796f13c1",
+        url: "https://rets.io/api/v2/abor_ref/listings?access_token=520a691140619b70d86de598796f13c1&limit=100",
         data: "",
         success: function(results) {
             for (var i = 0; i < results.bundle.length; i++) {
@@ -327,3 +326,57 @@ var address = result.UnparsedAddress
     $(".tabs").tabs();
                             }//loop close===========
 };
+
+
+// user sign up/in
+// get user login elements
+var txtEmail = $('#logemail');
+var txtPass =  $('#logpassword');
+var loginBtn =  $('#btnLogIn');
+
+// get user sign up elements
+var txtSEmail = $('#email');
+var txtSPass = $('#password');
+var userName = $('#name')
+var btnSignIn = $('#signbtn')
+var displayName = $('#name')
+// add login event
+$('#btnLogIn').on('click', e =>{
+// get email and password fields
+var email = txtEmail.val()
+var pass = txtPass.val()
+var auth = firebase.auth()
+// sign in
+var promise = auth.signInWithEmailAndPassword(email, pass)
+promise.catch(e => console.log(e.message));
+
+});
+
+// add signup event 
+
+$('#signbtn').on('click', e =>{
+    // get email and password fields
+    var email = txtSEmail.val()
+    var pass = txtSPass.val()
+    var auth = firebase.auth()
+    var userName = displayName.val()
+    // sign in
+    var promise = auth.createUserWithEmailAndPassword(email, pass).then(function(user) {
+        user.firebase.auth()({
+            displayName: userName   
+        });   
+    promise.catch(e => console.log(e.message));
+    
+    });
+
+    // add a realtime listener to detect user suthentication state changes
+    firebase.auth().onAuthStateChanged(firebaseUser =>{
+        if(firebaseUser){
+            console.log(firebaseUser)
+        } else {
+console.log('not logged in');
+        }
+
+        })})
+
+        // TODO: store users name and favourited homes in realtime database using their unique UID
