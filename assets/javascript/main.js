@@ -68,9 +68,13 @@ function getDataBridge(){
         data: {
         },
         success: function (result) {
-            console.log(result); 
-            generateCards(result);
-            start += 10
+            console.log(result);
+            var object = {url: URL, response : result};
+            localStorage.setItem('result', JSON.stringify(object));
+            
+            // window.location.replace("results.html"); 
+            // generateCards(result);
+            // start += 10
         },
         error: function () {
             console.log("error");
@@ -139,7 +143,7 @@ function generateCards(data){
                 //data catagories
                     ).append(
                         $('<div/>',{'class':'card-tabs'}).append(
-                            $('<ul/>',{'class':'tabs tabs-fixed-width'}).append(                           
+                            $('<ul/>',{'class':'tabs tabs-fixed-width blue-grey lighten-5'}).append(                           
                                 $('<li/>',{'class':'tab'}).append(
                                     $('<a/>',{'class':'active'}).attr('href', '#'+ result.ListingId+'-tab1').text('Housing Data')
                                 )
@@ -155,7 +159,7 @@ function generateCards(data){
                         )
                     ).append(
                     //card blades========================
-                        $('<div/>', {'class':'card-content'}).append(
+                        $('<div/>', {'class':'card-content blue-grey lighten-4'}).append(
                                     $('<div/>',{'id': result.ListingId+'-tab1'}).append(//house data
                                         $('<ul/>').text(result.UnparsedAddress).append(
                                             $('<li/>').text(' Beds: ' + result.BedroomsTotal)
