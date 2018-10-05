@@ -380,6 +380,13 @@ function populateInfo(){
 function listPage(result){
     $('#propertyAdd').attr('value', result.UnparsedAddress).text(result.UnparsedAddress)
     $('#address').attr('value', result.UnparsedAddress)
+    for( var i =0; i < result.Media.length; i++){
+        $('#propCarousel').append(
+          $('<a/>',{'class':'carousel-item'}).append(
+              $('<img>').attr('src', result.Media[i].MediaURL)
+          )
+        )
+    }$('.carousel').carousel();
 
     let a = $('#propPostPoint')
     a.append(
