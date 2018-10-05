@@ -50,31 +50,130 @@ jQuery(document).ready(function(){
         });
     });
 
-
-var start = 0;
-var working = false;
-//Text Search Ajax Call
-function getDataBridge(){
-    var URL = ' https://rets.io/api/v2/test/listings?access_token=520a691140619b70d86de598796f13c1&offset=' + start;
-    URL += '&' + $.param({
-       //query param
-    });
-    $.ajax({
+// my code
+$('#submit').on('click',function (event){
+    event.preventDefault();
+    var URL = ' https://rets.io/api/v2/' + $('#city').val() + '/listings?access_token=520a691140619b70d86de598796f13c1&limit=50&BathroomsFull.eq=' + $('#bathroom').val() + '&BedroomsTotal.eq=' + $('#bed').val() + '&LotSizeSquareFeet.gte=' + $('#minsqft').val().trim() + '&ListPrice.lte=' + $('#maxprice').val().trim()
+    $.ajax({ 
         url: URL,
         type: "GET", /* or type:"GET" or type:"PUT" */
         dataType: "json",
         data: {
         },
         success: function (result) {
-            console.log(result); 
-            generateCards(result);
-            start += 10
+            console.log(result);   
+            var object = {url: URL, response : result}
+            localStorage.setItem('result', JSON.stringify(object));
+            window.location.replace("results.html"); 
         },
         error: function () {
             console.log("error");
         }
     });
-};
+        
+    });
+
+//Map api location data
+function newLocation(newLat,newLng)
+{
+map.setCenter({
+lat : newLat,
+lng : newLng
+});
+}
+
+
+
+$("#1").on('click', function ()
+{
+newLocation(37.773972,-122.431297);
+});
+
+$("#2").on('click', function ()
+{
+newLocation(32.715736,-117.161087);
+});
+
+$("#3").on('click', function ()
+{
+newLocation(30.267153, -97.7430608);
+})
+
+var map;
+function initMap(){
+map = new google.maps.Map(document.getElementById('map'), {
+center: new google.maps.LatLng(37.773972,-122.431297),
+zoom: 11
+})
+}
+$('#1').on('click',function (event){
+    event.preventDefault();
+    $.ajax({
+        type: "GET",
+        url: "https://rets.io/api/v2/test_sf/listings?access_token=520a691140619b70d86de598796f13c1",
+        data: "",
+        success: function(results) {
+            for (var i = 0; i < results.bundle.length; i++) {
+                var coords = results.bundle[i].Coordinates;
+                var latLng = new google.maps.LatLng(coords[1],coords[0]);
+                var marker = new google.maps.Marker({
+                  position: latLng,
+                  map: map
+            });
+        }
+}});
+
+$('#2').on('click',function (event){
+    event.preventDefault();
+    $.ajax({
+        type: "GET",
+        url: "https://rets.io/api/v2/test_sd/listings?access_token=520a691140619b70d86de598796f13c1",
+        data: "",
+        success: function(results) {
+            for (var i = 0; i < results.bundle.length; i++) {
+                var coords = results.bundle[i].Coordinates;
+                var latLng = new google.maps.LatLng(coords[1],coords[0]);
+                var marker = new google.maps.Marker({
+                  position: latLng,
+                  map: map
+            });
+        }
+}});
+
+$('#3').on('click',function (event){
+    event.preventDefault();
+    $.ajax({
+        type: "GET",
+        url: "https://rets.io/api/v2/abor_ref/listings?access_token=520a691140619b70d86de598796f13c1",
+        data: "",
+        success: function(results) {
+            for (var i = 0; i < results.bundle.length; i++) {
+                var coords = results.bundle[i].Coordinates;
+                var latLng = new google.maps.LatLng(coords[1],coords[0]);
+                var marker = new google.maps.Marker({
+                  position: latLng,
+                  map: map
+            });
+        }
+}});
+});
+});
+});
+
+
+
+// end of Map script
+
+var start = 0;
+var working = false;
+var Data =JSON.parse(localStorage.getItem('result'));
+// no need for ajax call getting data from local storage
+// //Text Search Ajax Call
+function getDataBridge(){
+    var Data =JSON.parse(localStorage.getItem('result'));
+    console.log(Data)
+    generateCards(Data.response)
+     };
 
 //inifite scroll=========
 $(window).scroll(function(){
@@ -121,10 +220,10 @@ function booleanArrayDisplay(bln, arry){
     }else return 'N/A';
 };
 
-function generateCards(data){
+function generateCards(Data){
     var a = $('div#rowPost');
-    for(var i = 0; i < data.bundle.length; i++){
-        var result = data.bundle[i];
+    for(var i = 0; i < Data.bundle.length; i++){
+        var result = Data.bundle[i];
         //image fallback
         if(result.Media[0]) {var imgurl = result.Media[0].MediaURL;}
         //else if(street view) show street view
@@ -233,120 +332,3 @@ function generateCards(data){
     $(".tabs").tabs();
                             }//loop close===========
 };
-
-
-
-
-// my code
-$('#submit').on('click',function (event){
-    event.preventDefault();
-    var URL = ' https://rets.io/api/v2/' + $('#city').val() + '/listings?access_token=520a691140619b70d86de598796f13c1&BathroomsFull.eq=' + $('#bathroom').val() + '&BedroomsTotal.eq=' + $('#bed').val() + '&LotSizeSquareFeet.gte=' + $('#minsqft').val().trim() + '&ListPrice.lte=' + $('#maxprice').val().trim()
-    $.ajax({ 
-        url: URL,
-        type: "GET", /* or type:"GET" or type:"PUT" */
-        dataType: "json",
-        data: {
-        },
-        success: function (result) {
-            console.log(result);   
-            var object = {url: URL, response : result}
-            localStorage.setItem(result, JSON.stringify(object));
-            // window.location.replace("results.html"); 
-        },
-        error: function () {
-            console.log("error");
-        }
-    });
-        
-    });
-
-//Map api location data
-function newLocation(newLat,newLng)
-{
-map.setCenter({
-lat : newLat,
-lng : newLng
-});
-}
-
-
-
-$("#1").on('click', function ()
-{
-newLocation(37.773972,-122.431297);
-});
-
-$("#2").on('click', function ()
-{
-newLocation(32.715736,-117.161087);
-});
-
-$("#3").on('click', function ()
-{
-newLocation(30.267153, -97.7430608);
-})
-
-var map;
-function initMap(){
-map = new google.maps.Map(document.getElementById('map'), {
-center: new google.maps.LatLng(37.773972,-122.431297),
-zoom: 11
-})
-}
-$('#1').on('click',function (event){
-    event.preventDefault();
-    $.ajax({
-        type: "GET",
-        url: "https://rets.io/api/v2/test_sf/listings?access_token=520a691140619b70d86de598796f13c1",
-        data: "",
-        success: function(results) {
-            for (var i = 0; i < results.bundle.length; i++) {
-                var coords = results.bundle[i].Coordinates;
-                var latLng = new google.maps.LatLng(coords[1],coords[0]);
-                var marker = new google.maps.Marker({
-                  position: latLng,
-                  map: map
-            });
-        }
-}});
-
-$('#2').on('click',function (event){
-    event.preventDefault();
-    $.ajax({
-        type: "GET",
-        url: "https://rets.io/api/v2/test_sd/listings?access_token=520a691140619b70d86de598796f13c1",
-        data: "",
-        success: function(results) {
-            for (var i = 0; i < results.bundle.length; i++) {
-                var coords = results.bundle[i].Coordinates;
-                var latLng = new google.maps.LatLng(coords[1],coords[0]);
-                var marker = new google.maps.Marker({
-                  position: latLng,
-                  map: map
-            });
-        }
-}});
-
-$('#3').on('click',function (event){
-    event.preventDefault();
-    $.ajax({
-        type: "GET",
-        url: "https://rets.io/api/v2/abor_ref/listings?access_token=520a691140619b70d86de598796f13c1",
-        data: "",
-        success: function(results) {
-            for (var i = 0; i < results.bundle.length; i++) {
-                var coords = results.bundle[i].Coordinates;
-                var latLng = new google.maps.LatLng(coords[1],coords[0]);
-                var marker = new google.maps.Marker({
-                  position: latLng,
-                  map: map
-            });
-        }
-}});
-});
-});
-});
-
-
-
-// end of Map script
