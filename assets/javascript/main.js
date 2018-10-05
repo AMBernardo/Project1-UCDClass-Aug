@@ -59,6 +59,10 @@ var working = false;
 function getDataBridge(){
     var URL = ' https://rets.io/api/v2/test/listings?access_token=520a691140619b70d86de598796f13c1&offset=' + start;
     URL += '&' + $.param({
+        // 'BathroomsFull.eq': $('#bathroom').val(),
+        // 'BedroomsTotal.eq': $('#bed').val(),
+        // 'ListPrice.lte': $('#maxprice').val().trim(),
+        // 'LotSizeSquareFeet.gte': $('#minsqft').val().trim(),
        //query param
     });
     $.ajax({
@@ -69,12 +73,11 @@ function getDataBridge(){
         },
         success: function (result) {
             console.log(result);
-            var object = {url: URL, response : result};
-            localStorage.setItem('result', JSON.stringify(object));
-            
+            // var object = {url: URL, response : result};
+            // localStorage.setItem('result', JSON.stringify(object));
             // window.location.replace("results.html"); 
-            // generateCards(result);
-            // start += 10
+            generateCards(result);
+            start += 10
         },
         error: function () {
             console.log("error");
@@ -84,18 +87,18 @@ function getDataBridge(){
 
 //inifite scroll=========
     //will only load results every ten seconds, as to not overoad the users computer might work some local storage stuff to if we can smooth it up a bit
-
-// $(window).scroll(function(){
-//     if($(this).scrollTop() + 1>= $('body').height() - $(window).height()){
-//         if (working == false){
-//             working = true;
-//             getDataBridge();
-//             setTimeout(function(){
-//                 working = false;
-//             }, 10000)
-//         }
-//     }
-// })
+// does it on every page
+$(window).scroll(function(){
+    if($(this).scrollTop() + 1>= $('body').height() - $(window).height()){
+        if (working == false){
+            working = true;
+            getDataBridge();
+            setTimeout(function(){
+                working = false;
+            }, 10000)
+        }
+    }
+})
 
 //Functions for displaying arrays 
     //ex. el.text(arrayDisplay(arry))
@@ -143,7 +146,7 @@ function generateCards(data){
                 //data catagories
                     ).append(
                         $('<div/>',{'class':'card-tabs'}).append(
-                            $('<ul/>',{'class':'tabs tabs-fixed-width blue-grey lighten-5'}).append(                           
+                            $('<ul/>',{'class':'tabs tabs-fixed-width'}).append(                           
                                 $('<li/>',{'class':'tab'}).append(
                                     $('<a/>',{'class':'active'}).attr('href', '#'+ result.ListingId+'-tab1').text('Housing Data')
                                 )
@@ -159,7 +162,7 @@ function generateCards(data){
                         )
                     ).append(
                     //card blades========================
-                        $('<div/>', {'class':'card-content blue-grey lighten-4'}).append(
+                        $('<div/>', {'class':'card-content'}).append(
                                     $('<div/>',{'id': result.ListingId+'-tab1'}).append(//house data
                                         $('<ul/>').text(result.UnparsedAddress).append(
                                             $('<li/>').text(' Beds: ' + result.BedroomsTotal)
