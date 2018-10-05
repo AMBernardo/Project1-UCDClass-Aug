@@ -176,17 +176,6 @@ function getDataBridge(){
     generateCards(Data.response)
      };
 
-
-// function openResults(){
-//     window.open('results.html','_self');
-// }
-
-$('div.card').on("click", function(event){
-    //on click if postPoint>child.attr('display'==none) set child.display = inline & set otherchildren.display = none
-    //need to denote what certain clicks do.
-    //right now clicking on the picture opens the blade but i think that should just link to the reletive houses info page
-    //its is making it hard to set the click event that changes the blade content. talk to ux about options there.
-});
 //Functions for displaying arrays 
     //ex. el.text(arrayDisplay(arry))
 function arrayDisplay(arry){
@@ -361,10 +350,7 @@ $('#signbtn').on('click', e =>{
     var auth = firebase.auth()
     var userName = displayName.val()
     // sign in
-    var promise = auth.createUserWithEmailAndPassword(email, pass).then(function(user) {
-        user.firebase.auth()({
-            displayName: userName   
-        });   
+    var promise = auth.createUserWithEmailAndPassword(email, pass)
     promise.catch(e => console.log(e.message));
     
     });
@@ -377,6 +363,6 @@ $('#signbtn').on('click', e =>{
 console.log('not logged in');
         }
 
-        })})
+        })
 
         // TODO: store users name and favourited homes in realtime database using their unique UID
