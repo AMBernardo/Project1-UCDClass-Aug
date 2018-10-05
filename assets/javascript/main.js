@@ -32,7 +32,7 @@
 //     });
 // });
 jQuery(document).ready(function(){
-    getDataBridge()
+    // getDataBridge()
     M.AutoInit();
     $('.dropdown-trigger').dropdown();
     $(".sidenav").sidenav();
@@ -70,7 +70,7 @@ jQuery(document).ready(function(){
 // my code
 $('#submit').on('click',function (event){
     event.preventDefault();
-    var URL = ' https://rets.io/api/v2/' + $('#city').val() + '/listings?access_token=520a691140619b70d86de598796f13c1&limit=100&BathroomsFull.eq=' + $('#bathroom').val() + '&BedroomsTotal.eq=' + $('#bed').val() + '&LotSizeSquareFeet.gte=' + $('#minsqft').val().trim() + '&ListPrice.lte=' + $('#maxprice').val().trim()
+    var URL = ' https://rets.io/api/v2/' + $('#city').val() + '/listings?access_token=520a691140619b70d86de598796f13c1&limit=25&BathroomsFull.eq=' + $('#bathroom').val() + '&BedroomsTotal.eq=' + $('#bed').val() + '&LotSizeSquareFeet.gte=' + $('#minsqft').val().trim() + '&ListPrice.lte=' + $('#maxprice').val().trim()
     $.ajax({ 
         url: URL,
         type: "GET", /* or type:"GET" or type:"PUT" */
@@ -80,6 +80,7 @@ $('#submit').on('click',function (event){
         success: function (result) {
             console.log(result);   
             var object = {url: URL, response : result}
+            localStorage.removeItem('result')
             localStorage.setItem('result', JSON.stringify(object));
             window.location.replace("results.html"); 
             
@@ -107,38 +108,34 @@ $('#submit').on('click',function (event){
 // })
 
 //Map api location data
-function newLocation(newLat,newLng)
-{
-map.setCenter({
-lat : newLat,
-lng : newLng
-});
+function newLocation(newLat,newLng){
+    map.setCenter({
+        lat : newLat,
+        lng : newLng
+    });
 }
 
 
 
-$("#1").on('click', function ()
-{
-newLocation(37.773972,-122.431297);
+$("#1").on('click', function (){
+    newLocation(37.773972,-122.431297);
 });
 
-$("#2").on('click', function ()
-{
-newLocation(32.715736,-117.161087);
+$("#2").on('click', function (){
+    newLocation(32.715736,-117.161087);
 });
 
-$("#3").on('click', function ()
-{
-newLocation(30.267153, -97.7430608);
+$("#3").on('click', function (){
+    newLocation(30.267153, -97.7430608);
 })
 
 var map;
-function initMap(){
-map = new google.maps.Map(document.getElementById('map'), {
-center: new google.maps.LatLng(37.773972,-122.431297),
-zoom: 11
-})
-}
+    function initMap(){
+        map = new google.maps.Map(document.getElementById('map'), {
+            center: new google.maps.LatLng(37.773972,-122.431297),
+            zoom: 11
+        })
+    }
 $('#1').on('click',function (event){
     event.preventDefault();
     $.ajax({
@@ -193,8 +190,6 @@ $('#3').on('click',function (event){
 });
 });
 
-
-
 // end of Map script
 
 
@@ -246,11 +241,11 @@ function generateCards(Data){
         
     //card generation 
             a.append(
-                $('<div/>',{'class': 'col s10 m4'}).append(
+                $('<div/>',{'class': 'col s10 m4 listCard'}).append(
                     $('<div/>',{'class':'card hoverable'}).append(
-                        $('<div/>',{'class':'card-image waves-effect waves-block waves-light'}).append(
+                        $('<div/>',{'class':'card-image' /*waves-effect waves-block waves-light*/}).append(
                         //image block=================
-                            $('<img>', {'class':'responsive-img'}).attr('src',imgurl).attr('alt','test pic')
+                            $('<img>', {'class':'responsive-img imageLink'}).attr('data-set',(result.OriginatingSystemKey)).attr('data-lid',(result.ListingKey)).attr('src',imgurl).attr('alt','test pic')
                         ).append(
                             $('<div/>', {'class': 'caption white black-text text-lighten-2 right-align'}).append(
                                 $('<h4/>').text('$'+result.ListPrice  )//Price Header 
@@ -300,6 +295,8 @@ function generateCards(Data){
                                         $('<ul/>').text('Listing Agent: ' + result.ListAgentFullName).append(
                                             $('<br>')
                                         ).append(
+                                            $('<br>')
+                                        ).append(
                                             $('<li/>').text('Contact Number: ' + result.ListAgentPreferredPhone)
                                         ).append(
                                             $('<br>')
@@ -313,8 +310,6 @@ function generateCards(Data){
                                             $('<br>')
                                         ).append(
                                             $('<li/>').text('Listing Office: ' + result.ListOfficeName)
-                                        ).append(
-                                            $('<br>')
                                         )
                                     )
                                 ).append(
@@ -347,3 +342,193 @@ function generateCards(Data){
             $(".tabs").tabs();
     }//loop close===========
 };
+
+//image on click
+    //get data-lid from image and store in local storage
+//open property page
+//load data-lid from local storage plug it into an ajax call url designed for individual listings and populate the page
+
+//================================================property page code(ajax and population)
+//result image click gets the id, sends you to property page and calls ajax
+$(document).on('click', 'img.imageLink', function (){
+    console.log($(this).attr('data-lid'));
+    localStorage.removeItem('lid','dataset')
+    localStorage.setItem('lid', $(this).attr('data-lid'))
+    localStorage.setItem('dataset', $(this).attr('data-set'))
+    window.location.replace('propertyPage.html')
+});
+function populateInfo(){
+    let lid = localStorage.getItem('lid');
+    let dataset = localStorage.getItem('dataset')
+    let URL = 'https://rets.io/api/v2/'+dataset+'/listings/'+lid+'?access_token=520a691140619b70d86de598796f13c1'
+    $.ajax({ 
+        url: URL,
+        type: "GET", /* or type:"GET" or type:"PUT" */
+        dataType: "json",
+        data: {
+        },
+        success: function (result) {
+            console.log(result); 
+            listPage(result.bundle)
+
+        },
+        error: function () {
+            console.log("error");
+        }
+    });
+};
+function listPage(result){
+    $('#propertyAdd').attr('value', result.UnparsedAddress).text(result.UnparsedAddress)
+    $('#address').attr('value', result.UnparsedAddress)
+
+    let a = $('#propPostPoint')
+    a.append(
+        $('<div/>',{'class':'card-tabs'}).append(
+            $('<ul/>',{'class':'tabs tabs-fixed-width'}).append(                           
+                $('<li/>',{'class':'tab'}).append(
+                    $('<a/>',{'class':'active'}).attr('href', '#tab1').text('Housing Data')
+                )
+            ).append(
+                $('<li/>',{'class':'tab'}).append(
+                    $('<a/>').attr('href', '#tab2').text('Agent Data')
+                )
+            ).append(
+                $('<li/>',{'class':'tab'}).append(
+                    $('<a/>').attr('href', '#tab3').text('Lot Data')
+                )
+            )
+        )
+    ).append(
+    //card blades========================
+        $('<div/>', {'class':'card-content'}).append(
+                    $('<div/>',{'id': 'tab1'}).append(//house data
+                        $('<ul/>').text(result.UnparsedAddress).append(
+                            $('<li/>').text(' Beds: ' + result.BedroomsTotal)
+                        ).append(
+                            $('<li/>').text(' Full Baths: ' + result.BathroomsFull)
+                        ).append(
+                            $('<li/>').text(' Half Baths: ' + result.BathroomsHalf)
+                        ).append(
+                            $('<li/>').text('Heating Options: ' + booleanArrayDisplay(result.HeatingYN, result.Heating))
+                        ).append(
+                            $('<li/>').text('Laundry Features: ' + arrayDisplay(result.LaundryFeatures))
+                        ).append(
+                            $('<li/>').text('Appliances: ' + arrayDisplay(result.Appliances))
+                        ).append(
+                            $('<li/>').text('Garage: '+ booleanDisplay(result.GarageYN))
+                        ).append(
+                            $('<li/>').text('Flooring Types: ' + arrayDisplay(result.Flooring))
+                        )
+                    )
+                ).append(
+                    $('<div/>',{'id': 'tab2'}).append(//Agent Data====
+                        $('<ul/>').text('Listing Agent: ' + result.ListAgentFullName).append(
+                            $('<br>')
+                        ).append(
+                            $('<br>')
+                        ).append(
+                            $('<li/>').text('Contact Number: ' + result.ListAgentPreferredPhone)
+                        ).append(
+                            $('<br>')
+                        ).append(
+                            $('<li/>').text('Showing Agent: ' + result.ShowingContactName)
+                        ).append(
+                            $('<br>')
+                        ).append(
+                            $('<li/>').text('Showing Agent Contact Number: ' + result.ShowingContactPhone)
+                        ).append(
+                            $('<br>')
+                        ).append(
+                            $('<li/>').text('Listing Office: ' + result.ListOfficeName)
+                        )
+                    )
+                ).append(
+                    $('<div/>',{'id': 'tab3'}).append(//Lot Data====
+                        $('<ul/>').append(
+                            $('<li/>').text('Lot Size: ' + result.LotSizeSquareFeet + ' SqFt.')
+                        ).append(
+                            $('<li/>').text('Living Area: ' + result.LivingArea + ' SqFt.' )
+                        ).append(
+                            $('<li/>').text('Exterior Features: ' + result.ExteriorFeatures)
+                        ).append(
+                            $('<li/>').text('Year Built: est.'+ result.YearBuilt)
+                        ).append(
+                            $('<li/>').text('Zoning: ' + result.Zoning)
+                        ).append(
+                            $('<li/>').text('Building Faces: ' +result.DirectionFaces)
+                        ).append(
+                            $('<li/>').text('Entry Location: ' +result.EntryLocation)
+                        ).append(
+                            $('<br>')
+                        ).append(
+                            $('<li/>').text('Contact For Further Details.')
+                        )
+                )
+        )
+    )
+    $(".tabs").tabs();
+};
+
+
+
+
+
+
+
+//================================================end property page
+
+
+
+// user sign up/in
+// get user login elements
+var txtEmail = $('#logemail');
+var txtPass =  $('#logpassword');
+var loginBtn =  $('#btnLogIn');
+
+// get user sign up elements
+var txtSEmail = $('#email');
+var txtSPass = $('#password');
+var userName = $('#name')
+var btnSignIn = $('#signbtn')
+var displayName = $('#name')
+// add login event
+$('#btnLogIn').on('click', e =>{
+// get email and password fields
+var email = txtEmail.val()
+var pass = txtPass.val()
+var auth = firebase.auth()
+// sign in
+var promise = auth.signInWithEmailAndPassword(email, pass)
+promise.catch(e => console.log(e.message));
+
+});
+
+// add signup event 
+
+$('#signbtn').on('click', e =>{
+    // get email and password fields
+    var email = txtSEmail.val()
+    var pass = txtSPass.val()
+    var auth = firebase.auth()
+    var userName = displayName.val()
+    // sign in
+    var promise = auth.createUserWithEmailAndPassword(email, pass).then(function(user) {
+        user.firebase.auth()({
+            displayName: userName   
+        });   
+    promise.catch(e => console.log(e.message));
+    
+    });
+
+    // add a realtime listener to detect user suthentication state changes
+    firebase.auth().onAuthStateChanged(firebaseUser =>{
+        if(firebaseUser){
+            console.log(firebaseUser)
+        } else {
+            console.log('not logged in');
+        }
+
+        });
+    });
+
+        // TODO: store users name and favourited homes in realtime database using their unique UID
