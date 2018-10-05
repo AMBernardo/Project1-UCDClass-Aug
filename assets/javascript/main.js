@@ -32,6 +32,7 @@
 //     });
 // });
 jQuery(document).ready(function(){
+    getDataBridge()
     M.AutoInit();
     $('.dropdown-trigger').dropdown();
     $(".sidenav").sidenav();
@@ -53,7 +54,7 @@ jQuery(document).ready(function(){
 // my code
 $('#submit').on('click',function (event){
     event.preventDefault();
-    var URL = ' https://rets.io/api/v2/' + $('#city').val() + '/listings?access_token=520a691140619b70d86de598796f13c1&limit=50&BathroomsFull.eq=' + $('#bathroom').val() + '&BedroomsTotal.eq=' + $('#bed').val() + '&LotSizeSquareFeet.gte=' + $('#minsqft').val().trim() + '&ListPrice.lte=' + $('#maxprice').val().trim()
+    var URL = ' https://rets.io/api/v2/' + $('#city').val() + '/listings?access_token=520a691140619b70d86de598796f13c1&limit=100&BathroomsFull.eq=' + $('#bathroom').val() + '&BedroomsTotal.eq=' + $('#bed').val() + '&LotSizeSquareFeet.gte=' + $('#minsqft').val().trim() + '&ListPrice.lte=' + $('#maxprice').val().trim()
     $.ajax({ 
         url: URL,
         type: "GET", /* or type:"GET" or type:"PUT" */
@@ -65,6 +66,7 @@ $('#submit').on('click',function (event){
             var object = {url: URL, response : result}
             localStorage.setItem('result', JSON.stringify(object));
             window.location.replace("results.html"); 
+            
         },
         error: function () {
             console.log("error");
@@ -175,19 +177,6 @@ function getDataBridge(){
     generateCards(Data.response)
      };
 
-//inifite scroll=========
-$(window).scroll(function(){
-    if($(this).scrollTop() + 1>= $('body').height() - $(window).height()){
-        if (working == false){
-            working = true;
-            getDataBridge();
-            setTimeout(function(){
-                working = false;
-            }, 10000)
-        }
-    }
-})
-
 
 // function openResults(){
 //     window.open('results.html','_self');
@@ -227,7 +216,13 @@ function generateCards(Data){
         //image fallback
         if(result.Media[0]) {var imgurl = result.Media[0].MediaURL;}
         //else if(street view) show street view
-        else var imgurl = './assets/images/image.png';
+
+        else function streetview() {
+var address = result.UnparsedAddress
+            $('.responsive-img').html('<img src="http://maps.googleapis.com/maps/api/streetview?size=500x500&sensor=false&location='+address+'">');
+                
+        };
+        
         
     //card generation 
     a.append(
