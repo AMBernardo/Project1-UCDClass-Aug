@@ -5,15 +5,4 @@ jQuery(document).ready(function(){
     $(".modal").modal();
     $(".parallax").parallax();
 
-
-    // $(".sidenav").on("click", function(){
-    //     if ($(".sidenav").isOpen) {
-    //         $(".savedSearches").html($("#savedSearches"))
-    //         instance.close()
-    //     }
-    // })
-    // $(".sidenav").isOpen({
-
-
-    // })
 });
