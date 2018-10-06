@@ -57,7 +57,7 @@ jQuery(document).ready(function(){
 // ================================================================================PROPERTY SEARCH CODE===========================================================================================================
 $('#submit').on('click',function (event){
     event.preventDefault();
-    var URL = ' https://rets.io/api/v2/' + $('#city').val() + '/listings?access_token=520a691140619b70d86de598796f13c1&limit=25&BathroomsFull.eq=' + $('#bathroom').val() + '&BedroomsTotal.eq=' + $('#bed').val() + '&LotSizeSquareFeet.gte=' + $('#minsqft').val().trim() + '&ListPrice.lte=' + $('#maxprice').val().trim()
+    var URL = ' https://rets.io/api/v2/' + $('#city').val() + '/listings?access_token=520a691140619b70d86de598796f13c1&limit=25&BathroomsFull.eq=' + $('#bathroom').val() + '&BedroomsTotal.eq=' + $('#bed').val() + '&LotSizeSquareFeet.gte=' + $('#minsqft').val() + '&ListPrice.lte=' + $('#maxprice').val()
     $.ajax({ 
         url: URL,
         type: "GET", /* or type:"GET" or type:"PUT" */
@@ -552,4 +552,38 @@ $('#signbtn').on('click', e =>{
 
 
 // ==================================================================================================END OF USER AUTHENTICATION CODE===========================================================================================================
-       
+
+
+
+
+
+//==================================================================================================Index Code==================================================
+$('#indexSubmit').on('click',function (event){
+    event.preventDefault();
+    var URL = 'https://rets.io/api/v2/' + $('#indexcity').val() + '/listings?access_token=520a691140619b70d86de598796f13c1&limit=25'
+    $.ajax({ 
+        url: URL,
+        type: "GET", /* or type:"GET" or type:"PUT" */
+        dataType: "json",
+        data: {
+        },
+        success: function (result) {
+            var object = {url: URL, response : result}
+            localStorage.removeItem('result')
+            localStorage.setItem('result', JSON.stringify(object));
+            window.location.replace("results.html"); 
+            
+        },
+        error: function () {
+            console.log("error");
+        }
+    });
+        
+    });
+
+    $('#advanced').on('click',function (event){
+        event.preventDefault();
+
+        window.location.replace("propertysearch.html"); 
+
+    });
