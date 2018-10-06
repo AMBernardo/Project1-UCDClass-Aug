@@ -1,14 +1,13 @@
-
   // Initialize Firebase
-//   var config = {
-//     apiKey: "AIzaSyDU1RNQPTorPNLi0J9wZYXJY_kOwa9_B60",
-//     authDomain: "realestate-459b5.firebaseapp.com",
-//     databaseURL: "https://realestate-459b5.firebaseio.com",
-//     projectId: "realestate-459b5",
-//     storageBucket: "realestate-459b5.appspot.com",
-//     messagingSenderId: "770633504288"
-//   };
-//   firebase.initializeApp(config);
+  var config = {
+    apiKey: "AIzaSyDR2-15Tdhu7iFhT4MbpbyoxP157PtISIk",
+    authDomain: "doorsteppe.firebaseapp.com",
+    databaseURL: "https://doorsteppe.firebaseio.com",
+    projectId: "doorsteppe",
+    storageBucket: "doorsteppe.appspot.com",
+    messagingSenderId: "808880878005"
+  };
+  firebase.initializeApp(config);
 //We will use this function once we have the pub dataset
 // $('#submit').on('click',function (event){
 //     event.preventDefault();
@@ -54,23 +53,11 @@ jQuery(document).ready(function(){
 
 
 
-// var start = 0;
-// var working = false;
-// //Text Search Ajax Call
-// function getDataBridge(){
-//     var URL = ' https://rets.io/api/v2/test/listings?access_token=520a691140619b70d86de598796f13c1&offset=' + start;
-//     URL += '&' + $.param({
-//         // 'BathroomsFull.eq': $('#bathroom').val(),
-//         // 'BedroomsTotal.eq': $('#bed').val(),
-//         // 'ListPrice.lte': $('#maxprice').val().trim(),
-//         // 'LotSizeSquareFeet.gte': $('#minsqft').val().trim(),
-//        //query param
-//     });
-//     $.ajax({
-// my code
+
+// ================================================================================PROPERTY SEARCH CODE===========================================================================================================
 $('#submit').on('click',function (event){
     event.preventDefault();
-    var URL = ' https://rets.io/api/v2/' + $('#city').val() + '/listings?access_token=520a691140619b70d86de598796f13c1&limit=25&BathroomsFull.eq=' + $('#bathroom').val() + '&BedroomsTotal.eq=' + $('#bed').val() + '&LotSizeSquareFeet.gte=' + $('#minsqft').val().trim() + '&ListPrice.lte=' + $('#maxprice').val().trim()
+    var URL = ' https://rets.io/api/v2/' + $('#city').val() + '/listings?access_token=520a691140619b70d86de598796f13c1&limit=25&BathroomsFull.eq=' + $('#bathroom').val() + '&BedroomsTotal.eq=' + $('#bed').val() + '&LotSizeSquareFeet.gte=' + $('#minsqft').val() + '&ListPrice.lte=' + $('#maxprice').val()
     $.ajax({ 
         url: URL,
         type: "GET", /* or type:"GET" or type:"PUT" */
@@ -78,7 +65,6 @@ $('#submit').on('click',function (event){
         data: {
         },
         success: function (result) {
-            console.log(result);   
             var object = {url: URL, response : result}
             localStorage.removeItem('result')
             localStorage.setItem('result', JSON.stringify(object));
@@ -91,6 +77,7 @@ $('#submit').on('click',function (event){
     });
         
     });
+// ==================================================================================================PROPERTY SEARCH CODE===========================================================================================================
 
 //Map api location data
 function newLocation(newLat,newLng){
@@ -130,7 +117,7 @@ $('#1').on('click',function (event){
     event.preventDefault();
     $.ajax({
         type: "GET",
-        url: "https://rets.io/api/v2/test_sf/listings?access_token=520a691140619b70d86de598796f13c1",
+        url: "https://rets.io/api/v2/test_sf/listings?access_token=520a691140619b70d86de598796f13c1&limit=100",
         data: "",
         success: function(results) {
             for (var i = 0; i < results.bundle.length; i++) {
@@ -141,8 +128,11 @@ $('#1').on('click',function (event){
                 var marker = new google.maps.Marker({
                   position: latLng,
                   map: map,
-                  customInfo: info
-                //   customInfo:"  Address  " + results.bundle[i].UnparsedAddress + "  Listed Price  "+ results.bundle[i].ListPrice + "  Lot size sqft.  " +  results.bundle[i].LotSizeSquareFeet + "  Bedrooms  " + results.bundle[i].BedroomsTotal  + "  Full baths  " + results.bundle[i].BathroomsFull + "  Half baths  " + results.bundle[i].BathroomsHalf 
+                  customInfo:"  Address  " + results.bundle[i].UnparsedAddress + "  Listed Price  "+ results.bundle[i].ListPrice + "  Lot size sqft.  " +  results.bundle[i].LotSizeSquareFeet + "  Bedrooms  " + results.bundle[i].BedroomsTotal  + "  Full baths  " + results.bundle[i].BathroomsFull + "  Half baths  " + results.bundle[i].BathroomsHalf 
+            });
+            google.maps.event.addListener(marker, 'click', function() {
+                //TODO: append clicked house markers in cards below the map
+                alert(this.customInfo);
             });
             google.maps.event.addListener(marker,  'click', function() {
                
@@ -191,11 +181,10 @@ $('#3').on('click',function (event){
                 var marker = new google.maps.Marker({
                   position: latLng,
                   map: map,
-                  customInfo:"  Address  " + results.bundle[i].UnparsedAddress + $("<br>") + "  Listed Price  "+ results.bundle[i].ListPrice + "  Lot size sqft.  " +  results.bundle[i].LotSizeSquareFeet + "  Bedrooms  " + results.bundle[i].BedroomsTotal  + "  Full baths  " + results.bundle[i].BathroomsFull + "  Half baths  " + results.bundle[i].BathroomsHalf 
+                  customInfo:"  Address  " + results.bundle[i].UnparsedAddress + "  Listed Price  "+ results.bundle[i].ListPrice + "  Lot size sqft.  " +  results.bundle[i].LotSizeSquareFeet + "  Bedrooms  " + results.bundle[i].BedroomsTotal  + "  Full baths  " + results.bundle[i].BathroomsFull + "  Half baths  " + results.bundle[i].BathroomsHalf 
             });
             google.maps.event.addListener(marker, 'click', function() {
-                $("#modal1").append(this.customInfo)
-                // alert(this.customInfo);
+                alert(this.customInfo);
             });
         }
 }});
@@ -374,8 +363,11 @@ $(".more").on('click' , function(Data){
             );
             M.AutoInit();
             $(".tabs").tabs();
-    }//loop close===========
+    }
 };
+// ==================================================================================================END OF RESULTS CODE===========================================================================================================
+
+
 
 
 //================================================property page code(ajax and population)
@@ -513,10 +505,13 @@ function listPage(result){
 
 
 
-//================================================end property page
+// ==================================================================================================END OF PROPERTY PAGE CODE===========================================================================================================
 
 
 
+
+
+// ==================================================================================================USER AUTHENTICATION CODE===========================================================================================================
 // user sign up/in
 // get user login elements
 var txtEmail = $('#logemail');
@@ -567,4 +562,47 @@ $('#signbtn').on('click', e =>{
         }
 
         });
+    });
+
+        // TODO: store users name and favourited homes in realtime database using their unique UID
+
+
+
+
+
+// ==================================================================================================END OF USER AUTHENTICATION CODE===========================================================================================================
+
+
+
+
+
+//==================================================================================================Index Code==================================================
+$('#indexSubmit').on('click',function (event){
+    event.preventDefault();
+    var URL = 'https://rets.io/api/v2/' + $('#indexcity').val() + '/listings?access_token=520a691140619b70d86de598796f13c1&limit=25'
+    $.ajax({ 
+        url: URL,
+        type: "GET", /* or type:"GET" or type:"PUT" */
+        dataType: "json",
+        data: {
+        },
+        success: function (result) {
+            var object = {url: URL, response : result}
+            localStorage.removeItem('result')
+            localStorage.setItem('result', JSON.stringify(object));
+            window.location.replace("results.html"); 
+            
+        },
+        error: function () {
+            console.log("error");
+        }
+    });
+        
+    });
+
+    $('#advanced').on('click',function (event){
+        event.preventDefault();
+
+        window.location.replace("propertysearch.html"); 
+
     });
