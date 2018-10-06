@@ -92,50 +92,41 @@ $('#submit').on('click',function (event){
         
     });
 
-//inifite scroll=========
-//     //will only load results every ten seconds, as to not overoad the users computer might work some local storage stuff to if we can smooth it up a bit
-// // does it on every page
-// $(window).scroll(function(){
-//     if($(this).scrollTop() + 1>= $('body').height() - $(window).height()){
-//         if (working == false){
-//             working = true;
-//             getDataBridge();
-//             setTimeout(function(){
-//                 working = false;
-//             }, 10000)
-//         }
-//     }
-// })
-
 //Map api location data
-function newLocation(newLat,newLng){
-    map.setCenter({
-        lat : newLat,
-        lng : newLng
-    });
+function newLocation(newLat,newLng)
+{
+map.setCenter({
+lat : newLat,
+lng : newLng
+});
 }
 
 
 
-$("#1").on('click', function (){
-    newLocation(37.773972,-122.431297);
+$("#1").on('click', function ()
+{
+newLocation(37.773972,-122.431297);
 });
 
-$("#2").on('click', function (){
-    newLocation(32.715736,-117.161087);
+$("#2").on('click', function ()
+{
+newLocation(32.715736,-117.161087);
 });
 
-$("#3").on('click', function (){
-    newLocation(30.267153, -97.7430608);
+$("#3").on('click', function ()
+{
+newLocation(30.267153, -97.7430608);
 })
 
 var map;
-    function initMap(){
-        map = new google.maps.Map(document.getElementById('map'), {
-            center: new google.maps.LatLng(37.773972,-122.431297),
-            zoom: 11
-        })
-    }
+function initMap(){
+map = new google.maps.Map(document.getElementById('map'), {
+center: new google.maps.LatLng(37.773972,-122.431297),
+zoom: 11
+})
+}
+
+//grab this code.....
 $('#1').on('click',function (event){
     event.preventDefault();
     $.ajax({
@@ -146,10 +137,24 @@ $('#1').on('click',function (event){
             for (var i = 0; i < results.bundle.length; i++) {
                 var coords = results.bundle[i].Coordinates;
                 var latLng = new google.maps.LatLng(coords[1],coords[0]);
+                var info = "<h5>" + "  Address  " + "</h5>" + results.bundle[i].UnparsedAddress + "<br>" + "<br>" +  "<h5>"+"  Listed Price  " + "</h5>"+ results.bundle[i].ListPrice +  "<br>" +   "<br>" +  "<h5>" + "  Square Foot  " + "</h5>" + results.bundle[i].LotSizeSquareFeet + "  Bedrooms  " + results.bundle[i].BedroomsTotal  + "  Full baths  " + results.bundle[i].BathroomsFull + "  Half baths  " + results.bundle[i].BathroomsHalf 
+                // var imgurl = results.bundle[1].Media[1].MediaURL;
                 var marker = new google.maps.Marker({
                   position: latLng,
-                  map: map
+                  map: map,
+                  customInfo: info
+                //   customInfo:"  Address  " + results.bundle[i].UnparsedAddress + "  Listed Price  "+ results.bundle[i].ListPrice + "  Lot size sqft.  " +  results.bundle[i].LotSizeSquareFeet + "  Bedrooms  " + results.bundle[i].BedroomsTotal  + "  Full baths  " + results.bundle[i].BathroomsFull + "  Half baths  " + results.bundle[i].BathroomsHalf 
             });
+            google.maps.event.addListener(marker,  'click', function() {
+               
+                $('#modal1').modal('open'); 
+                $("#modal-text").append(this.customInfo).append(
+                    $('<img>', {'class':'responsive-img ' }).attr('src', imgurl).attr('alt','test pic')
+                )
+               
+               
+            });
+
         }
 }});
 
@@ -157,7 +162,7 @@ $('#2').on('click',function (event){
     event.preventDefault();
     $.ajax({
         type: "GET",
-        url: "https://rets.io/api/v2/test_sd/listings?access_token=520a691140619b70d86de598796f13c1",
+        url: "https://rets.io/api/v2/test_sd/listings?access_token=520a691140619b70d86de598796f13c1&limit=100",
         data: "",
         success: function(results) {
             for (var i = 0; i < results.bundle.length; i++) {
@@ -165,7 +170,11 @@ $('#2').on('click',function (event){
                 var latLng = new google.maps.LatLng(coords[1],coords[0]);
                 var marker = new google.maps.Marker({
                   position: latLng,
-                  map: map
+                  map: map,
+                  customInfo:"  Address  " + results.bundle[i].UnparsedAddress + "  Listed Price  "+ results.bundle[i].ListPrice + "  Lot size sqft.  " +  results.bundle[i].LotSizeSquareFeet + "  Bedrooms  " + results.bundle[i].BedroomsTotal  + "  Full baths  " + results.bundle[i].BathroomsFull + "  Half baths  " + results.bundle[i].BathroomsHalf 
+            });
+            google.maps.event.addListener(marker, 'click', function() {
+                alert(this.customInfo);
             });
         }
 }});
@@ -174,7 +183,7 @@ $('#3').on('click',function (event){
     event.preventDefault();
     $.ajax({
         type: "GET",
-        url: "https://rets.io/api/v2/abor_ref/listings?access_token=520a691140619b70d86de598796f13c1",
+        url: "https://rets.io/api/v2/abor_ref/listings?access_token=520a691140619b70d86de598796f13c1&limit=100",
         data: "",
         success: function(results) {
             for (var i = 0; i < results.bundle.length; i++) {
@@ -182,26 +191,34 @@ $('#3').on('click',function (event){
                 var latLng = new google.maps.LatLng(coords[1],coords[0]);
                 var marker = new google.maps.Marker({
                   position: latLng,
-                  map: map
+                  map: map,
+                  customInfo:"  Address  " + results.bundle[i].UnparsedAddress + $("<br>") + "  Listed Price  "+ results.bundle[i].ListPrice + "  Lot size sqft.  " +  results.bundle[i].LotSizeSquareFeet + "  Bedrooms  " + results.bundle[i].BedroomsTotal  + "  Full baths  " + results.bundle[i].BathroomsFull + "  Half baths  " + results.bundle[i].BathroomsHalf 
+            });
+            google.maps.event.addListener(marker, 'click', function() {
+                $("#modal1").append(this.customInfo)
+                // alert(this.customInfo);
             });
         }
 }});
 });
 });
 });
-
+$(".modal-close").on('click' , function(){
+    $("#modal-text").empty();
+})
+//end of what you need------------------------------------------------
 // end of Map script
 
-
+var start = 0;
+var working = false;
+var Data =JSON.parse(localStorage.getItem('result'));
 // no need for ajax call getting data from local storage
 // //Text Search Ajax Call
 function getDataBridge(){
     var Data =JSON.parse(localStorage.getItem('result'));
     console.log(Data)
     generateCards(Data.response)
-};
-
-
+     };
 
 //Functions for displaying arrays 
     //ex. el.text(arrayDisplay(arry))
@@ -224,10 +241,28 @@ function booleanArrayDisplay(bln, arry){
     }else return 'N/A';
 };
 
+
 function generateCards(Data){
+//     var a = $('div#rowPost');
+//     for(var i = 0; i < Data.bundle.length; i++){
+//         var result = Data.bundle[i];
+// =======
+//my code for more cards
+}
+$(".more").on('click' , function(Data){
+
+    getDataBridge();
+});
+    function generateCards(Data){
+    
+   
+
     var a = $('div#rowPost');
-    for(var i = 0; i < Data.bundle.length; i++){
+  
+    for(var i = 0; i < 12; i++){
+       
         var result = Data.bundle[i];
+
         //image fallback
         if(result.Media[0]) {var imgurl = result.Media[0].MediaURL;}
         //else if(street view) show street view
@@ -343,10 +378,6 @@ function generateCards(Data){
     }//loop close===========
 };
 
-//image on click
-    //get data-lid from image and store in local storage
-//open property page
-//load data-lid from local storage plug it into an ajax call url designed for individual listings and populate the page
 
 //================================================property page code(ajax and population)
 //result image click gets the id, sends you to property page and calls ajax
@@ -481,7 +512,6 @@ function listPage(result){
 
 
 
-
 //================================================end property page
 
 
@@ -537,5 +567,3 @@ $('#signbtn').on('click', e =>{
 
         });
     });
-
-        // TODO: store users name and favourited homes in realtime database using their unique UID

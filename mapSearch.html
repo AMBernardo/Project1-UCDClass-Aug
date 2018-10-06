@@ -11,9 +11,9 @@
     <link rel="stylesheet" type="text/css" media="screen" href="assets/css/materialize.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <script src="https://www.gstatic.com/firebasejs/5.5.3/firebase.js"></script>
 
     <style>
-
     input[type=text] {
     margin-top: 3px !important;
     -webkit-border-radius: 10px !important;
@@ -21,8 +21,6 @@
     border-radius: 10px !important;
     background-color: White !important;
     }
-
-
     #map{
         margin-bottom: 60px;
     }
@@ -81,7 +79,18 @@
         </div>
     </div>
 
-
+   
+    <!-- Modal Structure -->
+    <div id="modal1" class="modal ">
+      <div class="modal-content center-align">
+        <h4>House Info</h4> <img  src="" alt=""  width="500" height="300">
+        <p id="modal-text"></p>
+        
+      </div>
+      <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+      </div>
+    </div>
 
 
     <footer class="page-footer">
