@@ -7,10 +7,10 @@ $('.slider').slider({full_width: true});
 $('.carousel-slider').slider({full_width: true});
 
 $('.carousel').carousel();
-// setInterval (function(){
-//     $('.carousel').carousel('next');
-// }, 2000);
-//autoplay function for carousel
+setInterval (function(){
+    $('.carousel').carousel('next');
+}, 2000);
+// autoplay function for carousel
 
 });
 
