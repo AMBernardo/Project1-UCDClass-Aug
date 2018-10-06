@@ -158,13 +158,15 @@ $('#2').on('click',function (event){
             for (var i = 0; i < results.bundle.length; i++) {
                 var coords = results.bundle[i].Coordinates;
                 var latLng = new google.maps.LatLng(coords[1],coords[0]);
+                var info = "<h5>" + "  Address  " + "</h5>" + results.bundle[i].UnparsedAddress + "<br>" + "<br>" +  "<h5>"+"  Listed Price  " + "</h5>"+ results.bundle[i].ListPrice +  "<br>" +   "<br>" +  "<h5>" + "  Square Foot  " + "</h5>" + results.bundle[i].LotSizeSquareFeet + "  Bedrooms  " + results.bundle[i].BedroomsTotal  + "  Full baths  " + results.bundle[i].BathroomsFull + "  Half baths  " + results.bundle[i].BathroomsHalf 
                 var marker = new google.maps.Marker({
                   position: latLng,
                   map: map,
-                  customInfo:"  Address  " + results.bundle[i].UnparsedAddress + "  Listed Price  "+ results.bundle[i].ListPrice + "  Lot size sqft.  " +  results.bundle[i].LotSizeSquareFeet + "  Bedrooms  " + results.bundle[i].BedroomsTotal  + "  Full baths  " + results.bundle[i].BathroomsFull + "  Half baths  " + results.bundle[i].BathroomsHalf 
+                  customInfo: info
             });
             google.maps.event.addListener(marker, 'click', function() {
-                alert(this.customInfo);
+                $('#modal1').modal('open'); 
+                $("#modal-text").append(this.customInfo)
             });
         }
 }});
@@ -179,14 +181,15 @@ $('#3').on('click',function (event){
             for (var i = 0; i < results.bundle.length; i++) {
                 var coords = results.bundle[i].Coordinates;
                 var latLng = new google.maps.LatLng(coords[1],coords[0]);
+                var info = "<h5>" + "  Address  " + "</h5>" + results.bundle[i].UnparsedAddress + "<br>" + "<br>" +  "<h5>"+"  Listed Price  " + "</h5>"+ results.bundle[i].ListPrice +  "<br>" +   "<br>" +  "<h5>" + "  Square Foot  " + "</h5>" + results.bundle[i].LotSizeSquareFeet + "<h5>"+ "  Bathrooms  "+"</h5>" + results.bundle[i].BedroomsTotal  + "  Full baths  " + results.bundle[i].BathroomsFull + "  Half baths  " + results.bundle[i].BathroomsHalf 
                 var marker = new google.maps.Marker({
                   position: latLng,
                   map: map,
-                  customInfo:"  Address  " + results.bundle[i].UnparsedAddress + $("<br>") + "  Listed Price  "+ results.bundle[i].ListPrice + "  Lot size sqft.  " +  results.bundle[i].LotSizeSquareFeet + "  Bedrooms  " + results.bundle[i].BedroomsTotal  + "  Full baths  " + results.bundle[i].BathroomsFull + "  Half baths  " + results.bundle[i].BathroomsHalf 
+                  customInfo: info 
             });
             google.maps.event.addListener(marker, 'click', function() {
-                $("#modal1").append(this.customInfo)
-                // alert(this.customInfo);
+                $('#modal1').modal('open'); 
+                $("#modal-text").append(this.customInfo)
             });
         }
 }});
@@ -203,7 +206,10 @@ $(".modal-close").on('click' , function(){
 
 
 
-
+$(".more").on('click', function(){
+         getDataBridge();   
+         
+})
 
 // ==================================================================================================RESULTS CODE===========================================================================================================
 // no need for ajax call getting data from local storage
@@ -238,9 +244,16 @@ function booleanArrayDisplay(bln, arry){
 };
 
 function generateCards(Data){
+
+  
     var a = $('div#rowPost');
-    for(var i = 0; i < Data.bundle.length; i++){
+    for( var i = 0; i < 12; i++){
+       
+       
+        
+       
         var result = Data.bundle[i];
+        
         //image fallback
         if(result.Media[0]) {var imgurl = result.Media[0].MediaURL;}
         //else if(street view) show street view
@@ -352,8 +365,11 @@ function generateCards(Data){
                 )
             );
             M.AutoInit();
+            
             $(".tabs").tabs();
+           
     }
+    
 };
 // ==================================================================================================END OF RESULTS CODE===========================================================================================================
 
