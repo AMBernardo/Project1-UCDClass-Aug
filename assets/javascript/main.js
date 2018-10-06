@@ -93,37 +93,36 @@ $('#submit').on('click',function (event){
     });
 
 //Map api location data
-function newLocation(newLat,newLng)
-{
-map.setCenter({
-lat : newLat,
-lng : newLng
-});
+function newLocation(newLat,newLng){
+    map.setCenter({
+        lat : newLat,
+        lng : newLng
+    });
 }
 
 
 
 $("#1").on('click', function ()
 {
-newLocation(37.773972,-122.431297);
+    newLocation(37.773972,-122.431297);
 });
 
 $("#2").on('click', function ()
 {
-newLocation(32.715736,-117.161087);
+    newLocation(32.715736,-117.161087);
 });
 
 $("#3").on('click', function ()
 {
-newLocation(30.267153, -97.7430608);
+    newLocation(30.267153, -97.7430608);
 })
 
 var map;
 function initMap(){
-map = new google.maps.Map(document.getElementById('map'), {
-center: new google.maps.LatLng(37.773972,-122.431297),
-zoom: 11
-})
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: new google.maps.LatLng(37.773972,-122.431297),
+        zoom: 11
+    })
 }
 
 //grab this code.....
@@ -441,6 +440,8 @@ function listPage(result){
         $('<div/>', {'class':'card-content'}).append(
                     $('<div/>',{'id': 'tab1'}).append(//house data
                         $('<ul/>').text(result.UnparsedAddress).append(
+                            $('<li/>').text('Listing Price: ' + result.ListPrice)
+                        ).append(
                             $('<li/>').text(' Beds: ' + result.BedroomsTotal)
                         ).append(
                             $('<li/>').text(' Full Baths: ' + result.BathroomsFull)
