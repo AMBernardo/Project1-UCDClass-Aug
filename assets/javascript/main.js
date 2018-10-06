@@ -250,17 +250,11 @@ $(".more").on('click' , function(Data){
     for(var i = 0; i < 12; i++){
        
         var result = Data.bundle[i];
-
+        var imgurl;
         //image fallback
-        if(result.Media[0]) {var imgurl = result.Media[0].MediaURL;}
+        if(result.Media[0]) {imgurl = result.Media[0].MediaURL;}
         //else if(street view) show street view
-
-        else function streetview() {
-            var address = result.UnparsedAddress
-            $('.responsive-img').html('<img src="http://maps.googleapis.com/maps/api/streetview?size=500x500&sensor=false&location='+address+'">');
-                
-        };
-        
+        else imgurl = './assets/images/placeholderhouse2.jpg'      
         
     //card generation 
             a.append(
@@ -432,7 +426,7 @@ function listPage(result){
         $('<div/>', {'class':'card-content'}).append(
                     $('<div/>',{'id': 'tab1'}).append(//house data
                         $('<ul/>').text(result.UnparsedAddress).append(
-                            $('<li/>').text('Listing Price: ' + result.ListPrice)
+                            $('<li/>').text('Listing Price: $' + result.ListPrice)
                         ).append(
                             $('<li/>').text(' Beds: ' + result.BedroomsTotal)
                         ).append(
@@ -527,41 +521,48 @@ var displayName = $('#name')
 // add login event
 $('#btnLogIn').on('click', e =>{
 // get email and password fields
-var email = txtEmail.val()
-var pass = txtPass.val()
-var auth = firebase.auth()
-// sign in
-var promise = auth.signInWithEmailAndPassword(email, pass)
-promise.catch(e => console.log(e.message));
-
+    if(!txtEmail.val() || !txtPass.val()) return alert('Please Fill Out Forms');
+    else{
+        var email = txtEmail.val()
+        var pass = txtPass.val()
+        var auth = firebase.auth()
+        // sign in
+        var promise = auth.signInWithEmailAndPassword(email, pass)
+        promise.catch(e => console.log(e.message));
+        window.location.href='userPage.html';
+    }
 });
 
 // add signup event 
 
 $('#signbtn').on('click', e =>{
     // get email and password fields
-    var email = txtSEmail.val()
-    var pass = txtSPass.val()
-    var auth = firebase.auth()
-    var userName = displayName.val()
-    // sign in
-    var promise = auth.createUserWithEmailAndPassword(email, pass).then(function(user) {
-        user.firebase.auth()({
-            displayName: userName   
-        });   
-    promise.catch(e => console.log(e.message));
-    
-    });
-
-    // add a realtime listener to detect user suthentication state changes
-    firebase.auth().onAuthStateChanged(firebaseUser =>{
-        if(firebaseUser){
-            console.log(firebaseUser)
-        } else {
-            console.log('not logged in');
-        }
-
+    if (!txtSEmail.val() || !txtSPass.val() || !displayName.val()) return alert('Please Fill Out All forms');
+    else{
+        var email = txtSEmail.val()
+        var pass = txtSPass.val()
+        var auth = firebase.auth()
+        var userName = displayName.val()
+        // sign in
+        var promise = auth.createUserWithEmailAndPassword(email, pass).then(function(user) {
+            user.firebase.auth()({
+                displayName: userName   
+            });   
+        promise.catch(e => console.log(e.message));
+        
         });
+
+        // add a realtime listener to detect user suthentication state changes
+        firebase.auth().onAuthStateChanged(firebaseUser =>{
+                if(firebaseUser){
+                    console.log(firebaseUser)
+                } else {
+                    console.log('not logged in');
+                }
+
+            });
+        }
+        window.location.href='userPage.html'
     });
 
         // TODO: store users name and favourited homes in realtime database using their unique UID
