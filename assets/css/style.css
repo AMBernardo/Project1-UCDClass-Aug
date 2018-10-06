@@ -21,6 +21,10 @@ body {
         1px 1px 0 #000;
 }
 
+.brandLogoPic {
+    height: 4rem;
+}
+
 
 .cardTitle {
     text-align: center;
@@ -39,5 +43,9 @@ nav{
 
 footer.page-footer {
     background-color: #1c746b;
+}
+
+.cardContentUser {
+    padding-bottom: 0 !important;
 }
 
