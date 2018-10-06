@@ -7,8 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="assets/css/reset.css">
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
-    <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css">
     <link rel="stylesheet" type="text/css" media="screen" href="assets/css/materialize.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
     <script src="https://www.gstatic.com/firebasejs/5.5.3/firebase.js"></script>
@@ -16,23 +16,23 @@
 <body>
     <nav>
         <div class="nav-wrapper">
-            <a href="index.html" class="brand-logo knockout">Doorsteppe.info</a>
+
+            <a href="index.html" class="brand-logo"><img class="brandLogoPic" src="assets/images/doorstepimage.png" height="65px" width="100px"></a>
             <a href="index.html" data-target="mobile-demo" class="sidenav-trigger">
                 <i class="material-icons">menu</i>
             </a>
                 <ul class="right hide-on-med-and-down">
                     <li><a href="propertySearch.html">Property Search</a></li>
                     <li><a href="mapSearch.html">Map Search</a></li>
-                    <li><a href="findAnAgent.html">Find An Agent</a></li>
-                    <li><a href="Sign Out.html">Sign Out</a></li>
+                    <li><a href="index.html">Sign Out</a></li>
                 </ul>
+            
         </div>
     </nav>
                     
                 <ul class="sidenav" id="mobile-demo">
                     <li><a href="propertySearch.html">Property Search</a></li>
                     <li><a href="mapSearch.html">Map Search</a></li>
-                    <li><a href="findAnAgent.html">Find An Agent</a></li>
                     <li><a href="Sign Out.html">Sign Out</a></li>
                 </ul>
 
@@ -69,9 +69,9 @@
                 </div>
                 <div class="card-tabs">
                     <ul class="tabs tabs-fixed-width">
-                        <li class="tab"><a href="#savedSearches"><i class="material-icons">grade</i>Saved Searches</a></li>
-                        <li class="tab"><a class="active" href="#myListings"><i class="material-icons">home</i>My Listings</a></li>
-                        <li class="tab"><a href="#modifyProfile"><i class="material-icons">create</i>Modify Profile</a></li>
+                        <li class="tab"><a href="#savedSearches"><i class="material-icons">grade</i>Saved</a></li>
+                        <li class="tab"><a class="active" href="#myListings"><i class="material-icons">home</i>Listings</a></li>
+                        <li class="tab"><a href="#modifyProfile"><i class="material-icons">create</i>Edit Profile</a></li>
                     </ul>
                 </div>
                 <div class="card-content grey lighten-4">
@@ -170,10 +170,11 @@
                                             <input id="userZipCode" type="text" class="validate">
                                             <label for="userZipCode">Zip Code <i class="tiny material-icons">create</i></label>
                                         </div>
-                                        <div class="col s4">
-                                            <p>*Required Fields. Your personal information is strictly confidential and will not be shared with any outside organization.</p><br>
-                                            <p>By submitting this form with your telephone number you are consenting and authorizing representatives to contact you even if your name is on the Federal "Do-not-call-list"</p> 
+                                        <div class="col s12">
+                                            <p align="justify">*Required Fields. Your personal information is strictly confidential and will not be shared with any outside organization.</p><br>
+                                            <p align="justify">By submitting this form with your telephone number you are consenting and authorizing representatives to contact you even if your name is on the Federal "Do-not-call-list"</p> 
                                         </div>
+                                        <div class="col s12"><br></div>
                                         <div class="col s4">
                                             <a class="waves-effect" href="#!">Delete this Account</a>
                                         </div>
