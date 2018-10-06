@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,12 +19,22 @@
             border: 1px solid;
             background-color: white;
         }
+
+        img{
+           height: 100% !important;
+           width: 100% !important;
+        }
+
+        #propCarousel{
+            height: 500px !important;
+        }
+
     
     </style>
     
 </head>
 
-<body>
+<body onload='populateInfo()'>
 
         
     
@@ -55,52 +66,41 @@
     <div class="container">
         <div class="row">
             <div class="col s12">
-                <h5 id="propertyAdd">1111 S Figueroa St, Los Angeles, CA 90015</h5>
+                <h5 id="propertyAdd" value=""></h5>
             </div>
         </div>
 
-        <div class="carousel carousel-slider">
-            <a class="carousel-item" href="#one!"><img src="assets/images/placeholderHouse1.jpeg"></a>
-            <a class="carousel-item" href="#two!"><img src="assets/images/placeholderHouse2.jpeg"></a>
-            <a class="carousel-item" href="#three!"><img src="assets/images/placeholderHouse3.jpeg"></a>
-            <a class="carousel-item" href="#four!"><img src="assets/images/placeholderHouse4.jpeg"></a>
+        <div class="carousel carousel-slider" id='propCarousel'>
+            <!--<a class="carousel-item" id= 'propImg1'href="#one!"><img src="assets/images/placeholderHouse1.jpeg"></a>
+             <a class="carousel-item" id= 'propImg2'href="#two!"><img src="assets/images/placeholderHouse2.jpeg"></a>
+            <a class="carousel-item" id= 'propImg3'href="#three!"><img src="assets/images/placeholderHouse3.jpeg"></a>
+            <a class="carousel-item" id= 'propImg4'href="#four!"><img src="assets/images/placeholderHouse4.jpeg"></a> -->
         </div>
 
         <br>
         <br>
 
         <div class="row">
-            <div class="col s6">
-                    <table>
-                            <thead>
-                              <tr>
-                                  <th>Price Here</th>
-                              </tr>
-                            </thead>
+            <div class="col s6 card" id='propPostPoint'>
                     
-                            <tbody>
-                              <tr>
-                                <td>Bedroom count here</td>                              
-                              </tr>
-                              <tr>
-                                <td>Bathroom count here</td>
-                              </tr>
-                              <tr>
-                                <td>square footage here</td>                                
-                              </tr>
-                              <tr>
-                                <td><a href="#">save to favourites here</a></td>                               
-                              </tr>
-                            </tbody>
-                          </table>
             </div>
 
-            <div class="col s6">
-                    <div id="map">
-                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d105793.08961564963!2d-118.3372942254969!3d34.04299764179336!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c2c7b85dea2a93%3A0x1ff47c3ceb7bb2d5!2sSTAPLES+Center!5e0!3m2!1sen!2sus!4v1538429853594" width="438" height="390" frameborder="1" style="border:0" allowfullscreen></iframe>
-                    </div>
-            </div>
+            <div class="row">
+            <style>
+            #map {
+                height: 405px;
+                width: 50%;
+            }
+            </style>
+        
+           <div id="floating-panel">
+            <input id="address" type="textbox" value="">
+            <input id="submitMap" type="button" value="Go Here">
+          </div>
+          <div id="map"></div>
 
+            </div>
+        </div>
         </div>
         
 
@@ -122,7 +122,39 @@
 
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.5.3/firebase.js"></script>
     <script src="assets/javascript/materialize.min.js"></script>
     <script src="assets/javascript/main.js"></script>
+    <script
+    async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIvN_N1h7gY8ih2nVVstwEwxqNDh1ktZY&callback=initMap"></script>
+    <script>
+        function initMap() {
+          var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 12,
+            center: {lat: 37.774, lng: -122.431297}
+          });
+          var geocoder = new google.maps.Geocoder();
+  
+          document.getElementById('submitMap').addEventListener('click', function() {
+            geocodeAddress(geocoder, map);
+          });
+        }
+  
+        function geocodeAddress(geocoder, resultsMap) {
+          var address = document.getElementById('address').value;
+          geocoder.geocode({'address': address}, function(results, status) {
+            if (status === 'OK') {
+              resultsMap.setCenter(results[0].geometry.location);
+              var marker = new google.maps.Marker({
+                map: resultsMap,
+                position: results[0].geometry.location
+              });
+            } else {
+              alert('Geocode was not successful for the following reason: ' + status);
+            }
+          });
+        }
+      </script>
 </body>
 </html>

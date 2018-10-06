@@ -11,9 +11,9 @@
     <link rel="stylesheet" type="text/css" media="screen" href="assets/css/materialize.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <script src="https://www.gstatic.com/firebasejs/5.5.3/firebase.js"></script>
 
     <style>
-
     input[type=text] {
     margin-top: 3px !important;
     -webkit-border-radius: 10px !important;
@@ -21,18 +21,16 @@
     border-radius: 10px !important;
     background-color: White !important;
     }
-
-
     #map{
-        margin-bottom: 20px;
+        margin-bottom: 60px;
     }
     </style>
 </head>
 <body>
     <nav>
         <div class="nav-wrapper">
-            <a href="index.html" class="brand-logo knockout">Doorsteppe.info</a>
-            <a href="index.html" data-target="mobile-demo" class="sidenav-trigger">
+            <a href="#!" class="brand-logo knockout">Doorsteppe.info</a>
+            <a href="#" data-target="mobile-demo" class="sidenav-trigger">
                 <i class="material-icons">menu</i>
             </a>
                 <ul class="right hide-on-med-and-down">
@@ -61,44 +59,52 @@
         </div>
 
         <div class="row">
-            <div class="col s6">
-                <form>
-                    Location
-                    <br>
-                    <input type="text" name="enterLoc" value><br>
-                </form>
-            </div>
-
-            <div class="col s3 offset-s3">
-                <button class="waves-effect waves-light btn">Start Over</button>
+            <div class="col s8">
+                    <input class="waves-effect waves-light btn" id="1" type="submit" value="San Francisco">    
+                    <input class="waves-effect waves-light btn" id="2" type="submit" value="San Diego">  
+                    <input class="waves-effect waves-light btn" id="3" type="submit" value="Texas">  
             </div>
         </div>
 
         <div class="row">
-            <div class="col s12">
-                <div id="map">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d105793.08961564963!2d-118.3372942254969!3d34.04299764179336!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c2c7b85dea2a93%3A0x1ff47c3ceb7bb2d5!2sSTAPLES+Center!5e0!3m2!1sen!2sus!4v1538429853594" width="790" height="500" frameborder="1" style="border:0" allowfullscreen></iframe>
-                </div>
+            <style>
+            #map {
+                height: 500px;
+                width: 100%;
+            }
+            </style>
+            <div class="col s12" id="map">
+
             </div>
         </div>
-
-
     </div>
 
-
+   
+    <!-- Modal Structure -->
+    <div id="modal1" class="modal ">
+      <div class="modal-content center-align">
+        <h4>House Info</h4> <img  src="" alt=""  width="500" height="300">
+        <p id="modal-text"></p>
+        
+      </div>
+      <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+      </div>
+    </div>
 
 
     <footer class="page-footer">
             <div class="container">
-                <div class="col s12">
               © 2018 Copyright
               <a class="grey-text text-lighten-4 right" href="results.html">Results</a>
-                </div>
             </div>
     </footer>
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="assets/javascript/materialize.min.js"></script>
     <script src="assets/javascript/main.js"></script>
+    <script
+    async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIvN_N1h7gY8ih2nVVstwEwxqNDh1ktZY&callback=initMap"></script>
 </body>
 </html>
