@@ -42,12 +42,15 @@ jQuery(document).ready(function(){
     $(".sidenav").sidenav();
     $(".tabs").tabs();
     $('.parallax').parallax();
-    $('.carousel').carousel();
     $('.slider').slider({full_width: true});
     $('.carousel-slider').slider({full_width: true});
     $('.carousel.carousel-slider').carousel({
         fullWidth: true
-        });
+    });
+    $('.carousel').carousel();
+    setInterval (function(){
+        $('.carousel').carousel('next');
+    }, 3000);
     });
 
 
