@@ -1,14 +1,19 @@
 jQuery(document).ready(function(){
-    $('.dropdown-trigger').dropdown();
-    $(".sidenav").sidenav();
-    $(".tabs").tabs();
-    $(".modal").modal();
-    $(".parallax").parallax();
+$('.dropdown-trigger').dropdown();
+$(".sidenav").sidenav();
+$(".tabs").tabs();
+$('.parallax').parallax();
+$('.slider').slider({full_width: true});
+$('.carousel-slider').slider({full_width: true});
+
+$('.carousel').carousel();
+setInterval (function(){
+    $('.carousel').carousel('next');
+}, 2000);
+// autoplay function for carousel
 
 });
 
-new Vivus('carpenter-logo', {
-    type: 'delayed',
-    duration: 200,
-    animTimingFunction: Vivus.EASE_OUT
-});
+$('.carousel.carousel-slider').carousel({
+    fullWidth: true
+    });
