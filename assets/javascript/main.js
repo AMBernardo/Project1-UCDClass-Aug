@@ -6,3 +6,9 @@ jQuery(document).ready(function(){
     $(".parallax").parallax();
 
 });
+
+new Vivus('carpenter-logo', {
+    type: 'delayed',
+    duration: 200,
+    animTimingFunction: Vivus.EASE_OUT
+});
