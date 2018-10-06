@@ -31,7 +31,7 @@
 //     });
 // });
 jQuery(document).ready(function(){
-    getDataBridge()
+    // getDataBridge()
     M.AutoInit();
     $('.dropdown-trigger').dropdown();
     $(".sidenav").sidenav();
@@ -54,10 +54,10 @@ jQuery(document).ready(function(){
 
 
 
-// ==================================================================================================PROPERTY SEARCH CODE===========================================================================================================
+// ================================================================================PROPERTY SEARCH CODE===========================================================================================================
 $('#submit').on('click',function (event){
     event.preventDefault();
-    var URL = ' https://rets.io/api/v2/' + $('#city').val() + '/listings?access_token=520a691140619b70d86de598796f13c1&limit=100&BathroomsFull.eq=' + $('#bathroom').val() + '&BedroomsTotal.eq=' + $('#bed').val() + '&LotSizeSquareFeet.gte=' + $('#minsqft').val().trim() + '&ListPrice.lte=' + $('#maxprice').val().trim()
+    var URL = ' https://rets.io/api/v2/' + $('#city').val() + '/listings?access_token=520a691140619b70d86de598796f13c1&limit=25&BathroomsFull.eq=' + $('#bathroom').val() + '&BedroomsTotal.eq=' + $('#bed').val() + '&LotSizeSquareFeet.gte=' + $('#minsqft').val().trim() + '&ListPrice.lte=' + $('#maxprice').val().trim()
     $.ajax({ 
         url: URL,
         type: "GET", /* or type:"GET" or type:"PUT" */
@@ -66,6 +66,7 @@ $('#submit').on('click',function (event){
         },
         success: function (result) {
             var object = {url: URL, response : result}
+            localStorage.removeItem('result')
             localStorage.setItem('result', JSON.stringify(object));
             window.location.replace("results.html"); 
             
@@ -98,14 +99,12 @@ $("#1").on('click', function ()
 newLocation(37.774,-122.431297);
 });
 
-$("#2").on('click', function ()
-{
-newLocation(32.715736,-117.161087);
+$("#2").on('click', function (){
+    newLocation(32.715736,-117.161087);
 });
 
-$("#3").on('click', function ()
-{
-newLocation(30.267153, -97.7430608);
+$("#3").on('click', function (){
+    newLocation(30.267153, -97.7430608);
 })
 
 var map;
@@ -553,3 +552,4 @@ $('#signbtn').on('click', e =>{
 
 
 // ==================================================================================================END OF USER AUTHENTICATION CODE===========================================================================================================
+       
