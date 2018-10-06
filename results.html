@@ -7,12 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="assets/css/reset.css">
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
-    <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css">
     <link rel="stylesheet" type="text/css" media="screen" href="assets/css/materialize.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css">
 </head>
-<body>
+<body onload='getDataBridge()'>
     <nav>
         <div class="nav-wrapper">
             <a href="index.html" class="brand-logo knockout">Doorsteppe.info</a>
@@ -34,24 +34,24 @@
                     <li><a href="findAnAgent.html">Find An Agent</a></li>
                     <li><a href="Login.html">Log In</a></li>
               </ul>
-              <button id="click">click</button>
     <div class="row" id='rowPost'>
-       
+        <!-- the search results go here -->
     </div>
-
+<button class="more">click for more homes</button>
     <footer class="page-footer">
-        <div class="footer-copyright">
-            <div class="container">
-                <div class="col s12">
+        <div class="container">
+            <div class="col s12">
               © 2018 Copyright
               <a class="grey-text text-lighten-4 right" href="results.html">Results</a>
                 </div>
             </div>
-        </div>
     </footer>
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="assets/javascript/materialize.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.5.3/firebase.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?libraries=geometry"></script>
     <script src="assets/javascript/main.js"></script>
+    
 </body>
 </html>
