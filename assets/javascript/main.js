@@ -68,7 +68,7 @@ $('#submit').on('click',function (event){
             var object = {url: URL, response : result}
             localStorage.removeItem('result')
             localStorage.setItem('result', JSON.stringify(object));
-            window.location.replace("results.html"); 
+            window.location.href = 'results.html'
             
         },
         error: function () {
@@ -110,8 +110,8 @@ $("#3").on('click', function (){
 var map;
 function initMap(){
 map = new google.maps.Map(document.getElementById('map'), {
-center: new google.maps.LatLng(37.773972,-122.431297),
-zoom: 12
+center: new google.maps.LatLng(37.774,-122.431297),
+zoom: 13
 })
 }
 
@@ -125,14 +125,16 @@ $('#1').on('click',function (event){
             for (var i = 0; i < results.bundle.length; i++) {
                 var coords = results.bundle[i].Coordinates;
                 var latLng = new google.maps.LatLng(coords[1],coords[0]);
+                var info = "<h5>" + "  Address  " + "</h5>" + results.bundle[i].UnparsedAddress + "<br>" + "<br>" +  "<h5>"+"  Listed Price  " + "</h5>"+ results.bundle[i].ListPrice +  "<br>" +   "<br>" +  "<h5>" + "  Square Foot  " + "</h5>" + results.bundle[i].LotSizeSquareFeet + "  Bedrooms  " + results.bundle[i].BedroomsTotal  + "  Full baths  " + results.bundle[i].BathroomsFull + "  Half baths  " + results.bundle[i].BathroomsHalf 
                 var marker = new google.maps.Marker({
                   position: latLng,
                   map: map,
-                  customInfo:"  Address  " + results.bundle[i].UnparsedAddress + "  Listed Price  "+ results.bundle[i].ListPrice + "  Lot size sqft.  " +  results.bundle[i].LotSizeSquareFeet + "  Bedrooms  " + results.bundle[i].BedroomsTotal  + "  Full baths  " + results.bundle[i].BathroomsFull + "  Half baths  " + results.bundle[i].BathroomsHalf 
+                  customInfo: info
             });
             google.maps.event.addListener(marker, 'click', function() {
                 //TODO: append clicked house markers in cards below the map
-                alert(this.customInfo);
+                $('#modal1').modal('open'); 
+                $("#modal-text").append(this.customInfo)
             });
         }
 }});
@@ -147,13 +149,15 @@ $('#2').on('click',function (event){
             for (var i = 0; i < results.bundle.length; i++) {
                 var coords = results.bundle[i].Coordinates;
                 var latLng = new google.maps.LatLng(coords[1],coords[0]);
+                var info = "<h5>" + "  Address  " + "</h5>" + results.bundle[i].UnparsedAddress + "<br>" + "<br>" +  "<h5>"+"  Listed Price  " + "</h5>"+ results.bundle[i].ListPrice +  "<br>" +   "<br>" +  "<h5>" + "  Square Foot  " + "</h5>" + results.bundle[i].LotSizeSquareFeet + "  Bedrooms  " + results.bundle[i].BedroomsTotal  + "  Full baths  " + results.bundle[i].BathroomsFull + "  Half baths  " + results.bundle[i].BathroomsHalf 
                 var marker = new google.maps.Marker({
                   position: latLng,
                   map: map,
-                  customInfo:"  Address  " + results.bundle[i].UnparsedAddress + "  Listed Price  "+ results.bundle[i].ListPrice + "  Lot size sqft.  " +  results.bundle[i].LotSizeSquareFeet + "  Bedrooms  " + results.bundle[i].BedroomsTotal  + "  Full baths  " + results.bundle[i].BathroomsFull + "  Half baths  " + results.bundle[i].BathroomsHalf 
+                  customInfo:info
             });
             google.maps.event.addListener(marker, 'click', function() {
-                alert(this.customInfo);
+                $('#modal1').modal('open'); 
+                $("#modal-text").append(this.customInfo)
             });
         }
 }});
@@ -168,13 +172,15 @@ $('#3').on('click',function (event){
             for (var i = 0; i < results.bundle.length; i++) {
                 var coords = results.bundle[i].Coordinates;
                 var latLng = new google.maps.LatLng(coords[1],coords[0]);
+                var info = "<h5>" + "  Address  " + "</h5>" + results.bundle[i].UnparsedAddress + "<br>" + "<br>" +  "<h5>"+"  Listed Price  " + "</h5>"+ results.bundle[i].ListPrice +  "<br>" +   "<br>" +  "<h5>" + "  Square Foot  " + "</h5>" + results.bundle[i].LotSizeSquareFeet + "  Bedrooms  " + results.bundle[i].BedroomsTotal  + "  Full baths  " + results.bundle[i].BathroomsFull + "  Half baths  " + results.bundle[i].BathroomsHalf 
                 var marker = new google.maps.Marker({
                   position: latLng,
                   map: map,
-                  customInfo:"  Address  " + results.bundle[i].UnparsedAddress + "  Listed Price  "+ results.bundle[i].ListPrice + "  Lot size sqft.  " +  results.bundle[i].LotSizeSquareFeet + "  Bedrooms  " + results.bundle[i].BedroomsTotal  + "  Full baths  " + results.bundle[i].BathroomsFull + "  Half baths  " + results.bundle[i].BathroomsHalf 
+                  customInfo:info
             });
             google.maps.event.addListener(marker, 'click', function() {
-                alert(this.customInfo);
+                $('#modal1').modal('open'); 
+                $("#modal-text").append(this.customInfo)
             });
         }
 }});
@@ -571,7 +577,7 @@ $('#indexSubmit').on('click',function (event){
             var object = {url: URL, response : result}
             localStorage.removeItem('result')
             localStorage.setItem('result', JSON.stringify(object));
-            window.location.replace("results.html"); 
+            window.location.href = 'results.html'
             
         },
         error: function () {
@@ -584,6 +590,6 @@ $('#indexSubmit').on('click',function (event){
     $('#advanced').on('click',function (event){
         event.preventDefault();
 
-        window.location.replace("propertysearch.html"); 
+        window.location.href ="propertysearch.html"
 
     });
