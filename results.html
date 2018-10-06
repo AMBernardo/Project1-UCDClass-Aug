@@ -11,9 +11,8 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
     <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css">
-    <script src="https://www.gstatic.com/firebasejs/5.5.3/firebase.js"></script>
 </head>
-<body>
+<body onload='getDataBridge()'>
     <nav>
         <div class="nav-wrapper">
             <a href="index.html" class="brand-logo knockout">Doorsteppe.info</a>
@@ -36,36 +35,7 @@
                     <li><a href="Login.html">Log In</a></li>
               </ul>
     <div class="row" id='rowPost'>
-<!--         
-            <div class="col s12 m4">
-            <div class="card blue-grey darken-1">
-                <div class="card-content white-text">
-                    <span class="card-title cardTitle">Price in $$</span>
-                </div>
-                <div class="row">
-                    <div class="col s10 offset-s1">
-                        <div class="card">
-                            <div class="card-image waves-effect waves-block waves-light">
-                                <img class="responsive-img activator" src="assets/images/image.png" alt="testPic">
-                            </div>
-                            <div class="card-content">
-                                <span class="card-title activator grey-text text-darken-4">Statistics<i class="material-icons right">more_vert</i></span>
-                                <p><a href="#">This is a link to somewhere</a></p>
-                                <span class="card-title activator grey-text text-darken-4">News<i class="material-icons right">more_vert</i></span>
-                                <p><a href="#">This is a link to somewhere</a></p>
-                                <span class="card-title activator grey-text text-darken-4">Housing Data<i class="material-icons right">more_vert</i></span>
-                                <p><a href="#">This is a link to somewhere</a></p>
-                            </div>
-                            <div class="card-reveal">
-                                <span class="card-title grey-text text-darken-4">Prepend or Append This! Serves as Title<i class="material-icons right">close</i></span>
-                                <p>Whatever you want to post here :)</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
+        <!-- the search results go here -->
     </div>
 
     <footer class="page-footer">
@@ -79,11 +49,9 @@
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="assets/javascript/materialize.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.5.3/firebase.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?libraries=geometry"></script>
-
-
     <script src="assets/javascript/main.js"></script>
     
-    
 </body>
-</html> 
+</html>

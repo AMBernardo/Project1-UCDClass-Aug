@@ -50,7 +50,11 @@ jQuery(document).ready(function(){
         });
     });
 
-// my code
+
+
+
+
+// ==================================================================================================PROPERTY SEARCH CODE===========================================================================================================
 $('#submit').on('click',function (event){
     event.preventDefault();
     var URL = ' https://rets.io/api/v2/' + $('#city').val() + '/listings?access_token=520a691140619b70d86de598796f13c1&limit=100&BathroomsFull.eq=' + $('#bathroom').val() + '&BedroomsTotal.eq=' + $('#bed').val() + '&LotSizeSquareFeet.gte=' + $('#minsqft').val().trim() + '&ListPrice.lte=' + $('#maxprice').val().trim()
@@ -61,7 +65,6 @@ $('#submit').on('click',function (event){
         data: {
         },
         success: function (result) {
-            console.log(result);   
             var object = {url: URL, response : result}
             localStorage.setItem('result', JSON.stringify(object));
             window.location.replace("results.html"); 
@@ -73,8 +76,13 @@ $('#submit').on('click',function (event){
     });
         
     });
+// ==================================================================================================PROPERTY SEARCH CODE===========================================================================================================
 
-//Map api location data
+
+
+
+
+// ==================================================================================================MAP SEARCH CODE===========================================================================================================
 function newLocation(newLat,newLng)
 {
 map.setCenter({
@@ -87,7 +95,7 @@ lng : newLng
 
 $("#1").on('click', function ()
 {
-newLocation(37.773972,-122.431297);
+newLocation(37.774,-122.431297);
 });
 
 $("#2").on('click', function ()
@@ -104,9 +112,10 @@ var map;
 function initMap(){
 map = new google.maps.Map(document.getElementById('map'), {
 center: new google.maps.LatLng(37.773972,-122.431297),
-zoom: 11
+zoom: 12
 })
 }
+
 $('#1').on('click',function (event){
     event.preventDefault();
     $.ajax({
@@ -119,7 +128,12 @@ $('#1').on('click',function (event){
                 var latLng = new google.maps.LatLng(coords[1],coords[0]);
                 var marker = new google.maps.Marker({
                   position: latLng,
-                  map: map
+                  map: map,
+                  customInfo:"  Address  " + results.bundle[i].UnparsedAddress + "  Listed Price  "+ results.bundle[i].ListPrice + "  Lot size sqft.  " +  results.bundle[i].LotSizeSquareFeet + "  Bedrooms  " + results.bundle[i].BedroomsTotal  + "  Full baths  " + results.bundle[i].BathroomsFull + "  Half baths  " + results.bundle[i].BathroomsHalf 
+            });
+            google.maps.event.addListener(marker, 'click', function() {
+                //TODO: append clicked house markers in cards below the map
+                alert(this.customInfo);
             });
         }
 }});
@@ -136,7 +150,11 @@ $('#2').on('click',function (event){
                 var latLng = new google.maps.LatLng(coords[1],coords[0]);
                 var marker = new google.maps.Marker({
                   position: latLng,
-                  map: map
+                  map: map,
+                  customInfo:"  Address  " + results.bundle[i].UnparsedAddress + "  Listed Price  "+ results.bundle[i].ListPrice + "  Lot size sqft.  " +  results.bundle[i].LotSizeSquareFeet + "  Bedrooms  " + results.bundle[i].BedroomsTotal  + "  Full baths  " + results.bundle[i].BathroomsFull + "  Half baths  " + results.bundle[i].BathroomsHalf 
+            });
+            google.maps.event.addListener(marker, 'click', function() {
+                alert(this.customInfo);
             });
         }
 }});
@@ -153,7 +171,11 @@ $('#3').on('click',function (event){
                 var latLng = new google.maps.LatLng(coords[1],coords[0]);
                 var marker = new google.maps.Marker({
                   position: latLng,
-                  map: map
+                  map: map,
+                  customInfo:"  Address  " + results.bundle[i].UnparsedAddress + "  Listed Price  "+ results.bundle[i].ListPrice + "  Lot size sqft.  " +  results.bundle[i].LotSizeSquareFeet + "  Bedrooms  " + results.bundle[i].BedroomsTotal  + "  Full baths  " + results.bundle[i].BathroomsFull + "  Half baths  " + results.bundle[i].BathroomsHalf 
+            });
+            google.maps.event.addListener(marker, 'click', function() {
+                alert(this.customInfo);
             });
         }
 }});
@@ -163,18 +185,23 @@ $('#3').on('click',function (event){
 
 
 
-// end of Map script
 
-var start = 0;
-var working = false;
-var Data =JSON.parse(localStorage.getItem('result'));
+// ==================================================================================================END OF MAP SEARCH CODE===========================================================================================================
+
+
+
+
+
+// ==================================================================================================RESULTS CODE===========================================================================================================
 // no need for ajax call getting data from local storage
 // //Text Search Ajax Call
 function getDataBridge(){
     var Data =JSON.parse(localStorage.getItem('result'));
     console.log(Data)
     generateCards(Data.response)
-     };
+};
+
+
 
 //Functions for displaying arrays 
     //ex. el.text(arrayDisplay(arry))
@@ -206,117 +233,267 @@ function generateCards(Data){
         //else if(street view) show street view
 
         else function streetview() {
-var address = result.UnparsedAddress
+            var address = result.UnparsedAddress
             $('.responsive-img').html('<img src="http://maps.googleapis.com/maps/api/streetview?size=500x500&sensor=false&location='+address+'">');
                 
         };
         
         
     //card generation 
-    a.append(
-        $('<div/>',{'class': 'col s10 m4'}).append(
-            $('<div/>',{'class':'card hoverable'}).append(
-                $('<div/>',{'class':'card-image waves-effect waves-block waves-light'}).append(
-                //image block=================
-                    $('<img>', {'class':'responsive-img'}).attr('src',imgurl).attr('alt','test pic')
-                ).append(
-                    $('<div/>', {'class': 'caption white black-text text-lighten-2 right-align'}).append(
-                        $('<h4/>').text('$'+result.ListPrice  )//Price Header 
-                    )
-                )
-        //data catagories
-            ).append(
-                $('<div/>',{'class':'card-tabs'}).append(
-                    $('<ul/>',{'class':'tabs tabs-fixed-width'}).append(                           
-                        $('<li/>',{'class':'tab'}).append(
-                            $('<a/>',{'class':'active'}).attr('href', '#'+ result.ListingId+'-tab1').text('Housing Data')
+            a.append(
+                $('<div/>',{'class': 'col s10 m4 listCard'}).append(
+                    $('<div/>',{'class':'card hoverable'}).append(
+                        $('<div/>',{'class':'card-image' /*waves-effect waves-block waves-light*/}).append(
+                        //image block=================
+                            $('<img>', {'class':'responsive-img imageLink'}).attr('data-set',(result.OriginatingSystemKey)).attr('data-lid',(result.ListingKey)).attr('src',imgurl).attr('alt','test pic')
+                        ).append(
+                            $('<div/>', {'class': 'caption white black-text text-lighten-2 right-align'}).append(
+                                $('<h4/>').text('$'+result.ListPrice  )//Price Header 
+                            )
                         )
+                //data catagories
                     ).append(
-                        $('<li/>',{'class':'tab'}).append(
-                            $('<a/>').attr('href', '#'+ result.ListingId+'-tab2').text('Agent Data')
-                        )
-                    ).append(
-                        $('<li/>',{'class':'tab'}).append(
-                            $('<a/>').attr('href', '#'+ result.ListingId+'-tab3').text('Lot Data')
-                        )
-                    )
-                )
-            ).append(
-            //card blades========================
-                $('<div/>', {'class':'card-content'}).append(
-                            $('<div/>',{'id': result.ListingId+'-tab1'}).append(//house data
-                                $('<ul/>').text(result.UnparsedAddress).append(
-                                    $('<li/>').text(' Beds: ' + result.BedroomsTotal)
-                                ).append(
-                                    $('<li/>').text(' Full Baths: ' + result.BathroomsFull)
-                                ).append(
-                                    $('<li/>').text(' Half Baths: ' + result.BathroomsHalf)
-                                ).append(
-                                    $('<li/>').text('Heating Options: ' + booleanArrayDisplay(result.HeatingYN, result.Heating))
-                                ).append(
-                                    $('<li/>').text('Laundry Features: ' + arrayDisplay(result.LaundryFeatures))
-                                ).append(
-                                    $('<li/>').text('Appliances: ' + arrayDisplay(result.Appliances))
-                                ).append(
-                                    $('<li/>').text('Garage: '+ booleanDisplay(result.GarageYN))
-                                ).append(
-                                    $('<li/>').text('Flooring Types: ' + arrayDisplay(result.Flooring))
+                        $('<div/>',{'class':'card-tabs'}).append(
+                            $('<ul/>',{'class':'tabs tabs-fixed-width'}).append(                           
+                                $('<li/>',{'class':'tab'}).append(
+                                    $('<a/>',{'class':'active'}).attr('href', '#'+ result.ListingId+'-tab1').text('Housing Data')
+                                )
+                            ).append(
+                                $('<li/>',{'class':'tab'}).append(
+                                    $('<a/>').attr('href', '#'+ result.ListingId+'-tab2').text('Agent Data')
+                                )
+                            ).append(
+                                $('<li/>',{'class':'tab'}).append(
+                                    $('<a/>').attr('href', '#'+ result.ListingId+'-tab3').text('Lot Data')
                                 )
                             )
-                        ).append(
-                            $('<div/>',{'id': result.ListingId+'-tab2'}).append(//Agent Data====
-                                $('<ul/>').text('Listing Agent: ' + result.ListAgentFullName).append(
-                                    $('<br>')
+                        )
+                    ).append(
+                    //card blades========================
+                        $('<div/>', {'class':'card-content'}).append(
+                                    $('<div/>',{'id': result.ListingId+'-tab1'}).append(//house data
+                                        $('<ul/>').text(result.UnparsedAddress).append(
+                                            $('<li/>').text(' Beds: ' + result.BedroomsTotal)
+                                        ).append(
+                                            $('<li/>').text(' Full Baths: ' + result.BathroomsFull)
+                                        ).append(
+                                            $('<li/>').text(' Half Baths: ' + result.BathroomsHalf)
+                                        ).append(
+                                            $('<li/>').text('Heating Options: ' + booleanArrayDisplay(result.HeatingYN, result.Heating))
+                                        ).append(
+                                            $('<li/>').text('Laundry Features: ' + arrayDisplay(result.LaundryFeatures))
+                                        ).append(
+                                            $('<li/>').text('Appliances: ' + arrayDisplay(result.Appliances))
+                                        ).append(
+                                            $('<li/>').text('Garage: '+ booleanDisplay(result.GarageYN))
+                                        ).append(
+                                            $('<li/>').text('Flooring Types: ' + arrayDisplay(result.Flooring))
+                                        )
+                                    )
                                 ).append(
-                                    $('<li/>').text('Contact Number: ' + result.ListAgentPreferredPhone)
+                                    $('<div/>',{'id': result.ListingId+'-tab2'}).append(//Agent Data====
+                                        $('<ul/>').text('Listing Agent: ' + result.ListAgentFullName).append(
+                                            $('<br>')
+                                        ).append(
+                                            $('<br>')
+                                        ).append(
+                                            $('<li/>').text('Contact Number: ' + result.ListAgentPreferredPhone)
+                                        ).append(
+                                            $('<br>')
+                                        ).append(
+                                            $('<li/>').text('Showing Agent: ' + result.ShowingContactName)
+                                        ).append(
+                                            $('<br>')
+                                        ).append(
+                                            $('<li/>').text('Showing Agent Contact Number: ' + result.ShowingContactPhone)
+                                        ).append(
+                                            $('<br>')
+                                        ).append(
+                                            $('<li/>').text('Listing Office: ' + result.ListOfficeName)
+                                        )
+                                    )
                                 ).append(
-                                    $('<br>')
-                                ).append(
-                                    $('<li/>').text('Showing Agent: ' + result.ShowingContactName)
-                                ).append(
-                                    $('<br>')
-                                ).append(
-                                    $('<li/>').text('Showing Agent Contact Number: ' + result.ShowingContactPhone)
-                                ).append(
-                                    $('<br>')
-                                ).append(
-                                    $('<li/>').text('Listing Office: ' + result.ListOfficeName)
-                                ).append(
-                                    $('<br>')
-                                )
-                            )
-                        ).append(
-                            $('<div/>',{'id': result.ListingId+'-tab3'}).append(//Lot Data====
-                                $('<ul/>').append(
-                                    $('<li/>').text('Lot Size: ' + result.LotSizeSquareFeet + ' SqFt.')
-                                ).append(
-                                    $('<li/>').text('Living Area: ' + result.LivingArea + ' SqFt.' )
-                                ).append(
-                                    $('<li/>').text('Exterior Features: ' + result.ExteriorFeatures)
-                                ).append(
-                                    $('<li/>').text('Year Built: est.'+ result.YearBuilt)
-                                ).append(
-                                    $('<li/>').text('Zoning: ' + result.Zoning)
-                                ).append(
-                                    $('<li/>').text('Building Faces: ' +result.DirectionFaces)
-                                ).append(
-                                    $('<li/>').text('Entry Location: ' +result.EntryLocation)
-                                ).append(
-                                    $('<br>')
-                                ).append(
-                                    $('<li/>').text('Contact For Further Details.')
+                                    $('<div/>',{'id': result.ListingId+'-tab3'}).append(//Lot Data====
+                                        $('<ul/>').append(
+                                            $('<li/>').text('Lot Size: ' + result.LotSizeSquareFeet + ' SqFt.')
+                                        ).append(
+                                            $('<li/>').text('Living Area: ' + result.LivingArea + ' SqFt.' )
+                                        ).append(
+                                            $('<li/>').text('Exterior Features: ' + result.ExteriorFeatures)
+                                        ).append(
+                                            $('<li/>').text('Year Built: est.'+ result.YearBuilt)
+                                        ).append(
+                                            $('<li/>').text('Zoning: ' + result.Zoning)
+                                        ).append(
+                                            $('<li/>').text('Building Faces: ' +result.DirectionFaces)
+                                        ).append(
+                                            $('<li/>').text('Entry Location: ' +result.EntryLocation)
+                                        ).append(
+                                            $('<br>')
+                                        ).append(
+                                            $('<li/>').text('Contact For Further Details.')
+                                        )
                                 )
                         )
-                 )
-             )
+                    )
+                )
+            );
+            M.AutoInit();
+            $(".tabs").tabs();
+    }
+};
+// ==================================================================================================END OF RESULTS CODE===========================================================================================================
+
+
+
+
+
+// ==================================================================================================PROPERTY PAGE CODE===========================================================================================================
+//image on click
+    //get data-lid from image and store in local storage
+//open property page
+//load data-lid from local storage plug it into an ajax call url designed for individual listings and populate the page
+
+//================================================property page code(ajax and population)
+//result image click gets the id, sends you to property page and calls ajax
+$(document).on('click', 'img.imageLink', function (){
+    console.log($(this).attr('data-lid'));
+    localStorage.removeItem('lid','dataset')
+    localStorage.setItem('lid', $(this).attr('data-lid'))
+    localStorage.setItem('dataset', $(this).attr('data-set'))
+    window.location.replace('propertyPage.html')
+});
+function populateInfo(){
+    let lid = localStorage.getItem('lid');
+    let dataset = localStorage.getItem('dataset')
+    let URL = 'https://rets.io/api/v2/'+dataset+'/listings/'+lid+'?access_token=520a691140619b70d86de598796f13c1'
+    $.ajax({ 
+        url: URL,
+        type: "GET", /* or type:"GET" or type:"PUT" */
+        dataType: "json",
+        data: {
+        },
+        success: function (result) {
+            console.log(result); 
+            listPage(result.bundle)
+
+        },
+        error: function () {
+            console.log("error");
+        }
+    });
+};
+function listPage(result){
+    $('#propertyAdd').attr('value', result.UnparsedAddress).text(result.UnparsedAddress)
+    $('#address').attr('value', result.UnparsedAddress)
+    for( var i =0; i < result.Media.length; i++){
+        $('#propCarousel').append(
+          $('<a/>',{'class':'carousel-item'}).append(
+              $('<img>').attr('src', result.Media[i].MediaURL)
+          )
         )
-    );
-    M.AutoInit();
+    }$('.carousel').carousel();
+
+    let a = $('#propPostPoint')
+    a.append(
+        $('<div/>',{'class':'card-tabs'}).append(
+            $('<ul/>',{'class':'tabs tabs-fixed-width'}).append(                           
+                $('<li/>',{'class':'tab'}).append(
+                    $('<a/>',{'class':'active'}).attr('href', '#tab1').text('Housing Data')
+                )
+            ).append(
+                $('<li/>',{'class':'tab'}).append(
+                    $('<a/>').attr('href', '#tab2').text('Agent Data')
+                )
+            ).append(
+                $('<li/>',{'class':'tab'}).append(
+                    $('<a/>').attr('href', '#tab3').text('Lot Data')
+                )
+            )
+        )
+    ).append(
+    //card blades========================
+        $('<div/>', {'class':'card-content'}).append(
+                    $('<div/>',{'id': 'tab1'}).append(//house data
+                        $('<ul/>').text(result.UnparsedAddress).append(
+                            $('<li/>').text(' Beds: ' + result.BedroomsTotal)
+                        ).append(
+                            $('<li/>').text(' Full Baths: ' + result.BathroomsFull)
+                        ).append(
+                            $('<li/>').text(' Half Baths: ' + result.BathroomsHalf)
+                        ).append(
+                            $('<li/>').text('Heating Options: ' + booleanArrayDisplay(result.HeatingYN, result.Heating))
+                        ).append(
+                            $('<li/>').text('Laundry Features: ' + arrayDisplay(result.LaundryFeatures))
+                        ).append(
+                            $('<li/>').text('Appliances: ' + arrayDisplay(result.Appliances))
+                        ).append(
+                            $('<li/>').text('Garage: '+ booleanDisplay(result.GarageYN))
+                        ).append(
+                            $('<li/>').text('Flooring Types: ' + arrayDisplay(result.Flooring))
+                        )
+                    )
+                ).append(
+                    $('<div/>',{'id': 'tab2'}).append(//Agent Data====
+                        $('<ul/>').text('Listing Agent: ' + result.ListAgentFullName).append(
+                            $('<br>')
+                        ).append(
+                            $('<br>')
+                        ).append(
+                            $('<li/>').text('Contact Number: ' + result.ListAgentPreferredPhone)
+                        ).append(
+                            $('<br>')
+                        ).append(
+                            $('<li/>').text('Showing Agent: ' + result.ShowingContactName)
+                        ).append(
+                            $('<br>')
+                        ).append(
+                            $('<li/>').text('Showing Agent Contact Number: ' + result.ShowingContactPhone)
+                        ).append(
+                            $('<br>')
+                        ).append(
+                            $('<li/>').text('Listing Office: ' + result.ListOfficeName)
+                        )
+                    )
+                ).append(
+                    $('<div/>',{'id': 'tab3'}).append(//Lot Data====
+                        $('<ul/>').append(
+                            $('<li/>').text('Lot Size: ' + result.LotSizeSquareFeet + ' SqFt.')
+                        ).append(
+                            $('<li/>').text('Living Area: ' + result.LivingArea + ' SqFt.' )
+                        ).append(
+                            $('<li/>').text('Exterior Features: ' + result.ExteriorFeatures)
+                        ).append(
+                            $('<li/>').text('Year Built: est.'+ result.YearBuilt)
+                        ).append(
+                            $('<li/>').text('Zoning: ' + result.Zoning)
+                        ).append(
+                            $('<li/>').text('Building Faces: ' +result.DirectionFaces)
+                        ).append(
+                            $('<li/>').text('Entry Location: ' +result.EntryLocation)
+                        ).append(
+                            $('<br>')
+                        ).append(
+                            $('<li/>').text('Contact For Further Details.')
+                        )
+                )
+        )
+    )
     $(".tabs").tabs();
-                            }//loop close===========
 };
 
 
+
+
+
+
+// ==================================================================================================END OF PROPERTY PAGE CODE===========================================================================================================
+
+
+
+
+
+// ==================================================================================================USER AUTHENTICATION CODE===========================================================================================================
 // user sign up/in
 // get user login elements
 var txtEmail = $('#logemail');
@@ -350,7 +527,10 @@ $('#signbtn').on('click', e =>{
     var auth = firebase.auth()
     var userName = displayName.val()
     // sign in
-    var promise = auth.createUserWithEmailAndPassword(email, pass)
+    var promise = auth.createUserWithEmailAndPassword(email, pass).then(function(user) {
+        user.firebase.auth()({
+            displayName: userName   
+        });   
     promise.catch(e => console.log(e.message));
     
     });
@@ -360,9 +540,16 @@ $('#signbtn').on('click', e =>{
         if(firebaseUser){
             console.log(firebaseUser)
         } else {
-console.log('not logged in');
+            console.log('not logged in');
         }
 
-        })
+        });
+    });
 
         // TODO: store users name and favourited homes in realtime database using their unique UID
+
+
+
+
+
+// ==================================================================================================END OF USER AUTHENTICATION CODE===========================================================================================================
