@@ -266,13 +266,13 @@ $(".more").on('click' , function(Data){
         //image fallback
         if(result.Media[0]) {imgurl = result.Media[0].MediaURL;}
         //else if(street view) show street view
-        else imgurl = './assets/images/placeholderhouse2.jpg'      
+        else imgurl = './assets/images/placeholderHouse2.jpeg'      
         
     //card generation 
             a.append(
                 $('<div/>',{'class': 'col s10 m4 listCard'}).append(
                     $('<div/>',{'class':'card hoverable'}).append(
-                        $('<div/>',{'class':'card-image' /*waves-effect waves-block waves-light*/}).append(
+                        $('<div/>',{'class':'card-image waves-effect waves-block waves-light'}).append(
                         //image block=================
                             $('<img>', {'class':'responsive-img imageLink'}).attr('data-set',(result.OriginatingSystemKey)).attr('data-lid',(result.ListingKey)).attr('src',imgurl).attr('alt','test pic')
                         ).append(
@@ -603,7 +603,7 @@ $('#indexSubmit').on('click',function (event){
             var object = {url: URL, response : result}
             localStorage.removeItem('result')
             localStorage.setItem('result', JSON.stringify(object));
-            window.location.replace("results.html"); 
+            window.location.href = "results.html"; 
             
         },
         error: function () {
@@ -613,9 +613,9 @@ $('#indexSubmit').on('click',function (event){
         
     });
 
-    $('#advanced').on('click',function (event){
-        event.preventDefault();
+    $('#advanced').on('click',function (){
+        // event.preventDefault();
 
-        window.location.replace("propertysearch.html"); 
+        window.location.href = "propertySearch.html"; 
 
     });
