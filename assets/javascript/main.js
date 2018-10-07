@@ -1,13 +1,22 @@
-  // Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyDR2-15Tdhu7iFhT4MbpbyoxP157PtISIk",
-    authDomain: "doorsteppe.firebaseapp.com",
-    databaseURL: "https://doorsteppe.firebaseio.com",
-    projectId: "doorsteppe",
-    storageBucket: "doorsteppe.appspot.com",
-    messagingSenderId: "808880878005"
-  };
-  firebase.initializeApp(config);
+jQuery(document).ready(function(){
+    // getDataBridge()
+    M.AutoInit();
+    $('.dropdown-trigger').dropdown();
+    $(".sidenav").sidenav();
+    $(".tabs").tabs();
+    $(".modal").modal();
+    $(".parallax").parallax();
+    $('.dropdown-trigger').dropdown();
+    $(".sidenav").sidenav();
+    $(".tabs").tabs();
+    $('.parallax').parallax();
+    $('.carousel').carousel();
+    $('.slider').slider({full_width: true});
+    $('.carousel-slider').slider({full_width: true});
+    $('.carousel.carousel-slider').carousel({
+        fullWidth: true
+        });
+    });
 //We will use this function once we have the pub dataset
 // $('#submit').on('click',function (event){
 //     event.preventDefault();
@@ -30,33 +39,26 @@
 //         }
 //     });
 // });
-jQuery(document).ready(function(){
-    // getDataBridge()
-    M.AutoInit();
-    $('.dropdown-trigger').dropdown();
-    $(".sidenav").sidenav();
-    $(".tabs").tabs();
-    $(".modal").modal();
-    $(".parallax").parallax();
-    $('.dropdown-trigger').dropdown();
-    $(".sidenav").sidenav();
-    $(".tabs").tabs();
-    $('.parallax').parallax();
-    $('.carousel').carousel();
-    $('.slider').slider({full_width: true});
-    $('.carousel-slider').slider({full_width: true});
-    $('.carousel.carousel-slider').carousel({
-        fullWidth: true
-        });
-    });
 
 
 
+ // Initialize Firebase
+ var config = {
+    apiKey: "AIzaSyDR2-15Tdhu7iFhT4MbpbyoxP157PtISIk",
+    authDomain: "doorsteppe.firebaseapp.com",
+    databaseURL: "https://doorsteppe.firebaseio.com",
+    projectId: "doorsteppe",
+    storageBucket: "doorsteppe.appspot.com",
+    messagingSenderId: "808880878005"
+  };
+  firebase.initializeApp(config);
 
 
 // ================================================================================PROPERTY SEARCH CODE===========================================================================================================
 $('#submit').on('click',function (event){
     event.preventDefault();
+    if(!$('#city').val() || !$('#bathroom').val() || ! $('#bed').val() || !$('#minsqft').val() || !$('#maxprice').val()) return alert('Please Fill Out Forms');
+    else{
     var URL = ' https://rets.io/api/v2/' + $('#city').val() + '/listings?access_token=520a691140619b70d86de598796f13c1&limit=25&BathroomsFull.eq=' + $('#bathroom').val() + '&BedroomsTotal.eq=' + $('#bed').val() + '&LotSizeSquareFeet.gte=' + $('#minsqft').val() + '&ListPrice.lte=' + $('#maxprice').val()
     $.ajax({ 
         url: URL,
@@ -68,7 +70,7 @@ $('#submit').on('click',function (event){
             var object = {url: URL, response : result}
             localStorage.removeItem('result')
             localStorage.setItem('result', JSON.stringify(object));
-            window.location.replace("results.html"); 
+            window.location.href = 'results.html'
             
         },
         error: function () {
@@ -76,7 +78,8 @@ $('#submit').on('click',function (event){
         }
     });
         
-    });
+    }
+})
 // ==================================================================================================PROPERTY SEARCH CODE===========================================================================================================
 
 //Map api location data
@@ -118,10 +121,11 @@ $("#3").on('click', function ()
 
 var map;
 function initMap(){
-    map = new google.maps.Map(document.getElementById('map'), {
-        center: new google.maps.LatLng(37.773972,-122.431297),
-        zoom: 11
-    })
+
+map = new google.maps.Map(document.getElementById('map'), {
+center: new google.maps.LatLng(37.774,-122.431297),
+zoom: 13
+})
 }
 
 //grab this code.....
@@ -136,15 +140,16 @@ $('#1').on('click',function (event){
                 var coords = results.bundle[i].Coordinates;
                 var latLng = new google.maps.LatLng(coords[1],coords[0]);
                 var info = "<h5>" + "  Address  " + "</h5>" + results.bundle[i].UnparsedAddress + "<br>" + "<br>" +  "<h5>"+"  Listed Price  " + "</h5>"+ results.bundle[i].ListPrice +  "<br>" +   "<br>" +  "<h5>" + "  Square Foot  " + "</h5>" + results.bundle[i].LotSizeSquareFeet + "  Bedrooms  " + results.bundle[i].BedroomsTotal  + "  Full baths  " + results.bundle[i].BathroomsFull + "  Half baths  " + results.bundle[i].BathroomsHalf 
-                // var imgurl = results.bundle[1].Media[1].MediaURL;
+
                 var marker = new google.maps.Marker({
                   position: latLng,
                   map: map,
-                  customInfo:"  Address  " + results.bundle[i].UnparsedAddress + "  Listed Price  "+ results.bundle[i].ListPrice + "  Lot size sqft.  " +  results.bundle[i].LotSizeSquareFeet + "  Bedrooms  " + results.bundle[i].BedroomsTotal  + "  Full baths  " + results.bundle[i].BathroomsFull + "  Half baths  " + results.bundle[i].BathroomsHalf 
+                  customInfo: info
             });
             google.maps.event.addListener(marker, 'click', function() {
                 //TODO: append clicked house markers in cards below the map
-                alert(this.customInfo);
+                $('#modal1').modal('open'); 
+                $("#modal-text").append(this.customInfo)
             });
             google.maps.event.addListener(marker,  'click', function() {
                
@@ -169,13 +174,15 @@ $('#2').on('click',function (event){
             for (var i = 0; i < results.bundle.length; i++) {
                 var coords = results.bundle[i].Coordinates;
                 var latLng = new google.maps.LatLng(coords[1],coords[0]);
+                var info = "<h5>" + "  Address  " + "</h5>" + results.bundle[i].UnparsedAddress + "<br>" + "<br>" +  "<h5>"+"  Listed Price  " + "</h5>"+ results.bundle[i].ListPrice +  "<br>" +   "<br>" +  "<h5>" + "  Square Foot  " + "</h5>" + results.bundle[i].LotSizeSquareFeet + "  Bedrooms  " + results.bundle[i].BedroomsTotal  + "  Full baths  " + results.bundle[i].BathroomsFull + "  Half baths  " + results.bundle[i].BathroomsHalf 
                 var marker = new google.maps.Marker({
                   position: latLng,
                   map: map,
-                  customInfo:"  Address  " + results.bundle[i].UnparsedAddress + "  Listed Price  "+ results.bundle[i].ListPrice + "  Lot size sqft.  " +  results.bundle[i].LotSizeSquareFeet + "  Bedrooms  " + results.bundle[i].BedroomsTotal  + "  Full baths  " + results.bundle[i].BathroomsFull + "  Half baths  " + results.bundle[i].BathroomsHalf 
+                  customInfo:info
             });
             google.maps.event.addListener(marker, 'click', function() {
-                alert(this.customInfo);
+                $('#modal1').modal('open'); 
+                $("#modal-text").append(this.customInfo)
             });
         }
 }});
@@ -190,13 +197,15 @@ $('#3').on('click',function (event){
             for (var i = 0; i < results.bundle.length; i++) {
                 var coords = results.bundle[i].Coordinates;
                 var latLng = new google.maps.LatLng(coords[1],coords[0]);
+                var info = "<h5>" + "  Address  " + "</h5>" + results.bundle[i].UnparsedAddress + "<br>" + "<br>" +  "<h5>"+"  Listed Price  " + "</h5>"+ results.bundle[i].ListPrice +  "<br>" +   "<br>" +  "<h5>" + "  Square Foot  " + "</h5>" + results.bundle[i].LotSizeSquareFeet + "  Bedrooms  " + results.bundle[i].BedroomsTotal  + "  Full baths  " + results.bundle[i].BathroomsFull + "  Half baths  " + results.bundle[i].BathroomsHalf 
                 var marker = new google.maps.Marker({
                   position: latLng,
                   map: map,
-                  customInfo:"  Address  " + results.bundle[i].UnparsedAddress + "  Listed Price  "+ results.bundle[i].ListPrice + "  Lot size sqft.  " +  results.bundle[i].LotSizeSquareFeet + "  Bedrooms  " + results.bundle[i].BedroomsTotal  + "  Full baths  " + results.bundle[i].BathroomsFull + "  Half baths  " + results.bundle[i].BathroomsHalf 
+                  customInfo:info
             });
             google.maps.event.addListener(marker, 'click', function() {
-                alert(this.customInfo);
+                $('#modal1').modal('open'); 
+                $("#modal-text").append(this.customInfo)
             });
         }
 }});
@@ -209,8 +218,19 @@ $(".modal-close").on('click' , function(){
 //end of what you need------------------------------------------------
 // end of Map script
 
-var start = 0;
-var working = false;
+
+
+
+
+// ==================================================================================================END OF MAP SEARCH CODE===========================================================================================================
+
+
+
+
+
+// ==================================================================================================RESULTS CODE===========================================================================================================
+
+
 var Data =JSON.parse(localStorage.getItem('result'));
 // no need for ajax call getting data from local storage
 // //Text Search Ajax Call
@@ -266,7 +286,9 @@ $(".more").on('click' , function(Data){
         //image fallback
         if(result.Media[0]) {imgurl = result.Media[0].MediaURL;}
         //else if(street view) show street view
-        else imgurl = './assets/images/placeholderhouse2.jpg'      
+
+        else imgurl = './assets/images/placeholderhouse2.jpeg'      
+
         
     //card generation 
             a.append(
@@ -578,11 +600,6 @@ $('#signbtn').on('click', e =>{
     });
 
         // TODO: store users name and favourited homes in realtime database using their unique UID
-
-
-
-
-
 // ==================================================================================================END OF USER AUTHENTICATION CODE===========================================================================================================
 
 
@@ -603,7 +620,7 @@ $('#indexSubmit').on('click',function (event){
             var object = {url: URL, response : result}
             localStorage.removeItem('result')
             localStorage.setItem('result', JSON.stringify(object));
-            window.location.replace("results.html"); 
+            window.location.href = "results.html"; 
             
         },
         error: function () {
@@ -616,6 +633,6 @@ $('#indexSubmit').on('click',function (event){
     $('#advanced').on('click',function (event){
         event.preventDefault();
 
-        window.location.replace("propertysearch.html"); 
+        window.location.href= "propertysearch.html"; 
 
     });
