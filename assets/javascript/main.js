@@ -601,6 +601,7 @@ $('#signbtn').on('click', e =>{
 
         // TODO: store users name and favourited homes in realtime database using their unique UID
 // ==================================================================================================END OF USER AUTHENTICATION CODE===========================================================================================================
+//=======================more firebase stufffffff=============================
 
 
 
