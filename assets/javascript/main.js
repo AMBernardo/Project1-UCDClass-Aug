@@ -102,12 +102,14 @@ $("#1").on('click', function ()
 newLocation(37.774,-122.431297);
 });
 
-$("#2").on('click', function (){
-    newLocation(32.715736,-117.161087);
+$("#2").on('click', function ()
+{
+newLocation(32.715736,-117.161087);
 });
 
-$("#3").on('click', function (){
-    newLocation(30.267153, -97.7430608);
+$("#3").on('click', function ()
+{
+newLocation(30.267153, -97.7430608);
 })
 
 var map;
@@ -137,8 +139,9 @@ $('#1').on('click',function (event){
             google.maps.event.addListener(marker, 'click', function() {
                 //TODO: append clicked house markers in cards below the map
                 $('#modal1').modal('open'); 
-                $("#modal-text").append(this.customInfo)
+                $("#modal-text").html(this.customInfo)
             });
+
         }
 }});
 
@@ -160,7 +163,7 @@ $('#2').on('click',function (event){
             });
             google.maps.event.addListener(marker, 'click', function() {
                 $('#modal1').modal('open'); 
-                $("#modal-text").append(this.customInfo)
+                $("#modal-text").html(this.customInfo)
             });
         }
 }});
@@ -183,7 +186,7 @@ $('#3').on('click',function (event){
             });
             google.maps.event.addListener(marker, 'click', function() {
                 $('#modal1').modal('open'); 
-                $("#modal-text").append(this.customInfo)
+                $("#modal-text").html(this.customInfo)
             });
         }
 }});
@@ -253,7 +256,7 @@ $(".more").on('click' , function(Data){
     for(var i = 0; i < 12; i++){
        
         var result = Data.bundle[i];
-        var imgurl;
+  
         //image fallback
         if(result.Media[0]) {imgurl = result.Media[0].MediaURL;}
         //else if(street view) show street view
@@ -381,7 +384,7 @@ $(document).on('click', 'img.imageLink', function (){
     localStorage.removeItem('lid','dataset')
     localStorage.setItem('lid', $(this).attr('data-lid'))
     localStorage.setItem('dataset', $(this).attr('data-set'))
-    window.location.replace('propertyPage.html')
+    window.location.href='propertyPage.html'
 });
 function populateInfo(){
     let lid = localStorage.getItem('lid');

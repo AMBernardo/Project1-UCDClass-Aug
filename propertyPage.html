@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>index of Project1</title>
+    <title>Property Page</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="assets/css/reset.css">
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
@@ -18,6 +19,16 @@
             border: 1px solid;
             background-color: white;
         }
+
+        img{
+           height: 100% !important;
+           width: 100% !important;
+        }
+
+        #propCarousel{
+            height: 500px !important;
+        }
+
     
     </style>
     
@@ -30,7 +41,7 @@
 
     <nav>
         <div class="nav-wrapper">
-            <a href="index.html" class="brand-logo knockout">Doorsteppe.info</a>
+            <a href="index.html" class="brand-logo knockout">Doorstep</a>
             <a href="index.html" data-target="mobile-demo" class="sidenav-trigger">
                 <i class="material-icons">menu</i>
             </a>
@@ -122,65 +133,17 @@
 
 function initMap() {
   var astorPlace = {lat: 40.729884, lng: -73.990988};
-
-  // Set up the map
   var map = new google.maps.Map(document.getElementById('map'), {
     center: astorPlace,
-    zoom: 18,
-    streetViewControl: false
+    zoom: 13,
+    streetViewControl: true
   });
-
-  // Set up the markers on the map
-  var cafeMarker = new google.maps.Marker({
-      position: {lat: 40.730031, lng: -73.991428},
-      map: map,
-      icon: 'https://chart.apis.google.com/chart?chst=d_map_pin_icon&chld=cafe|FFFF00',
-      title: 'Cafe'
-  });
-
-  var bankMarker = new google.maps.Marker({
-      position: {lat: 40.729681, lng: -73.991138},
-      map: map,
-      icon: 'https://chart.apis.google.com/chart?chst=d_map_pin_icon&chld=dollar|FFFF00',
-      title: 'Bank'
-  });
-
-  var busMarker = new google.maps.Marker({
-      position: {lat: 40.729559, lng: -73.990741},
-      map: map,
-      icon: 'https://chart.apis.google.com/chart?chst=d_map_pin_icon&chld=bus|FFFF00',
-      title: 'Bus Stop'
-  });
-
-  // We get the map's default panorama and set up some defaults.
-  // Note that we don't yet set it visible.
-  panorama = map.getStreetView();
-  panorama.setPosition(astorPlace);
-  panorama.setPov(/** @type {google.maps.StreetViewPov} */({
-    heading: 265,
-    pitch: 0
-  }));
-}
-
-function toggleStreetView() {
-  var toggle = panorama.getVisible();
-  if (toggle == false) {
-    panorama.setVisible(true);
-  } else {
-    panorama.setVisible(false);
-  }
-}
-
-
-
-
-          
           var geocoder = new google.maps.Geocoder();
   
           document.getElementById('submitMap').addEventListener('click', function() {
             geocodeAddress(geocoder, map);
           });
-        }
+        
   
         function geocodeAddress(geocoder, resultsMap) {
           var address = document.getElementById('address').value;
@@ -196,6 +159,7 @@ function toggleStreetView() {
             }
           });
         }
+    }
       </script>
 </body>
 </html>
