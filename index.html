@@ -15,6 +15,14 @@
         #paraImg1{
             height: 370px !important;
         }
+
+        button{
+            background-color: #1c486b !important;
+        }
+
+        label{
+            font-size: 20px !important;
+        }
         
     </style>
 </head>
@@ -43,9 +51,9 @@
                 </ul> -->
                 
                 <div class="carousel carousel-slider" id="paraImg1">
-                        <a class="carousel-item" href="#one!"><img src="assets/images/landing1.jpg" width="100%" height="550"></a>
-                        <a class="carousel-item" href="#two!"><img src="assets/images/landing2.jpg" width="100%" height="550"></a>
-                        <a class="carousel-item" href="#three!"><img src="assets/images/landing3.jpg" width="100%" height="550"></a>
+                        <a class="carousel-item" href="#one!"><img src="assets/images/SanFo.jpg" width="100%" height="400"></a>
+                        <a class="carousel-item" href="#two!"><img src="assets/images/SanDiego.JPG" width="100%" height="400"></a>
+                        <a class="carousel-item" href="#three!"><img src="assets/images/Texas.jpg" width="100%" height="400"></a>
                                                        
                     </div>
                     
@@ -64,18 +72,29 @@
                         </div>
                         <div class="row">
                             
-                                <div class="col s5 offset-s1">
+                                <!-- <div class="col s5 offset-s1"> -->
                                         <!-- <div class="col s6"> -->
-                                                    City<br><br>
+                                                    <!-- City<br><br>
                                                     <select class="browser-default" id="city" name="cityName">
                                                         <option value="test_sf">San Francisco</option>
                                                         <option value="test_sd">San Diego</option>
                                                         <option value="abor_ref">Texas</option>
-                                                    </select>
+                                                    </select> -->
                                                 
                                         <!-- </div> -->
                             
-                                                </div>
+                                <!-- </div> -->
+
+                                <div class="input-field col s5 offset-s1">
+                                    <select id="city" name="cityName">
+                                      <option value="" disabled selected>Pick a city</option>
+                                      <option value="1">San Francisco</option>
+                                      <option value="2">San Diego</option>
+                                      <option value="3">Texas</option>
+                                    </select>
+                                    <label>City</label>
+                                  </div>
+
                                 <div class="col s1">
                                     <br><br>
                                         <button class="btn waves-effect waves-light" type="submitHome" id="indexSubmit" name="searchProp"><i class="material-icons">search</i>
@@ -83,6 +102,7 @@
                                 </div>
                             
                             </div>
+                        </form>
                             
                             <div class="row">
                                 <div class="col s4 offset-s1">
@@ -96,13 +116,13 @@
                                 </div>
                             </div>
                         </div>
-                    </form>
+                    
                     
 
 
                       </div>
                       <div class="parallax-container">
-                        <div class="parallax"><img src="assets/images/landing4.jpg" width="100%" height="550"></div>
+                        <div class="parallax"><img src="assets/images/landing1.jpg" width="100%" height="550"></div>
                       </div>
                    
                 
