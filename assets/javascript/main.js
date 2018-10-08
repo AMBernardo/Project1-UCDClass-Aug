@@ -43,13 +43,14 @@ jQuery(document).ready(function(){
 
 
  // Initialize Firebase
- var config = {
-    apiKey: "AIzaSyDR2-15Tdhu7iFhT4MbpbyoxP157PtISIk",
-    authDomain: "doorsteppe.firebaseapp.com",
-    databaseURL: "https://doorsteppe.firebaseio.com",
-    projectId: "doorsteppe",
-    storageBucket: "doorsteppe.appspot.com",
-    messagingSenderId: "808880878005"
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyDU1RNQPTorPNLi0J9wZYXJY_kOwa9_B60",
+    authDomain: "realestate-459b5.firebaseapp.com",
+    databaseURL: "https://realestate-459b5.firebaseio.com",
+    projectId: "realestate-459b5",
+    storageBucket: "realestate-459b5.appspot.com",
+    messagingSenderId: "770633504288"
   };
   firebase.initializeApp(config);
 
@@ -389,7 +390,7 @@ $(".more").on('click' , function(Data){
 
 
 
-//================================================property page code(ajax and population)
+//================================================property page code(ajax and population)============================================================
 //result image click gets the id, sends you to property page and calls ajax
 $(document).on('click', 'img.imageLink', function (){
     console.log($(this).attr('data-lid'));
@@ -580,7 +581,7 @@ $('#signbtn').on('click', e =>{
         // add a realtime listener to detect user suthentication state changes
         firebase.auth().onAuthStateChanged(firebaseUser =>{
                 if(firebaseUser){
-                    console.log(firebaseUser)
+                    console.log(firebaseUser);
                 } else {
                     console.log('not logged in');
                 }
@@ -593,7 +594,11 @@ $('#signbtn').on('click', e =>{
         // TODO: store users name and favourited homes in realtime database using their unique UID
 // ==================================================================================================END OF USER AUTHENTICATION CODE===========================================================================================================
 //=======================more firebase stufffffff=============================
+ var database = firebase.database();
 
+    function favoriteProcess(){
+
+    };
 
 
 
