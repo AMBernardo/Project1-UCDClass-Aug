@@ -48,6 +48,13 @@ div.nav-wrapper{
     padding-bottom: -10px !important;
 }
 
+/* property page header */
+#propertyAdd{
+    margin-left: -1rem !important;
+}
+
+
+
 footer.page-footer {
     background-color: #1c746b;
     clear: both;
