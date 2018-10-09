@@ -3,11 +3,11 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>index of Project1</title>
+    <title>Doorstep.info</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="assets/css/reset.css">
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
-    <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css">
+    <!-- <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css"> -->
     <link rel="stylesheet" type="text/css" media="screen" href="assets/css/materialize.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
@@ -23,7 +23,19 @@
         label{
             font-size: 20px !important;
         }
+
+        .section{
+            margin-top: -3rem !important;
+        }
         
+        ul.indicators{
+            display: none !important;
+        }
+
+        footer.page-footer {
+    background-color: #1c746b;
+    padding-bottom: 5px;
+    }
     </style>
 </head>
 <body>
@@ -50,11 +62,45 @@
                     <li><a href="Login.html">Log In</a></li>
                 </ul> -->
                 
-                <div class="carousel carousel-slider" id="paraImg1">
-                        <a class="carousel-item" href="#one!"><img src="assets/images/SanFo.jpg" width="100%" height="400"></a>
-                        <a class="carousel-item" href="#two!"><img src="assets/images/SanDiego.JPG" width="100%" height="400"></a>
-                        <a class="carousel-item" href="#three!"><img src="assets/images/Texas.jpg" width="100%" height="400"></a>
+                <!-- <div class="carousel carousel-slider" id="paraImg1">
+                        <a class="carousel-item white-text" href="#one!"><img src="assets/images/SanFo.jpg" width="100%" height="400vh"></a>
+                        <a class="carousel-item" href="#two!"><img src="assets/images/SanDiego.JPG" width="100%" height="400vh"></a>
+                        <a class="carousel-item" href="#three!"><img src="assets/images/Texas.jpg" width="100%" height="400vh"></a>
                                                        
+                    </div> -->
+
+                    <div class="slider">
+                            <ul class="slides">
+                                <li>
+                                <img src="assets/images/finder.jpg">
+                                <div class="caption center-align">
+                                  <h3 class="slogan">Make your dream home come true</h3>
+                                  <h5 class="light grey-text text-lighten-3 slogan">Let us help you</h5>
+                                </div>
+                              </li>
+                              <li>
+                                <img src="assets/images/SanFo.jpg" width="100%" height="550"> <!-- random image -->
+                                <div class="caption left-align">
+                                  <h3 class="slogan">San Francisco</h3>
+                                  <h5 class="light grey-text text-lighten-3 slogan">City by the bay!</h5>
+                                </div>
+                              </li>
+                              <li>
+                                <img src="assets/images/SanDiego.JPG"> <!-- random image -->
+                                <div class="caption left-align">
+                                  <h3 class="slogan">San Diego</h3>
+                                  <h5 class="light grey-text text-lighten-3 slogan">America's finest city!</h5>
+                                </div>
+                              </li>
+                              <li>
+                                <img src="assets/images/Texas.jpg"> <!-- random image -->
+                                <div class="caption right-align">
+                                  <h3 class="slogan">Texas</h3>
+                                  <h5 class="light grey-text text-lighten-3 slogan">Everything is bigger in Texas!</h5>
+                                </div>
+                              </li>
+                              
+                            </ul>
                     </div>
                     
                     <!-- <div class="parallax-container " id="paraImg1">
@@ -65,7 +111,7 @@
                       <form>
                       <div class="section white">
                         <div class="row container-fluid">
-                            <div class="col s12 offset-s1">
+                            <div class="col s11 offset-s1">
                                 <h2 class="header">Find your dream home</h2>
                             </div>
                             

@@ -7,12 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="assets/css/reset.css">
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
-    <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css">
+   
     <link rel="stylesheet" type="text/css" media="screen" href="assets/css/materialize.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
     <link rel="stylesheet" href="assets/css/propertySearchCSS.css">
     <script src="https://www.gstatic.com/firebasejs/5.5.3/firebase.js"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css">
 
 
 </head>
@@ -41,8 +42,8 @@
                 
     <div class="container">
         <div class="row">
-            <div class="col s12">
-                <h5>Property Search</h5>
+            <div class="col s4 center-align  offset-s4">
+                <h4>Property Search</h4>
             </div>
         </div>
         <div class="row">
@@ -69,20 +70,30 @@
             </div> -->
 
             <form>
-            <div class="col s6">
-                        City<br>
+            <div class="input-field col s6">
+                        <!-- City<br>
                         <select class="browser-default" id="city" name="cityName">
                             <option value="test_sf">San Francisco</option>
                             <option value="test_sd">San Diego</option>
                             <option value="abor_ref">Texas</option>
+                        </select> -->
+                        
+                        <select id="city" name="cityName">
+                                <option value="" disabled selected>Choose a city</option>
+                                <option value="test_sf">San Francisco</option>
+                                <option value="test_sd">San Diego</option>
+                                <option value="abor_ref">Texas</option>
                         </select>
+                        <label>City</label>
+                        
                     
             </div>
+            
         </div>
         <div class="row">
             <div class="col s6">
                 
-                    Property Type<br>
+                    <!-- Property Type<br>
                     <select class="browser-default" name="houseType">
                         <option value="houseCondo">House / Condo</option>
                         <option value="house">House Only</option>
@@ -91,12 +102,24 @@
                         <option value="multi">Multi-Unit Residential</option>
                         <option value="mobile">Mobile Home</option>
                         <option value="commercial">Commercial</option>
+                    </select> -->
+
+                    <select name="houseType">
+                        <option value="" disabled selected>Choose a housetype</option>
+                        <option value="houseCondo">House / Condo</option>
+                        <option value="house">House Only</option>
+                        <option value="condo">Condo Only</option>
+                        <option value="lots">Lots / Land</option>
+                        <option value="multi">Multi-Unit Residential</option>
+                        <option value="mobile">Mobile Home</option>
+                        <option value="commercial">Commercial</option>
                     </select>
+                    <label>Property Type</label>
                 
             </div>
         
             <div class="col s6">
-                <p>Status</p><br>
+                <!-- <p>Status</p><br>
                 <label class="radio-inline">
                     <input class="radio" name="status" value="active" type="radio" checked="checked">
                     For Sale
@@ -108,9 +131,27 @@
                 <label class="radio-inline">
                     <input class="radio" name="status" value="sold" type="radio" >
                     Sold
-                </label>
+                </label> -->
+                
+                <p>
+                        <label>
+                          <input name="status" type="radio" value="active" checked />
+                          <span>For Sale</span>
+                        </label>
+                        <label>
+                          <input name="status" type="radio" value="pending"/>
+                          <span>Pending</span>
+                        </label>
+                        <label>
+                          <input name="status" type="radio" value="sold"/>
+                          <span>Sold</span>
+                        </label>
+                </p>
             </div>
         </div>
+
+
+
         <div class="row">
             
             <div class="col s3">
@@ -125,48 +166,66 @@
                         <input type="text" id="minsqft" name="minSq" value><br>
                 
             </div>
-            <div class="col s2">
+            <div class="input-field col s3">
                 
-                    Beds<br>
+                    <!-- Beds<br> -->
                         <!-- <input type="text" name="minSq" value><br> -->
-                        <select class="browser-default" id="bed" name="bedCount">
+                        <!-- <select class="browser-default" id="bed" name="bedCount">
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
                                 <option value="4">4</option>
                                 <option value="5">5+</option>
-                        </select>
+                        </select> -->
+
+                        
+                    <select id="bed" name="bedCount">
+                            <option value="" disabled selected>Number of beds</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5+</option>
+                    </select>
+                    <label>Beds</label>
                 
             </div>
-            <div class="col s2">
+            <div class="input-field col s3">
                 
-                    Baths<br>
-                        <!-- <input type="text" name="minSq" value><br> -->
+                    <!-- Baths<br>
+                        <input type="text" name="minSq" value><br>
                         <select class="browser-default" id="bathroom" name="bath">
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
                                 <option value="4">4</option>
                                 <option value="5">5+</option>
+                        </select> -->
+
+                        <select id="bathroom" name="bath">
+                                <option value="" disabled selected>Number of baths</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5+</option>
                         </select>
+                        <label>Baths</label>
                 
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col s6">
+                <!-- <input class="waves-effect waves-light btn" id="submit" type="submit" value="Submit">  -->
+                <button class="btn waves-effect waves-light" id="submit" type="submit" name="action">Submit
+                        <i class="material-icons right">send</i>
+                      </button>
             </div>
         </div>
     </form>
     </div>
-    <input class="waves-effect waves-light btn" id="submit" type="submit" value="Submit"> 
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
+   
     
     
     <footer class="page-footer">
