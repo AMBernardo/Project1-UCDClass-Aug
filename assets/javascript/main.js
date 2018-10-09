@@ -554,7 +554,7 @@ function listPage(result){
 
 // ==================================================================================================USER AUTHENTICATION CODE===========================================================================================================
 
-    if(!txtEmail.val() || !txtPass.val()) return M.toast({html: 'ERROR PLEASE FILL OUT EVERYTHING', classes: 'errorToast ' });
+
 
 
 
@@ -580,9 +580,6 @@ firebase.auth().onAuthStateChanged(function(user) {
       uid = activeUser.uid 
       email = activeUser.email;
       console.log(email, activeUser, uid);
-      ///======this is for the favorites please accept change==========================================
-     
-      ////end of favoriting code==========================================
       $('#sideNavEmail').text(email);
       $('#usergreet').text('Welcome    ' + email);
       $('.loginNav').attr('style', 'display: none');
