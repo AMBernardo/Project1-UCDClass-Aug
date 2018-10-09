@@ -407,8 +407,9 @@ function populateInfo(){
     });
 };
 function listPage(result){
-    $('#propertyAdd').attr('value', result.UnparsedAddress).text(result.UnparsedAddress)
-    $('#address').attr('value', result.UnparsedAddress)
+    $('#propertyAdd').attr('value', result.UnparsedAddress).text(result.UnparsedAddress);
+    $('#address').attr('value', result.UnparsedAddress);
+    $('#favoriteButton').attr('data-set',(result.OriginatingSystemKey)).attr('data-lid',(result.ListingKey))
     for( var i =0; i < result.Media.length; i++){
         $('#propCarousel').append(
           $('<a/>',{'class':'carousel-item'}).append(
@@ -527,6 +528,7 @@ var dbRef = firebase.database();
 var usersRef = dbRef.ref()
 var auth = null;
 var activeUser;
+var uid;
 var name;
 var email;
 
@@ -535,16 +537,22 @@ firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
         //if there is a signed in user
       activeUser = user;
-      console.log(activeUser);
-      UID =firebase.auth().activeUser.uid
-            email = activeUser.email;
-            console.log( email, activeUser)
+      uid = activeUser.uid 
+      email = activeUser.email;
+      console.log(email, activeUser, uid);
+      ///======this is for the favorites please accept change==========================================
+     
+      ////end of favoriting code==========================================
+      $('#sideNavEmail').text(email);
+      $('#usergreet').text('Welcome    ' + email);
       $('.loginNav').attr('style', 'display: none');
       $('.userDisplay').attr('style', 'display: inline');
+      $('#favoriteButton').attr('style', 'display: inline')
     } else {
         // No user is signed in.
         $('.loginNav').attr('style', 'display: inline');
         $('.userDisplay').attr('style', 'display: none');
+        $('#favoriteButton').attr('style', 'display: none')
     }
   });
 
@@ -603,9 +611,8 @@ firebase.auth().onAuthStateChanged(function(user) {
         
         
     })
-     var user =JSON.parse(localStorage.getItem('user id:'));
-    var email = user.email
-    $('#usergreet').text('Welcome    ' + email)
+    
+    
     
     $('#logout').on('click', function(e){
         e.preventDefault(
@@ -618,48 +625,84 @@ firebase.auth().onAuthStateChanged(function(user) {
               }))
             })   
     // ==================================================================================================END OF USER AUTHENTICATION CODE===========================================================================================================
+    
+    
     //============================favorite mechanism===============================================\\
+    firebase.auth().onAuthStateChanged(function(user) {
+        activeUser = user;
+        uid = activeUser.uid 
+        if (user) {
+            firebase.database().ref('users/' + uid +  '/favorites' ).on('child_added',function(snapshot){
+                
+                console.log(snapshot.val())
+                
+                let LID = snapshot.val().LID;
+                let dataSet =snapshot.val().ds;    
+                let URL = 'https://rets.io/api/v2/'+ dataSet +'/listings/'+ LID +'?access_token=520a691140619b70d86de598796f13c1'
+                $.ajax({ 
+                    url: URL,
+                    type: "GET", /* or type:"GET" or type:"PUT" */
+                    dataType: "json",
+                    data: {
+                    },
+                    success: function (result) {
+                        console.log(result)
+                        populateFavorites(result.bundle)
+                    },
+                    error: function () {
+                        console.log("error");
+                    }
+                });
+                // 
+                
+            });
+        }
+        else{ return}
+    });
+
+    function newFavorite(LID, uid, ds){
+        var newFavoriteData =   {
+            LID: LID,
+            ds: ds
+        };
+
+        var newFavoriteKey = firebase.database().ref('users/' + uid).child('favorites').push().key;
+
+        var updates = {};
+        updates['/favorites/' + newFavoriteKey] = newFavoriteData;
+
+        return  firebase.database().ref('users/' + uid).update(updates);
+
+    }
+
+    function populateFavorites(result){
+        if(result.Media[0]) {imgurl = result.Media[0].MediaURL;}
+        else imgurl = './assets/images/placeholderhouse2.jpeg';
+
+        $('#favePost').append(
+             $('<div/>',{'class': 'card col s3 m3 '}).append(
+                $('<div/>',{'class':'card-image waves-effect waves-block waves-light'}).append(
+                    //image block=================
+                        $('<img>', {'class':'responsive-img imageLink'}).attr('data-set',(result.OriginatingSystemKey)).attr('data-lid',(result.ListingKey)).attr('src',imgurl).attr('alt','test pic')
+                    ).append(
+                        $('<div/>', {'class': 'caption white black-text text-lighten-2 right-align'}).append(
+                            $('<h4/>').text('$'+result.ListPrice)//Price Header 
+                        )
+                    )
+             )
+        ).append()               
+    };
+
+
+
     $('#favoriteButton').on('click', function (e) {
         e.preventDefault();
         var LID = $(this).attr('data-lid');
         var ds =$(this).attr('data-set');
-        var user = firebase.auth().currentUser;
-        var faveLi = {
-            LID: LID,
-            dataSet: ds,
-        }
-
-        dbRef.ref('user/' + user).push({
-           faveLi: faveLi,
-        });
-    });
-
-    dbRef.ref('user/' + activeUser).on('child_added', function(childSnapshot){
-        let LID = childSnapshot.LID;
-        let dataSet = childSnapshot.dataSet;    
-        let URL = 'https://rets.io/api/v2/'+ dataSet +'/listings/'+ LID +'?access_token=520a691140619b70d86de598796f13c1'
-        $.ajax({ 
-            url: URL,
-            type: "GET", /* or type:"GET" or type:"PUT" */
-            dataType: "json",
-            data: {
-            },
-            success: function (result) {
-                console.log(result); 
-                populateFavorites(result)
-            },
-            error: function () {
-                console.log("error");
-            }
-        });
-        
-        function populateFavorites(result){
-            $('#favePost').append(
-                // all the fuckin info we need
-            )
-
-        }
-            
+        console.log('ON CLICK DS AND LID= ' + ds, LID)
+        // var user = firebase.auth().currentUser;
+        newFavorite(LID, uid, ds)
+       
     });
     
     //========================================end favoriting===========================\\
