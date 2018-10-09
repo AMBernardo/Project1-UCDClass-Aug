@@ -1,6 +1,8 @@
+M.AutoInit();
 jQuery(document).ready(function(){
+
     // getDataBridge()
-    M.AutoInit();
+   
     $('.dropdown-trigger').dropdown();
     $(".sidenav").sidenav();
     $(".tabs").tabs();
@@ -77,9 +79,9 @@ jQuery(document).ready(function(){
 // ================================================================================PROPERTY SEARCH CODE===========================================================================================================
 $('#submit').on('click',function (event){
     event.preventDefault();
-    if(!$('#city').val() || !$('#bathroom').val() || ! $('#bed').val() || !$('#minsqft').val() || !$('#maxprice').val()) return alert('Please Fill Out Forms');
+    if(!$('#city').val() || !$('#bathroom').val() || ! $('#bed').val() || !$('#minsqft').val() || !$('#maxprice').val()) return M.toast({html: 'PLEASE FILL OUT EVERYTHING', classes: 'errorToast ' });
     else{
-    var URL = ' https://rets.io/api/v2/' + $('#city').val() + '/listings?access_token=520a691140619b70d86de598796f13c1&limit=25&BathroomsFull.eq=' + $('#bathroom').val() + '&BedroomsTotal.eq=' + $('#bed').val() + '&LotSizeSquareFeet.gte=' + $('#minsqft').val() + '&ListPrice.lte=' + $('#maxprice').val()
+    var URL = ' https://rets.io/api/v2/' + $('#city').val() + '/listings?access_token=520a691140619b70d86de598796f13c1&limit=100&BathroomsFull.eq=' + $('#bathroom').val() + '&BedroomsTotal.eq=' + $('#bed').val() + '&LotSizeSquareFeet.gte=' + $('#minsqft').val() + '&ListPrice.lte=' + $('#maxprice').val()
     $.ajax({ 
         url: URL,
         type: "GET", /* or type:"GET" or type:"PUT" */
@@ -90,8 +92,17 @@ $('#submit').on('click',function (event){
             var object = {url: URL, response : result}
             localStorage.removeItem('result')
             localStorage.setItem('result', JSON.stringify(object));
-            window.location.href = 'results.html'
             
+            if(result.bundle.length <= 0){
+                M.toast({html: 'ERROR NO RESULTS', classes: 'errorToast ' })
+              
+               
+                
+            }else{
+                window.location.href = 'results.html'
+               
+            }
+
         },
         error: function () {
             console.log("error");
@@ -171,7 +182,7 @@ $('#1').on('click',function (event){
             google.maps.event.addListener(marker, 'click', function() {
                 //TODO: append clicked house markers in cards below the map
                 $('#modal1').modal('open'); 
-                $("#modal-text").html(this.customInfo)
+                $("#modal-text").html(this.customInfo) 
             });
 
         }
@@ -235,12 +246,8 @@ $(".modal-close").on('click' , function(){
 
 // ==================================================================================================END OF MAP SEARCH CODE===========================================================================================================
 
+//adds more cards
 
-
-$(".more").on('click', function(){
-         getDataBridge();   
-         
-})
 
 // ==================================================================================================RESULTS CODE===========================================================================================================
 
@@ -255,6 +262,7 @@ function getDataBridge(){
     var Data =JSON.parse(localStorage.getItem('result'));
     console.log(Data)
     generateCards(Data.response)
+
 };
 
 
@@ -279,38 +287,32 @@ function booleanArrayDisplay(bln, arry){
         };
     }else return 'N/A';
 };
-
-
-function generateCards(Data){
-//     var a = $('div#rowPost');
-//     for(var i = 0; i < Data.bundle.length; i++){
-//         var result = Data.bundle[i];
-// =======
-//my code for more cards
-}
+var x = 0;
 $(".more").on('click' , function(Data){
-
+    x += 18
     getDataBridge();
+     $(".tabs").tabs();
+     
 });
-    function generateCards(Data){
-    
    
 
-  
+function generateCards(Data){
+    console.log(x)
     var a = $('div#rowPost');
-    for( var i = 0; i < 12; i++){
-       
-       
-        
-       
+    for(var i = x; i < x + 18; i++){
         var result = Data.bundle[i];
+       console.log(i)
+
+       if (x >= 100){
+        M.toast({html: 'ERROR NO MORE HOMES', classes: 'errorToast ' });
+     }
         
   
         //image fallback
         if(result.Media[0]) {imgurl = result.Media[0].MediaURL;}
         //else if(street view) show street view
 
-        else imgurl = './assets/images/placeholderhouse2.jpeg'      
+        else imgurl = './assets/images/placeholderHouse2.jpeg'      
 
         
     //card generation 
@@ -578,9 +580,8 @@ var displayName = $('#name')
 // add login event
 $('#btnLogIn').on('click', e =>{
 // get email and password fields
-    if(!txtEmail.val() || !txtPass.val()) return $('#modal3').modal('open');
-    else{
-        
+    if(!txtEmail.val() || !txtPass.val()) return M.toast({html: 'ERROR PLEASE FILL OUT EVERYTHING', classes: 'errorToast ' });
+    else{  
         var email = txtEmail.val()
         var pass = txtPass.val()
         var auth = firebase.auth()
@@ -595,7 +596,10 @@ $('#btnLogIn').on('click', e =>{
 //modal 
 $('#signbtn').on('click', e =>{
     // get email and password fields
-    if (!txtSEmail.val() || !txtSPass.val() || !displayName.val()) return $('#modal3').modal('open');  
+    if (!txtSEmail.val() || !txtSPass.val() || !displayName.val()){
+        e.preventDefault();
+        return  M.toast({html: 'ERROR PLEASE FILL OUT EVERYTHING', classes: 'errorToast '});  
+    }
     else{
          $('#modal2').modal('open');
         var email = txtSEmail.val()
@@ -639,7 +643,7 @@ $('#signbtn').on('click', e =>{
 //==================================================================================================Index Code==================================================
 $('#indexSubmit').on('click',function (event){
     event.preventDefault();
-    var URL = 'https://rets.io/api/v2/' + $('#indexcity').val() + '/listings?access_token=520a691140619b70d86de598796f13c1&limit=25'
+    var URL = 'https://rets.io/api/v2/' + $('#indexcity').val() + '/listings?access_token=520a691140619b70d86de598796f13c1&limit=100'
     $.ajax({ 
         url: URL,
         type: "GET", /* or type:"GET" or type:"PUT" */

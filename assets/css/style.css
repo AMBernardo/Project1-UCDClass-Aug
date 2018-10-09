@@ -52,3 +52,10 @@ footer.page-footer {
 #indexSubmit{
     height: 3.2em;
 }
+.errorToast{
+    background-color: orange;
+}
+.more-homes{
+margin-top: -2rem;
+background-color: #1c486b;
+}
