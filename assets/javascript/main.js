@@ -515,7 +515,7 @@ function listPage(result){
   var dbRef = firebase.database();
   var usersRef = dbRef.ref()
   var auth = null;
-
+  var user = Auth.currentUser;
   //Register
   $('#signbtn').on('click', function (e) {
     e.preventDefault();
@@ -533,22 +533,64 @@ function listPage(result){
           .then(function() {
             var user = firebase.auth().currentUser; 
             var user = firebase.auth().currentUser;
-        user.updateProfile({
-            displayName: $('#name').val().trim()
-        }
-             );
+                user.updateProfile({
+                    displayName: $('#name').val().trim()
+                    });
           })
-          .catch(function(error){
-            console.log("Error creating user:", error);
-          });
+            .catch(function(error){
+                console.log("Error creating user:", error);
+                });
     });
   
+    $('#favoriteButton').on('click', function (e) {
+        e.preventDefault();
+        var LID = $(this).attr('data-lid');
+        var ds =$(this).attr('data-set');
+        var user = firebase.auth().currentUser;
+        var faveLi = {
+            LID: LID,
+            dataSet: ds,
+        }
 
+        dbRef.ref('user/' + user).push({
+           faveLi: faveLi,
+        });
+    });
 
+    dbRef.ref('user/' + user).on('child_added', function(childSnapshot){
+        let LID = childSnapshot.LID;
+        let dataSet = childSnapshot.dataSet;    
+        let URL = 'https://rets.io/api/v2/'+ dataSet +'/listings/'+ LID +'?access_token=520a691140619b70d86de598796f13c1'
+        $.ajax({ 
+            url: URL,
+            type: "GET", /* or type:"GET" or type:"PUT" */
+            dataType: "json",
+            data: {
+            },
+            success: function (result) {
+                console.log(result); 
+                populateFavorites(result)
+            },
+            error: function () {
+                console.log("error");
+            }
+        });
+        
+        function populateFavorites(result){
+            $('#favePost').append(
+                // all the fuckin info we need
+            )
+
+        }
+        
+
+        
+    });
+    
 
 // ==================================================================================================END OF USER AUTHENTICATION CODE===========================================================================================================
 //=======================more firebase stufffffff=============================
- var database = firebase.database();
+
 
 
 
