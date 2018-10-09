@@ -1,6 +1,8 @@
+M.AutoInit();
 jQuery(document).ready(function(){
+
     // getDataBridge()
-    M.AutoInit();
+   
     $('.dropdown-trigger').dropdown();
     $(".sidenav").sidenav();
     $(".tabs").tabs();
@@ -39,6 +41,25 @@ jQuery(document).ready(function(){
 //         }
 //     });
 // });
+jQuery(document).ready(function(){
+    // getDataBridge()
+    M.AutoInit();
+    $('.dropdown-trigger').dropdown();
+    $(".sidenav").sidenav();
+    $(".tabs").tabs();
+    $(".modal").modal();
+    $(".parallax").parallax();
+    $('.dropdown-trigger').dropdown();
+    $(".sidenav").sidenav();
+    $(".tabs").tabs();
+    $('.parallax').parallax();
+    $('.carousel').carousel();
+    $('.slider').slider({full_width: true});
+    $('.carousel-slider').slider({full_width: true});
+    $('.carousel.carousel-slider').carousel({
+        fullWidth: true
+        });
+    });
 
 
 
@@ -57,9 +78,9 @@ jQuery(document).ready(function(){
 // ================================================================================PROPERTY SEARCH CODE===========================================================================================================
 $('#submit').on('click',function (event){
     event.preventDefault();
-    if(!$('#city').val() || !$('#bathroom').val() || ! $('#bed').val() || !$('#minsqft').val() || !$('#maxprice').val()) return alert('Please Fill Out Forms');
+    if(!$('#city').val() || !$('#bathroom').val() || ! $('#bed').val() || !$('#minsqft').val() || !$('#maxprice').val()) return M.toast({html: 'PLEASE FILL OUT EVERYTHING', classes: 'errorToast ' });
     else{
-    var URL = ' https://rets.io/api/v2/' + $('#city').val() + '/listings?access_token=520a691140619b70d86de598796f13c1&limit=25&BathroomsFull.eq=' + $('#bathroom').val() + '&BedroomsTotal.eq=' + $('#bed').val() + '&LotSizeSquareFeet.gte=' + $('#minsqft').val() + '&ListPrice.lte=' + $('#maxprice').val()
+    var URL = ' https://rets.io/api/v2/' + $('#city').val() + '/listings?access_token=520a691140619b70d86de598796f13c1&limit=100&BathroomsFull.eq=' + $('#bathroom').val() + '&BedroomsTotal.eq=' + $('#bed').val() + '&LotSizeSquareFeet.gte=' + $('#minsqft').val() + '&ListPrice.lte=' + $('#maxprice').val()
     $.ajax({ 
         url: URL,
         type: "GET", /* or type:"GET" or type:"PUT" */
@@ -70,8 +91,17 @@ $('#submit').on('click',function (event){
             var object = {url: URL, response : result}
             localStorage.removeItem('result')
             localStorage.setItem('result', JSON.stringify(object));
-            window.location.href = 'results.html'
             
+            if(result.bundle.length <= 0){
+                M.toast({html: 'ERROR NO RESULTS', classes: 'errorToast ' })
+              
+               
+                
+            }else{
+                window.location.href = 'results.html'
+               
+            }
+
         },
         error: function () {
             console.log("error");
@@ -82,6 +112,8 @@ $('#submit').on('click',function (event){
 })
 // ==================================================================================================PROPERTY SEARCH CODE===========================================================================================================
 
+
+// ==================================================================================================MAP SEARCH CODE===========================================================================================================
 //Map api location data
 function newLocation(newLat,newLng){
     map.setCenter({
@@ -138,7 +170,7 @@ $('#1').on('click',function (event){
             google.maps.event.addListener(marker, 'click', function() {
                 //TODO: append clicked house markers in cards below the map
                 $('#modal1').modal('open'); 
-                $("#modal-text").html(this.customInfo)
+                $("#modal-text").html(this.customInfo) 
             });
 
         }
@@ -195,8 +227,6 @@ $('#3').on('click',function (event){
 $(".modal-close").on('click' , function(){
     $("#modal-text").empty();
 })
-//end of what you need------------------------------------------------
-// end of Map script
 
 
 
@@ -204,8 +234,10 @@ $(".modal-close").on('click' , function(){
 
 // ==================================================================================================END OF MAP SEARCH CODE===========================================================================================================
 
+//adds more cards
 
 
+// ==================================================================================================RESULTS CODE===========================================================================================================
 
 
 // ==================================================================================================RESULTS CODE===========================================================================================================
@@ -217,7 +249,10 @@ function getDataBridge(){
     var Data =JSON.parse(localStorage.getItem('result'));
     console.log(Data)
     generateCards(Data.response)
-     };
+
+};
+
+
 
 //Functions for displaying arrays 
     //ex. el.text(arrayDisplay(arry))
@@ -239,34 +274,32 @@ function booleanArrayDisplay(bln, arry){
         };
     }else return 'N/A';
 };
-
-
-function generateCards(Data){
-//     var a = $('div#rowPost');
-//     for(var i = 0; i < Data.bundle.length; i++){
-//         var result = Data.bundle[i];
-// =======
-//my code for more cards
-}
+var x = 0;
 $(".more").on('click' , function(Data){
-
+    x += 18
     getDataBridge();
+     $(".tabs").tabs();
+     
 });
-    function generateCards(Data){
-    
    
 
+function generateCards(Data){
+    console.log(x)
     var a = $('div#rowPost');
-  
-    for(var i = 0; i < 12; i++){
-       
+    for(var i = x; i < x + 18; i++){
         var result = Data.bundle[i];
+       console.log(i)
+
+       if (x >= 100){
+        M.toast({html: 'ERROR NO MORE HOMES', classes: 'errorToast ' });
+     }
+        
   
         //image fallback
         if(result.Media[0]) {imgurl = result.Media[0].MediaURL;}
         //else if(street view) show street view
 
-        else imgurl = './assets/images/placeholderhouse2.jpeg'      
+        else imgurl = './assets/images/placeholderHouse2.jpeg'      
 
         
     //card generation 
@@ -521,6 +554,13 @@ function listPage(result){
 
 // ==================================================================================================USER AUTHENTICATION CODE===========================================================================================================
 
+    if(!txtEmail.val() || !txtPass.val()) return M.toast({html: 'ERROR PLEASE FILL OUT EVERYTHING', classes: 'errorToast ' });
+
+
+
+ 
+         
+    
 
 //create firebase references
 var Auth = firebase.auth(); 
@@ -559,6 +599,8 @@ firebase.auth().onAuthStateChanged(function(user) {
   //Register
   $('#signbtn').on('click', function (e) {
     e.preventDefault();
+    if(!txtEmail.val() || !txtPass.val()) return M.toast({html: 'ERROR PLEASE FILL OUT EVERYTHING', classes: 'errorToast ' });
+    
     var data = {
       email: $('#email').val().trim(), //get the email from Form
       firstName: $('#name').val().trim(),
@@ -595,6 +637,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 
     $('#btnLogIn').on('click', function(e){
         e.preventDefault();
+        if (!txtSEmail.val() || !txtSPass.val() || !displayName.val())return  M.toast({html: 'ERROR PLEASE FILL OUT EVERYTHING', classes: 'errorToast '}); 
         var data = {
             email: $('#logEmail').val(), //get the email from Form
           password : $('#logPassword').val(), //get the pass from Form
@@ -720,7 +763,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 //==================================================================================================Index Code==================================================
 $('#indexSubmit').on('click',function (event){
     event.preventDefault();
-    var URL = 'https://rets.io/api/v2/' + $('#city').val() + '/listings?access_token=520a691140619b70d86de598796f13c1&limit=25'
+    var URL = 'https://rets.io/api/v2/' + $('#city').val() + '/listings?access_token=520a691140619b70d86de598796f13c1&limit=100'
     $.ajax({ 
         url: URL,
         type: "GET", /* or type:"GET" or type:"PUT" */
