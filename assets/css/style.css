@@ -39,6 +39,13 @@ body {
 
 nav{
     background-color: #1c486b;
+    height: 60px;
+    line-height: 60px;
+    margin-bottom: 2rem;
+}
+
+div.nav-wrapper{
+    padding-bottom: -10px !important;
 }
 
 footer.page-footer {
