@@ -551,9 +551,11 @@ firebase.auth().onAuthStateChanged(function(user) {
     e.preventDefault();
     var data = {
       email: $('#email').val().trim(), //get the email from Form
-      firstName: $('#name').val().trim(),
+      displayName: $('#displayName').val().trim(),
       password : $('#password').val().trim(), //get the pass from Form
-    }
+      phoneNumber: $('#poneNumber').val(),
+      address: $('#userAddress').val(),
+        state: $('#userState').val() }
     if( data.email != '' && data.password != '')
         //create the user
         firebase.auth()
@@ -561,10 +563,12 @@ firebase.auth().onAuthStateChanged(function(user) {
           .then(function() {
             activeUser = firebase.auth().currentUser; 
             activeUser.updateProfile(
-                firebase.database().ref('users/' + firebase.auth().currentUser.uid).set({
-                    displayName: $('#name').val().trim(),
-                    name : $('#name').val().trim(),
-                    email : $('#email').val().trim(),
+                firebase.database().ref('users' + firebase.auth().currentUser.uid).set({
+                    displayName: $('#displayName').val(),
+                    email : $('#email').val(),  
+                    Number: $('#phoneNumber').val(),
+                    address: $('#userAddress').val(), 
+                    state: $('#userState').val(),
                     uid: firebase.auth().currentUser.uid
                 })
             );
@@ -572,9 +576,10 @@ firebase.auth().onAuthStateChanged(function(user) {
         if (firebase.auth().currentUser !== null) 
             console.log("user id: " + firebase.auth().currentUser.uid);
             localStorage.setItem('user id:', JSON.stringify(activeUser));
-            name = dbRef.ref('users/' + firebase.auth().currentUser.uid).displayName;
+            name = dbRef.ref(firebase.auth().currentUser.uid).displayName;
             email = Auth.currentUser.email;
             console.log(name, email, activeUser)
+            window.location.href = 'userPage.html'
             })
                 .catch(function(error){
                     console.log("Error creating user:", error);
@@ -658,7 +663,36 @@ firebase.auth().onAuthStateChanged(function(user) {
 
 //=====================================================================================================USER PAGE CODE================================================================================================================
 
-
+$('#update').on('click',function updateUser(e, uid) {
+e.preventDefault()
+firebase.auth().onAuthStateChanged(function(user) {
+    activeUser = user;
+    uid = activeUser.uid
+if(user){
+    var postData = {
+      displayName: $('#full_name').val(),
+      uid: uid,
+      email: $('#updateEmail').val(),
+      Number: $('#updateNumber').val(),
+      address: $('#updateAddress').val(),
+      state: $('#updateState').val()
+    };
+    var user = firebase.auth().currentUser;
+    user.updateProfile({
+        displayName:$('#full_name').val(),
+        email: $('#updateEmail').val()
+      }).then(function() {
+        // Update successful.
+      })
+    var newUpdateKey = firebase.database().ref(uid).push().key;
+  
+    // Write the new post's data simultaneously in the posts list and the user's post list.
+    var updates = {};
+    updates[newUpdateKey] = postData;
+  
+    return firebase.database().ref(uid).update(updates);
+    
+  }})})
 
 
 //==================================================================================================Index Code==================================================
