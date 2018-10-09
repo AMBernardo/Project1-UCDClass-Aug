@@ -1,22 +1,14 @@
-jQuery(document).ready(function(){
-    // getDataBridge()
-    M.AutoInit();
-    $('.dropdown-trigger').dropdown();
-    $(".sidenav").sidenav();
-    $(".tabs").tabs();
-    $(".modal").modal();
-    $(".parallax").parallax();
-    $('.dropdown-trigger').dropdown();
-    $(".sidenav").sidenav();
-    $(".tabs").tabs();
-    $('.parallax').parallax();
-    $('.carousel').carousel();
-    $('.slider').slider({full_width: true});
-    $('.carousel-slider').slider({full_width: true});
-    $('.carousel.carousel-slider').carousel({
-        fullWidth: true
-        });
-    });
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyDR2-15Tdhu7iFhT4MbpbyoxP157PtISIk",
+    authDomain: "doorsteppe.firebaseapp.com",
+    databaseURL: "https://doorsteppe.firebaseio.com",
+    projectId: "doorsteppe",
+    storageBucket: "doorsteppe.appspot.com",
+    messagingSenderId: "808880878005"
+  };
+  firebase.initializeApp(config);
+  var database = firebase.database();
 //We will use this function once we have the pub dataset
 // $('#submit').on('click',function (event){
 //     event.preventDefault();
@@ -39,26 +31,33 @@ jQuery(document).ready(function(){
 //         }
 //     });
 // });
+jQuery(document).ready(function(){
+    // getDataBridge()
+    M.AutoInit();
+    $('.dropdown-trigger').dropdown();
+    $(".sidenav").sidenav();
+    $(".tabs").tabs();
+    $(".modal").modal();
+    $(".parallax").parallax();
+    $('.dropdown-trigger').dropdown();
+    $(".sidenav").sidenav();
+    $(".tabs").tabs();
+    $('.parallax').parallax();
+    $('.carousel').carousel();
+    $('.slider').slider({full_width: true});
+    $('.carousel-slider').slider({full_width: true});
+    $('.carousel.carousel-slider').carousel({
+        fullWidth: true
+        });
+    });
 
 
 
- // Initialize Firebase
- var config = {
-    apiKey: "AIzaSyDR2-15Tdhu7iFhT4MbpbyoxP157PtISIk",
-    authDomain: "doorsteppe.firebaseapp.com",
-    databaseURL: "https://doorsteppe.firebaseio.com",
-    projectId: "doorsteppe",
-    storageBucket: "doorsteppe.appspot.com",
-    messagingSenderId: "808880878005"
-  };
-  firebase.initializeApp(config);
 
 
 // ================================================================================PROPERTY SEARCH CODE===========================================================================================================
 $('#submit').on('click',function (event){
     event.preventDefault();
-    if(!$('#city').val() || !$('#bathroom').val() || ! $('#bed').val() || !$('#minsqft').val() || !$('#maxprice').val()) return alert('Please Fill Out Forms');
-    else{
     var URL = ' https://rets.io/api/v2/' + $('#city').val() + '/listings?access_token=520a691140619b70d86de598796f13c1&limit=25&BathroomsFull.eq=' + $('#bathroom').val() + '&BedroomsTotal.eq=' + $('#bed').val() + '&LotSizeSquareFeet.gte=' + $('#minsqft').val() + '&ListPrice.lte=' + $('#maxprice').val()
     $.ajax({ 
         url: URL,
@@ -78,8 +77,7 @@ $('#submit').on('click',function (event){
         }
     });
         
-    }
-})
+    });
 // ==================================================================================================PROPERTY SEARCH CODE===========================================================================================================
 
 
@@ -102,15 +100,25 @@ $("#1").on('click', function ()
 newLocation(37.774,-122.431297);
 });
 
-$("#2").on('click', function ()
-{
-newLocation(32.715736,-117.161087);
+$("#2").on('click', function (){
+    newLocation(32.715736,-117.161087);
 });
 
-$("#3").on('click', function ()
-{
-newLocation(30.267153, -97.7430608);
+$("#3").on('click', function (){
+    newLocation(30.267153, -97.7430608);
 })
+$('.dropdown-trigger').dropdown();
+$(".sidenav").sidenav();
+$(".tabs").tabs();
+$('.parallax').parallax();
+$('.slider').slider({full_width: true});
+$('.carousel-slider').slider({full_width: true});
+
+$('.carousel').carousel();
+setInterval (function(){
+    $('.carousel').carousel('next');
+}, 2000);
+// autoplay function for carousel
 
 var map;
 function initMap(){
@@ -141,7 +149,6 @@ $('#1').on('click',function (event){
                 $('#modal1').modal('open'); 
                 $("#modal-text").html(this.customInfo)
             });
-
         }
 }});
 
@@ -204,15 +211,15 @@ $('#3').on('click',function (event){
 
 
 // ==================================================================================================RESULTS CODE===========================================================================================================
-
-var Data =JSON.parse(localStorage.getItem('result'));
 // no need for ajax call getting data from local storage
 // //Text Search Ajax Call
 function getDataBridge(){
     var Data =JSON.parse(localStorage.getItem('result'));
     console.log(Data)
     generateCards(Data.response)
-     };
+};
+
+
 
 //Functions for displaying arrays 
     //ex. el.text(arrayDisplay(arry))
@@ -235,32 +242,20 @@ function booleanArrayDisplay(bln, arry){
     }else return 'N/A';
 };
 
-
 function generateCards(Data){
-//     var a = $('div#rowPost');
-//     for(var i = 0; i < Data.bundle.length; i++){
-//         var result = Data.bundle[i];
-// =======
-//my code for more cards
-}
-$(".more").on('click' , function(Data){
-
-    getDataBridge();
-});
-    function generateCards(Data){
-    
-   
-
     var a = $('div#rowPost');
-  
-    for(var i = 0; i < 12; i++){
-       
+    for(var i = 0; i < Data.bundle.length; i++){
         var result = Data.bundle[i];
-  
         //image fallback
-        if(result.Media[0]) {imgurl = result.Media[0].MediaURL;}
+        if(result.Media[0]) {var imgurl = result.Media[0].MediaURL;}
         //else if(street view) show street view
-        else imgurl = './assets/images/placeholderhouse2.jpeg'      
+
+        else function streetview() {
+            var address = result.UnparsedAddress
+            $('.responsive-img').html('<img src="http://maps.googleapis.com/maps/api/streetview?size=500x500&sensor=false&location='+address+'">');
+                
+        };
+        
         
     //card generation 
             a.append(
@@ -384,7 +379,7 @@ $(document).on('click', 'img.imageLink', function (){
     localStorage.removeItem('lid','dataset')
     localStorage.setItem('lid', $(this).attr('data-lid'))
     localStorage.setItem('dataset', $(this).attr('data-set'))
-    window.location.href='propertyPage.html'
+    window.location.replace('propertyPage.html')
 });
 function populateInfo(){
     let lid = localStorage.getItem('lid');
@@ -517,66 +512,44 @@ function listPage(result){
 
 
 // ==================================================================================================USER AUTHENTICATION CODE===========================================================================================================
-// user sign up/in
-// get user login elements
-var txtEmail = $('#logemail');
-var txtPass =  $('#logpassword');
-var loginBtn =  $('#btnLogIn');
-
-// get user sign up elements
-var txtSEmail = $('#email');
-var txtSPass = $('#password');
-var userName = $('#name')
-var btnSignIn = $('#signbtn')
-var displayName = $('#name')
-// add login event
-$('#btnLogIn').on('click', e =>{
-// get email and password fields
-    if(!txtEmail.val() || !txtPass.val()) return alert('Please Fill Out Forms');
-    else{
-        var email = txtEmail.val()
-        var pass = txtPass.val()
-        var auth = firebase.auth()
-        // sign in
-        var promise = auth.signInWithEmailAndPassword(email, pass)
-        promise.catch(e => console.log(e.message));
-        window.location.href='userPage.html';
-    }
-});
-
 // add signup event 
 
-$('#signbtn').on('click', e =>{
-    // get email and password fields
-    if (!txtSEmail.val() || !txtSPass.val() || !displayName.val()) return alert('Please Fill Out All forms');
-    else{
-        var email = txtSEmail.val()
-        var pass = txtSPass.val()
-        var auth = firebase.auth()
-        var userName = displayName.val()
-        // sign in
-        var promise = auth.createUserWithEmailAndPassword(email, pass).then(function(user) {
-            user.firebase.auth()({
-                displayName: userName   
-            });   
-        promise.catch(e => console.log(e.message));
-        
-        });
+  //create firebase references
+  var Auth = firebase.auth(); 
+  var dbRef = firebase.database();
+  var usersRef = dbRef.ref()
+  var auth = null;
 
-        // add a realtime listener to detect user suthentication state changes
-        firebase.auth().onAuthStateChanged(firebaseUser =>{
-                if(firebaseUser){
-                    console.log(firebaseUser)
-                } else {
-                    console.log('not logged in');
-                }
-
-            });
+  //Register
+  $('#signbtn').on('click', function (e) {
+    e.preventDefault();
+    var data = {
+      email: $('#email').val().trim(), //get the email from Form
+      firstName: $('#name').val().trim()
+    };
+    var passwords = {
+      password : $('#password').val().trim(), //get the pass from Form
+    }
+    if( data.email != '' && passwords.password != '')
+        //create the user
+        firebase.auth()
+          .createUserWithEmailAndPassword(data.email, passwords.password)
+          .then(function() {
+            var user = firebase.auth().currentUser; 
+            var user = firebase.auth().currentUser;
+        user.updateProfile({
+            displayName: $('#name').val().trim()
         }
-        window.location.href='userPage.html'
+             );
+          })
+          .catch(function(error){
+            console.log("Error creating user:", error);
+          });
     });
+  
 
-        // TODO: store users name and favourited homes in realtime database using their unique UID
+
+
 // ==================================================================================================END OF USER AUTHENTICATION CODE===========================================================================================================
 
 
@@ -597,7 +570,7 @@ $('#indexSubmit').on('click',function (event){
             var object = {url: URL, response : result}
             localStorage.removeItem('result')
             localStorage.setItem('result', JSON.stringify(object));
-            window.location.href = "results.html"; 
+            window.location.href = 'results.html'
             
         },
         error: function () {
@@ -610,6 +583,8 @@ $('#indexSubmit').on('click',function (event){
     $('#advanced').on('click',function (event){
         event.preventDefault();
 
-        window.location.href= "propertysearch.html"; 
+        window.location.href ="propertysearch.html"
 
-    });
+$('.carousel.carousel-slider').carousel({
+    fullWidth: true
+    })});
