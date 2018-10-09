@@ -519,16 +519,31 @@ function listPage(result){
 
 
 // ==================================================================================================USER AUTHENTICATION CODE===========================================================================================================
-// add signup event 
 
-  //create firebase references
-  var Auth = firebase.auth(); 
-  var dbRef = firebase.database();
-  var usersRef = dbRef.ref()
-  var auth = null;
-  var user;
-  var name;
-  var email;
+
+//create firebase references
+var Auth = firebase.auth(); 
+var dbRef = firebase.database();
+var usersRef = dbRef.ref()
+var auth = null;
+var activeUser;
+var name;
+var email;
+
+// current user check
+firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+        //if there is a signed in user
+      activeUser = user;
+      console.log(activeUser);
+      $('.loginNav').attr('style', 'display: none');
+      $('.userDisplay').attr('style', 'display: inline');
+    } else {
+        // No user is signed in.
+        $('.loginNav').attr('style', 'display: inline');
+        $('.userDisplay').attr('style', 'display: none');
+    }
+  });
 
   //Register
   $('#signbtn').on('click', function (e) {
@@ -543,8 +558,8 @@ function listPage(result){
         firebase.auth()
           .createUserWithEmailAndPassword(data.email, data.password)
           .then(function() {
-            user = firebase.auth().currentUser; 
-            user.updateProfile(
+            activeUser = firebase.auth().currentUser; 
+            activeUser.updateProfile(
                 firebase.database().ref('users/' + firebase.auth().currentUser.uid).set({
                     displayName: $('#name').val().trim(),
                     name : $('#name').val().trim(),
@@ -555,10 +570,10 @@ function listPage(result){
                 
         if (firebase.auth().currentUser !== null) 
             console.log("user id: " + firebase.auth().currentUser.uid);
-            localStorage.setItem('user id:', JSON.stringify(user));
+            localStorage.setItem('user id:', JSON.stringify(activeUser));
             name = dbRef.ref('users/' + firebase.auth().currentUser.uid).displayName;
             email = Auth.currentUser.email;
-            console.log(name, email, user)
+            console.log(name, email, activeUser)
             })
                 .catch(function(error){
                     console.log("Error creating user:", error);
@@ -585,7 +600,7 @@ function listPage(result){
     })
     // var user =JSON.parse(localStorage.getItem('user id:'));
     // var email = user.email
-    $('#usergreet').text('Welcome    ' + email)
+    $('#usergreet').text('Welcome  ' + email)
     
     
     // ==================================================================================================END OF USER AUTHENTICATION CODE===========================================================================================================
@@ -605,7 +620,7 @@ function listPage(result){
         });
     });
 
-    dbRef.ref('user/' + user).on('child_added', function(childSnapshot){
+    dbRef.ref('user/' + activeUser).on('child_added', function(childSnapshot){
         let LID = childSnapshot.LID;
         let dataSet = childSnapshot.dataSet;    
         let URL = 'https://rets.io/api/v2/'+ dataSet +'/listings/'+ LID +'?access_token=520a691140619b70d86de598796f13c1'
