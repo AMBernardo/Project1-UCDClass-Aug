@@ -562,6 +562,7 @@ var dbRef = firebase.database();
 var usersRef = dbRef.ref()
 var auth = null;
 var activeUser;
+var uid;
 var name;
 var email;
 
