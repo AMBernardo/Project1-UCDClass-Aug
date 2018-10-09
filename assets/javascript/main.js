@@ -43,13 +43,14 @@ jQuery(document).ready(function(){
 
 
  // Initialize Firebase
+ // Initialize Firebase
  var config = {
-    apiKey: "AIzaSyDU1RNQPTorPNLi0J9wZYXJY_kOwa9_B60",
-    authDomain: "realestate-459b5.firebaseapp.com",
-    databaseURL: "https://realestate-459b5.firebaseio.com",
-    projectId: "realestate-459b5",
-    storageBucket: "realestate-459b5.appspot.com",
-    messagingSenderId: "770633504288"
+    apiKey: "AIzaSyDR2-15Tdhu7iFhT4MbpbyoxP157PtISIk",
+    authDomain: "doorsteppe.firebaseapp.com",
+    databaseURL: "https://doorsteppe.firebaseio.com",
+    projectId: "doorsteppe",
+    storageBucket: "doorsteppe.appspot.com",
+    messagingSenderId: "808880878005"
   };
   firebase.initializeApp(config);
 
@@ -519,16 +520,31 @@ function listPage(result){
 
 
 // ==================================================================================================USER AUTHENTICATION CODE===========================================================================================================
-// add signup event 
 
-  //create firebase references
-  var Auth = firebase.auth(); 
-  var dbRef = firebase.database();
-  var usersRef = dbRef.ref()
-  var auth = null;
-  var user;
-  var name;
-  var email;
+
+//create firebase references
+var Auth = firebase.auth(); 
+var dbRef = firebase.database();
+var usersRef = dbRef.ref()
+var auth = null;
+var activeUser;
+var name;
+var email;
+
+// current user check
+firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+        //if there is a signed in user
+      activeUser = user;
+      console.log(activeUser);
+      $('.loginNav').attr('style', 'display: none');
+      $('.userDisplay').attr('style', 'display: inline');
+    } else {
+        // No user is signed in.
+        $('.loginNav').attr('style', 'display: inline');
+        $('.userDisplay').attr('style', 'display: none');
+    }
+  });
 
   //Register
   $('#signbtn').on('click', function (e) {
@@ -543,8 +559,8 @@ function listPage(result){
         firebase.auth()
           .createUserWithEmailAndPassword(data.email, data.password)
           .then(function() {
-            user = firebase.auth().currentUser; 
-            user.updateProfile(
+            activeUser = firebase.auth().currentUser; 
+            activeUser.updateProfile(
                 firebase.database().ref('users/' + firebase.auth().currentUser.uid).set({
                     displayName: $('#name').val().trim(),
                     name : $('#name').val().trim(),
@@ -555,12 +571,10 @@ function listPage(result){
                 
         if (firebase.auth().currentUser !== null) 
             console.log("user id: " + firebase.auth().currentUser.uid);
-            localStorage.setItem('user id:', JSON.stringify(user));
+            localStorage.setItem('user id:', JSON.stringify(activeUser));
             name = dbRef.ref('users/' + firebase.auth().currentUser.uid).displayName;
             email = Auth.currentUser.email;
-            console.log(name, email, user)
-            
-            window.location.href = 'userPage.html'
+            console.log(name, email, activeUser)
             })
                 .catch(function(error){
                     console.log("Error creating user:", error);
@@ -578,7 +592,6 @@ function listPage(result){
         firebase.auth().onAuthStateChanged(function(user) {
             if (user) {
                 localStorage.setItem('user id:', JSON.stringify(user));
-                window.location.href = 'userPage.html'
             } else {
               // No user is signed in.
             }
@@ -586,20 +599,11 @@ function listPage(result){
         
         
     })
-     var user =JSON.parse(localStorage.getItem('user id:'));
-    var email = user.email
-    $('#usergreet').text('Welcome    ' + email)
+    // var user =JSON.parse(localStorage.getItem('user id:'));
+    // var email = user.email
+    $('#usergreet').text('Welcome  ' + email)
     
-    $('#logout').on('click', function(e){
-        e.preventDefault(
-            firebase.auth().signOut().then(function() {
-                console.log('Signed Out');
-                window.location.href = 'Login.html'
-              }, function(error) {
-                console.error('Sign Out Error', error);
-             
-              }))
-            })   
+    
     // ==================================================================================================END OF USER AUTHENTICATION CODE===========================================================================================================
     //============================favorite mechanism===============================================\\
     $('#favoriteButton').on('click', function (e) {
@@ -617,7 +621,7 @@ function listPage(result){
         });
     });
 
-    dbRef.ref('user/' + user).on('child_added', function(childSnapshot){
+    dbRef.ref('user/' + activeUser).on('child_added', function(childSnapshot){
         let LID = childSnapshot.LID;
         let dataSet = childSnapshot.dataSet;    
         let URL = 'https://rets.io/api/v2/'+ dataSet +'/listings/'+ LID +'?access_token=520a691140619b70d86de598796f13c1'
