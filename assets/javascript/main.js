@@ -80,42 +80,38 @@ $('#submit').on('click',function (event){
 // ==================================================================================================PROPERTY SEARCH CODE===========================================================================================================
 
 
-
-
-
 // ==================================================================================================MAP SEARCH CODE===========================================================================================================
 //Map api location data
-function newLocation(newLat,newLng)
-{
-map.setCenter({
-lat : newLat,
-lng : newLng
-});
+function newLocation(newLat,newLng){
+    map.setCenter({
+        lat : newLat,
+        lng : newLng
+    });
 }
 
 
 
 $("#1").on('click', function ()
 {
-newLocation(37.773972,-122.431297);
+    newLocation(37.773972,-122.431297);
 });
 
 $("#2").on('click', function ()
 {
-newLocation(32.715736,-117.161087);
+    newLocation(32.715736,-117.161087);
 });
 
 $("#3").on('click', function ()
 {
-newLocation(30.267153, -97.7430608);
+    newLocation(30.267153, -97.7430608);
 })
 
 var map;
 function initMap(){
-map = new google.maps.Map(document.getElementById('map'), {
-center: new google.maps.LatLng(37.773972,-122.431297),
-zoom: 11
-})
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: new google.maps.LatLng(37.773972,-122.431297),
+        zoom: 11
+    })
 }
 
 //grab this code.....
@@ -134,9 +130,9 @@ $('#1').on('click',function (event){
                 var marker = new google.maps.Marker({
                   position: latLng,
                   map: map,
-                  customInfo: info
-                //   customInfo:"  Address  " + results.bundle[i].UnparsedAddress + "  Listed Price  "+ results.bundle[i].ListPrice + "  Lot size sqft.  " +  results.bundle[i].LotSizeSquareFeet + "  Bedrooms  " + results.bundle[i].BedroomsTotal  + "  Full baths  " + results.bundle[i].BathroomsFull + "  Half baths  " + results.bundle[i].BathroomsHalf 
+                  customInfo:"  Address  " + results.bundle[i].UnparsedAddress + "  Listed Price  "+ results.bundle[i].ListPrice + "  Lot size sqft.  " +  results.bundle[i].LotSizeSquareFeet + "  Bedrooms  " + results.bundle[i].BedroomsTotal  + "  Full baths  " + results.bundle[i].BathroomsFull + "  Half baths  " + results.bundle[i].BathroomsHalf 
             });
+            
             google.maps.event.addListener(marker,  'click', function() {
                
                 $('#modal1').modal('open'); 
@@ -243,7 +239,21 @@ function booleanArrayDisplay(bln, arry){
     }else return 'N/A';
 };
 
+
 function generateCards(Data){
+//     var a = $('div#rowPost');
+//     for(var i = 0; i < Data.bundle.length; i++){
+//         var result = Data.bundle[i];
+// =======
+//my code for more cards
+}
+$(".more").on('click' , function(Data){
+
+    getDataBridge();
+});
+    function generateCards(Data){
+    
+   
 
   
     var a = $('div#rowPost');
@@ -255,15 +265,9 @@ function generateCards(Data){
         var result = Data.bundle[i];
         
         //image fallback
-        if(result.Media[0]) {var imgurl = result.Media[0].MediaURL;}
+        if(result.Media[0]) {imgurl = result.Media[0].MediaURL;}
         //else if(street view) show street view
-
-        else function streetview() {
-            var address = result.UnparsedAddress
-            $('.responsive-img').html('<img src="http://maps.googleapis.com/maps/api/streetview?size=500x500&sensor=false&location='+address+'">');
-                
-        };
-        
+        else imgurl = './assets/images/placeholderhouse2.jpg'      
         
     //card generation 
             a.append(
@@ -365,23 +369,13 @@ function generateCards(Data){
                 )
             );
             M.AutoInit();
-            
             $(".tabs").tabs();
-           
     }
-    
 };
 // ==================================================================================================END OF RESULTS CODE===========================================================================================================
 
 
 
-
-
-// ==================================================================================================PROPERTY PAGE CODE===========================================================================================================
-//image on click
-    //get data-lid from image and store in local storage
-//open property page
-//load data-lid from local storage plug it into an ajax call url designed for individual listings and populate the page
 
 //================================================property page code(ajax and population)
 //result image click gets the id, sends you to property page and calls ajax
@@ -445,6 +439,8 @@ function listPage(result){
         $('<div/>', {'class':'card-content'}).append(
                     $('<div/>',{'id': 'tab1'}).append(//house data
                         $('<ul/>').text(result.UnparsedAddress).append(
+                            $('<li/>').text('Listing Price: $' + result.ListPrice)
+                        ).append(
                             $('<li/>').text(' Beds: ' + result.BedroomsTotal)
                         ).append(
                             $('<li/>').text(' Full Baths: ' + result.BathroomsFull)
@@ -538,41 +534,50 @@ var displayName = $('#name')
 // add login event
 $('#btnLogIn').on('click', e =>{
 // get email and password fields
-var email = txtEmail.val()
-var pass = txtPass.val()
-var auth = firebase.auth()
-// sign in
-var promise = auth.signInWithEmailAndPassword(email, pass)
-promise.catch(e => console.log(e.message));
-
+    if(!txtEmail.val() || !txtPass.val()) return $('#modal3').modal('open');
+    else{
+        
+        var email = txtEmail.val()
+        var pass = txtPass.val()
+        var auth = firebase.auth()
+        // sign in
+        var promise = auth.signInWithEmailAndPassword(email, pass)
+        promise.catch(e => console.log(e.message));
+        window.location.href='userPage.html';
+    }
 });
 
 // add signup event 
 
 $('#signbtn').on('click', e =>{
     // get email and password fields
-    var email = txtSEmail.val()
-    var pass = txtSPass.val()
-    var auth = firebase.auth()
-    var userName = displayName.val()
-    // sign in
-    var promise = auth.createUserWithEmailAndPassword(email, pass).then(function(user) {
-        user.firebase.auth()({
-            displayName: userName   
-        });   
-    promise.catch(e => console.log(e.message));
-    
-    });
-
-    // add a realtime listener to detect user suthentication state changes
-    firebase.auth().onAuthStateChanged(firebaseUser =>{
-        if(firebaseUser){
-            console.log(firebaseUser)
-        } else {
-            console.log('not logged in');
-        }
-
+    if (!txtSEmail.val() || !txtSPass.val() || !displayName.val()) return $('#modal3').modal('open');  
+    else{
+         $('#modal2').modal('open');
+        var email = txtSEmail.val()
+        var pass = txtSPass.val()
+        var auth = firebase.auth()
+        var userName = displayName.val()
+        // sign in
+        var promise = auth.createUserWithEmailAndPassword(email, pass).then(function(user) {
+            user.firebase.auth()({
+                displayName: userName   
+            });   
+        promise.catch(e => console.log(e.message));
+        
         });
+
+        // add a realtime listener to detect user suthentication state changes
+        firebase.auth().onAuthStateChanged(firebaseUser =>{
+                if(firebaseUser){
+                    console.log(firebaseUser)
+                } else {
+                    console.log('not logged in');
+                }
+
+            });
+        }
+        window.location.href='userPage.html'
     });
 
         // TODO: store users name and favourited homes in realtime database using their unique UID
