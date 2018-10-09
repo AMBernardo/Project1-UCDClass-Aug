@@ -536,6 +536,9 @@ firebase.auth().onAuthStateChanged(function(user) {
         //if there is a signed in user
       activeUser = user;
       console.log(activeUser);
+      UID =firebase.auth().activeUser.uid
+            email = activeUser.email;
+            console.log( email, activeUser)
       $('.loginNav').attr('style', 'display: none');
       $('.userDisplay').attr('style', 'display: inline');
     } else {
@@ -569,11 +572,12 @@ firebase.auth().onAuthStateChanged(function(user) {
             );
                 
         if (firebase.auth().currentUser !== null) 
-            console.log("user id: " + firebase.auth().currentUser.uid);
-            localStorage.setItem('user id:', JSON.stringify(activeUser));
-            name = dbRef.ref('users/' + firebase.auth().currentUser.uid).displayName;
-            email = Auth.currentUser.email;
-            console.log(name, email, activeUser)
+            // console.log("user id: " + firebase.auth().currentUser.uid);
+            // localStorage.setItem('user id:', JSON.stringify(activeUser));
+            // name = dbRef.ref('users/' + firebase.auth().currentUser.uid).displayName;
+            // email = Auth.currentUser.email;
+           
+            window.location.href = 'userPage.html'
             })
                 .catch(function(error){
                     console.log("Error creating user:", error);
@@ -591,6 +595,7 @@ firebase.auth().onAuthStateChanged(function(user) {
         firebase.auth().onAuthStateChanged(function(user) {
             if (user) {
                 localStorage.setItem('user id:', JSON.stringify(user));
+                window.location.href = 'userPage.html'
             } else {
               // No user is signed in.
             }
@@ -598,11 +603,20 @@ firebase.auth().onAuthStateChanged(function(user) {
         
         
     })
-    // var user =JSON.parse(localStorage.getItem('user id:'));
-    // var email = user.email
-    $('#usergreet').text('Welcome  ' + email)
+     var user =JSON.parse(localStorage.getItem('user id:'));
+    var email = user.email
+    $('#usergreet').text('Welcome    ' + email)
     
-    
+    $('#logout').on('click', function(e){
+        e.preventDefault(
+            firebase.auth().signOut().then(function() {
+                console.log('Signed Out');
+                window.location.href = 'Login.html'
+              }, function(error) {
+                console.error('Sign Out Error', error);
+             
+              }))
+            })   
     // ==================================================================================================END OF USER AUTHENTICATION CODE===========================================================================================================
     //============================favorite mechanism===============================================\\
     $('#favoriteButton').on('click', function (e) {
