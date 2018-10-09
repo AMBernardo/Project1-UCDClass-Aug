@@ -133,47 +133,29 @@
                                     <div class="row">
                                         <div class="col s12">
                                         <div class="input-field col s6">
-                                            <input id="first_name" type="text" class="validate">
-                                            <label for="first_name">First Name* <i class="tiny material-icons">account_circle</i></label>
-                                        </div>
-                                        <div class=" input-field col s6">
-                                            <input id="last_name" type="text" class="validate">
-                                            <label for="last_name">Last Name* <i class="tiny material-icons">account_circle</i></label>
+                                            <input id="full_name" type="text" class="validate">
+                                            <label for="full_name">Name* <i class="tiny material-icons">account_circle</i></label>
                                         </div>
                                         <div class="input-field col s6">
-                                            <input id="email" type="email" class="validate">
-                                            <label for="email">Email* <i class="tiny material-icons">email</i></label>
-                                        </div>
-                                        <div class="input-field col s6">
-                                            <input id="password" type="password" class="validate">
-                                            <label for="password">Password* <i class="tiny material-icons">security</i></label>
+                                            <input id="updateEmail" type="email" class="validate">
+                                            <label for="updateEmail">Email* <i class="tiny material-icons">email</i></label>
                                         </div>
                                     <div class="row">
                                         <div class="col s12">
-                                        <div class="input-field col s8">
-                                            <input id="additionalEmail" type="email" class="validate">
-                                            <label for="additionalEmail">Additional Email <i class="tiny material-icons">create</i></label>
+
+                                        <div class="input-field col s3">
+                                            <input id="updateNumber" type="text" class="validate">
+                                            <label for="updateNumber">Phone Number <i class="tiny material-icons">phone</i></label>
                                         </div>
-                                        <div class="input-field col s4">
-                                            <input id="phoneNumber" type="text" class="validate">
-                                            <label for="phoneNumber">Phone Number <i class="tiny material-icons">phone</i></label>
+                                        <div class="input-field col s5">
+                                            <input id="updateAddress" type="text" class="validate">
+                                            <label for="updateAddress">Address <i class="tiny material-icons">create</i></label>
                                         </div>
-                                        <div class="input-field col s8">
-                                            <input id="userAddress" type="text" class="validate">
-                                            <label for="userAddress">Address <i class="tiny material-icons">create</i></label>
+                                        <div class="input-field col s3">
+                                            <input id="updateState" type="text" class="validate">
+                                            <label for="updateState">State <i class="tiny material-icons">create</i></label>
                                         </div>
-                                        <div class="input-field col s4">
-                                            <input id="userCity" type="text" class="validate">
-                                            <label for="userCity">City <i class="tiny material-icons">create</i></label>
-                                        </div>
-                                        <div class="input-field col s4">
-                                            <input id="userState" type="text" class="validate">
-                                            <label for="userState">State <i class="tiny material-icons">create</i></label>
-                                        </div>
-                                        <div class="input-field col s4">
-                                            <input id="userZipCode" type="text" class="validate">
-                                            <label for="userZipCode">Zip Code <i class="tiny material-icons">create</i></label>
-                                        </div>
+                                      
                                         <div class="col s12">
                                             <p align="justify">*Required Fields. Your personal information is strictly confidential and will not be shared with any outside organization.</p><br>
                                             <p align="justify">By submitting this form with your telephone number you are consenting and authorizing representatives to contact you even if your name is on the Federal "Do-not-call-list"</p> 
@@ -183,8 +165,9 @@
                                             <a class="waves-effect" href="#!">Delete this Account</a>
                                         </div>
                                         <div class="col s4">
-                                            <button class="btn waves-effect waves-light" type="submit" name="action">Save Settings<i class="material-icons right">save</i>
-                                            </button>   
+                                                <button class="btn waves-effect waves-light modal-trigger" id="update" data-target="modal1" type="submit" name="action">Sign Up!
+                                                        <i class="material-icons right"></i>
+                                                    </button> 
                                         </div>
                                         </div>
                                     </div>
@@ -307,7 +290,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+                <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
             </div>
         </div>
 

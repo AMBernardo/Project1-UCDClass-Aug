@@ -64,13 +64,14 @@ jQuery(document).ready(function(){
 
 
  // Initialize Firebase
+ // Initialize Firebase
  var config = {
-    apiKey: "AIzaSyDU1RNQPTorPNLi0J9wZYXJY_kOwa9_B60",
-    authDomain: "realestate-459b5.firebaseapp.com",
-    databaseURL: "https://realestate-459b5.firebaseio.com",
-    projectId: "realestate-459b5",
-    storageBucket: "realestate-459b5.appspot.com",
-    messagingSenderId: "770633504288"
+    apiKey: "AIzaSyDR2-15Tdhu7iFhT4MbpbyoxP157PtISIk",
+    authDomain: "doorsteppe.firebaseapp.com",
+    databaseURL: "https://doorsteppe.firebaseio.com",
+    projectId: "doorsteppe",
+    storageBucket: "doorsteppe.appspot.com",
+    messagingSenderId: "808880878005"
   };
   firebase.initializeApp(config);
 
@@ -555,20 +556,12 @@ function listPage(result){
 // ==================================================================================================USER AUTHENTICATION CODE===========================================================================================================
 
 
-
-
-
- 
-         
-    
-
 //create firebase references
 var Auth = firebase.auth(); 
 var dbRef = firebase.database();
 var usersRef = dbRef.ref()
 var auth = null;
 var activeUser;
-var uid;
 var name;
 var email;
 
@@ -600,9 +593,11 @@ firebase.auth().onAuthStateChanged(function(user) {
     
     var data = {
       email: $('#email').val().trim(), //get the email from Form
-      firstName: $('#name').val().trim(),
+      displayName: $('#displayName').val().trim(),
       password : $('#password').val().trim(), //get the pass from Form
-    }
+      phoneNumber: $('#poneNumber').val(),
+      address: $('#userAddress').val(),
+        state: $('#userState').val() }
     if( data.email != '' && data.password != '')
         //create the user
         firebase.auth()
@@ -610,20 +605,22 @@ firebase.auth().onAuthStateChanged(function(user) {
           .then(function() {
             activeUser = firebase.auth().currentUser; 
             activeUser.updateProfile(
-                firebase.database().ref('users/' + firebase.auth().currentUser.uid).set({
-                    displayName: $('#name').val().trim(),
-                    name : $('#name').val().trim(),
-                    email : $('#email').val().trim(),
+                firebase.database().ref('users' + firebase.auth().currentUser.uid).set({
+                    displayName: $('#displayName').val(),
+                    email : $('#email').val(),  
+                    Number: $('#phoneNumber').val(),
+                    address: $('#userAddress').val(), 
+                    state: $('#userState').val(),
                     uid: firebase.auth().currentUser.uid
                 })
             );
                 
         if (firebase.auth().currentUser !== null) 
-            // console.log("user id: " + firebase.auth().currentUser.uid);
-            // localStorage.setItem('user id:', JSON.stringify(activeUser));
-            // name = dbRef.ref('users/' + firebase.auth().currentUser.uid).displayName;
-            // email = Auth.currentUser.email;
-           
+            console.log("user id: " + firebase.auth().currentUser.uid);
+            localStorage.setItem('user id:', JSON.stringify(activeUser));
+            name = dbRef.ref(firebase.auth().currentUser.uid).displayName;
+            email = Auth.currentUser.email;
+            console.log(name, email, activeUser)
             window.location.href = 'userPage.html'
             })
                 .catch(function(error){
@@ -643,7 +640,6 @@ firebase.auth().onAuthStateChanged(function(user) {
         firebase.auth().onAuthStateChanged(function(user) {
             if (user) {
                 localStorage.setItem('user id:', JSON.stringify(user));
-                window.location.href = 'userPage.html'
             } else {
               // No user is signed in.
             }
@@ -654,16 +650,6 @@ firebase.auth().onAuthStateChanged(function(user) {
     
     
     
-    $('#logout').on('click', function(e){
-        e.preventDefault(
-            firebase.auth().signOut().then(function() {
-                console.log('Signed Out');
-                window.location.href = 'Login.html'
-              }, function(error) {
-                console.error('Sign Out Error', error);
-             
-              }))
-            })   
     // ==================================================================================================END OF USER AUTHENTICATION CODE===========================================================================================================
     
     
@@ -754,7 +740,36 @@ firebase.auth().onAuthStateChanged(function(user) {
 
 //=====================================================================================================USER PAGE CODE================================================================================================================
 
-
+$('#update').on('click',function updateUser(e, uid) {
+e.preventDefault()
+firebase.auth().onAuthStateChanged(function(user) {
+    activeUser = user;
+    uid = activeUser.uid
+if(user){
+    var postData = {
+      displayName: $('#full_name').val(),
+      uid: uid,
+      email: $('#updateEmail').val(),
+      Number: $('#updateNumber').val(),
+      address: $('#updateAddress').val(),
+      state: $('#updateState').val()
+    };
+    var user = firebase.auth().currentUser;
+    user.updateProfile({
+        displayName:$('#full_name').val(),
+        email: $('#updateEmail').val()
+      }).then(function() {
+        // Update successful.
+      })
+    var newUpdateKey = firebase.database().ref(uid).push().key;
+  
+    // Write the new post's data simultaneously in the posts list and the user's post list.
+    var updates = {};
+    updates[newUpdateKey] = postData;
+  
+    return firebase.database().ref(uid).update(updates);
+    
+  }})})
 
 
 //==================================================================================================Index Code==================================================
