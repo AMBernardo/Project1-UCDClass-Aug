@@ -1,14 +1,22 @@
-  // Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyDR2-15Tdhu7iFhT4MbpbyoxP157PtISIk",
-    authDomain: "doorsteppe.firebaseapp.com",
-    databaseURL: "https://doorsteppe.firebaseio.com",
-    projectId: "doorsteppe",
-    storageBucket: "doorsteppe.appspot.com",
-    messagingSenderId: "808880878005"
-  };
-  firebase.initializeApp(config);
-  var database = firebase.database();
+jQuery(document).ready(function(){
+    // getDataBridge()
+    M.AutoInit();
+    $('.dropdown-trigger').dropdown();
+    $(".sidenav").sidenav();
+    $(".tabs").tabs();
+    $(".modal").modal();
+    $(".parallax").parallax();
+    $('.dropdown-trigger').dropdown();
+    $(".sidenav").sidenav();
+    $(".tabs").tabs();
+    $('.parallax').parallax();
+    $('.carousel').carousel();
+    $('.slider').slider({full_width: true});
+    $('.carousel-slider').slider({full_width: true});
+    $('.carousel.carousel-slider').carousel({
+        fullWidth: true
+        });
+    });
 //We will use this function once we have the pub dataset
 // $('#submit').on('click',function (event){
 //     event.preventDefault();
@@ -31,33 +39,26 @@
 //         }
 //     });
 // });
-jQuery(document).ready(function(){
-    // getDataBridge()
-    M.AutoInit();
-    $('.dropdown-trigger').dropdown();
-    $(".sidenav").sidenav();
-    $(".tabs").tabs();
-    $(".modal").modal();
-    $(".parallax").parallax();
-    $('.dropdown-trigger').dropdown();
-    $(".sidenav").sidenav();
-    $(".tabs").tabs();
-    $('.parallax').parallax();
-    $('.carousel').carousel();
-    $('.slider').slider({full_width: true});
-    $('.carousel-slider').slider({full_width: true});
-    $('.carousel.carousel-slider').carousel({
-        fullWidth: true
-        });
-    });
 
 
 
+ // Initialize Firebase
+ var config = {
+    apiKey: "AIzaSyDR2-15Tdhu7iFhT4MbpbyoxP157PtISIk",
+    authDomain: "doorsteppe.firebaseapp.com",
+    databaseURL: "https://doorsteppe.firebaseio.com",
+    projectId: "doorsteppe",
+    storageBucket: "doorsteppe.appspot.com",
+    messagingSenderId: "808880878005"
+  };
+  firebase.initializeApp(config);
 
 
 // ================================================================================PROPERTY SEARCH CODE===========================================================================================================
 $('#submit').on('click',function (event){
     event.preventDefault();
+    if(!$('#city').val() || !$('#bathroom').val() || ! $('#bed').val() || !$('#minsqft').val() || !$('#maxprice').val()) return alert('Please Fill Out Forms');
+    else{
     var URL = ' https://rets.io/api/v2/' + $('#city').val() + '/listings?access_token=520a691140619b70d86de598796f13c1&limit=25&BathroomsFull.eq=' + $('#bathroom').val() + '&BedroomsTotal.eq=' + $('#bed').val() + '&LotSizeSquareFeet.gte=' + $('#minsqft').val() + '&ListPrice.lte=' + $('#maxprice').val()
     $.ajax({ 
         url: URL,
@@ -77,7 +78,8 @@ $('#submit').on('click',function (event){
         }
     });
         
-    });
+    }
+})
 // ==================================================================================================PROPERTY SEARCH CODE===========================================================================================================
 
 //Map api location data
@@ -87,34 +89,24 @@ function newLocation(newLat,newLng){
         lng : newLng
     });
 }
-$('.dropdown-trigger').dropdown();
-$(".sidenav").sidenav();
-$(".tabs").tabs();
-$('.parallax').parallax();
-$('.slider').slider({full_width: true});
-$('.carousel-slider').slider({full_width: true});
-
-$('.carousel').carousel();
-setInterval (function(){
-    $('.carousel').carousel('next');
-}, 2000);
-// autoplay function for carousel
 
 
 
 $("#1").on('click', function ()
 {
-    newLocation(37.773972,-122.431297);
+newLocation(37.774,-122.431297);
 });
 
-$("#2").on('click', function (){
-    newLocation(32.715736,-117.161087);
+$("#2").on('click', function ()
+{
+newLocation(32.715736,-117.161087);
 });
 
 $("#3").on('click', function ()
 {
 newLocation(30.267153, -97.7430608);
-});
+})
+
 
 var map;
 function initMap(){
@@ -148,6 +140,7 @@ $('#1').on('click',function (event){
                 $('#modal1').modal('open'); 
                 $("#modal-text").html(this.customInfo)
             });
+
         }
 }});
 
@@ -216,15 +209,15 @@ $(".modal-close").on('click' , function(){
 
 
 // ==================================================================================================RESULTS CODE===========================================================================================================
+
+var Data =JSON.parse(localStorage.getItem('result'));
 // no need for ajax call getting data from local storage
 // //Text Search Ajax Call
 function getDataBridge(){
     var Data =JSON.parse(localStorage.getItem('result'));
     console.log(Data)
     generateCards(Data.response)
-};
-
-
+     };
 
 //Functions for displaying arrays 
     //ex. el.text(arrayDisplay(arry))
@@ -247,12 +240,30 @@ function booleanArrayDisplay(bln, arry){
     }else return 'N/A';
 };
 
+
 function generateCards(Data){
+//     var a = $('div#rowPost');
+//     for(var i = 0; i < Data.bundle.length; i++){
+//         var result = Data.bundle[i];
+// =======
+//my code for more cards
+}
+$(".more").on('click' , function(Data){
+
+    getDataBridge();
+});
+    function generateCards(Data){
+    
+   
+
     var a = $('div#rowPost');
-    for(var i = 0; i < Data.bundle.length; i++){
+  
+    for(var i = 0; i < 12; i++){
+       
         var result = Data.bundle[i];
+  
         //image fallback
-        if(result.Media[0]) {var imgurl = result.Media[0].MediaURL;}
+        if(result.Media[0]) {imgurl = result.Media[0].MediaURL;}
         //else if(street view) show street view
 
         else imgurl = './assets/images/placeholderhouse2.jpeg'      
@@ -373,7 +384,7 @@ $(document).on('click', 'img.imageLink', function (){
     localStorage.removeItem('lid','dataset')
     localStorage.setItem('lid', $(this).attr('data-lid'))
     localStorage.setItem('dataset', $(this).attr('data-set'))
-    window.location.replace('propertyPage.html')
+    window.location.href='propertyPage.html'
 });
 function populateInfo(){
     let lid = localStorage.getItem('lid');
@@ -516,15 +527,18 @@ function listPage(result){
   var usersRef = dbRef.ref()
   var auth = null;
   var user = Auth.currentUser;
+  var name = $('#name').val();
+  var email = $('#email').val();
+
   //Register
   $('#signbtn').on('click', function (e) {
     e.preventDefault();
     var data = {
-      email: $('#email').val().trim(), //get the email from Form
-      firstName: $('#name').val().trim()
+      email: $('#email').val(), //get the email from Form
+      firstName: $('#name').val()
     };
     var passwords = {
-      password : $('#password').val().trim(), //get the pass from Form
+      password : $('#password').val(), //get the pass from Form
     }
     if( data.email != '' && passwords.password != '')
         //create the user
@@ -533,9 +547,16 @@ function listPage(result){
           .then(function() {
             var user = firebase.auth().currentUser; 
             var user = firebase.auth().currentUser;
-                user.updateProfile({
-                    displayName: $('#name').val().trim()
-                    });
+        user.updateProfile(
+            firebase.database().ref('users/' + firebase.auth().currentUser.uid).set({
+                displayName: $('#name').val().trim(),
+                name : $('#name').val().trim(),
+                email : $('#email').val().trim(),
+                uid: firebase.auth().currentUser.uid
+        }));
+        if (firebase.auth().currentUser !== null) 
+        console.log("user id: " + firebase.auth().currentUser.uid);
+        localStorage.setItem('user id:', JSON.stringify(user));
           })
             .catch(function(error){
                 console.log("Error creating user:", error);
@@ -588,10 +609,39 @@ function listPage(result){
     });
     
 
+    $('#btnLogIn').on('click', function(e){
+        e.preventDefault();
+        var data = {
+          email: $('#logEmail').val(), //get the email from Form
+          password : $('#logPassword').val(), //get the pass from Form
+        }
+        firebase.auth().signInWithEmailAndPassword(data.email, data.password)
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+                localStorage.setItem('user id:', JSON.stringify(user));
+            } else {
+              // No user is signed in.
+            }
+          });
+          
+        
+    })
+
+
+        
+        
+   
 // ==================================================================================================END OF USER AUTHENTICATION CODE===========================================================================================================
 //=======================more firebase stufffffff=============================
 
 
+
+
+var user =JSON.parse(localStorage.getItem('user id:'));
+var email = user.email
+$('#usergreet').text('Welcome    ' + email)
+
+//=====================================================================================================USER PAGE CODE================================================================================================================
 
 
 
@@ -610,7 +660,8 @@ $('#indexSubmit').on('click',function (event){
             var object = {url: URL, response : result}
             localStorage.removeItem('result')
             localStorage.setItem('result', JSON.stringify(object));
-            window.location.href = 'results.html'         
+            window.location.href = "results.html"; 
+            
         },
         error: function () {
             console.log("error");
@@ -622,9 +673,6 @@ $('#indexSubmit').on('click',function (event){
     $('#advanced').on('click',function (){
         // event.preventDefault();
 
-        window.location.href ="propertysearch.html"
+        window.location.href= "propertysearch.html"; 
 
-        $('.carousel.carousel-slider').carousel({
-            fullWidth: true
-            })
     });
