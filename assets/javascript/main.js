@@ -559,6 +559,8 @@ function listPage(result){
             name = dbRef.ref('users/' + firebase.auth().currentUser.uid).displayName;
             email = Auth.currentUser.email;
             console.log(name, email, user)
+            
+            window.location.href = 'userPage.html'
             })
                 .catch(function(error){
                     console.log("Error creating user:", error);
@@ -576,6 +578,7 @@ function listPage(result){
         firebase.auth().onAuthStateChanged(function(user) {
             if (user) {
                 localStorage.setItem('user id:', JSON.stringify(user));
+                window.location.href = 'userPage.html'
             } else {
               // No user is signed in.
             }
@@ -583,11 +586,20 @@ function listPage(result){
         
         
     })
-    // var user =JSON.parse(localStorage.getItem('user id:'));
-    // var email = user.email
+     var user =JSON.parse(localStorage.getItem('user id:'));
+    var email = user.email
     $('#usergreet').text('Welcome    ' + email)
     
-    
+    $('#logout').on('click', function(e){
+        e.preventDefault(
+            firebase.auth().signOut().then(function() {
+                console.log('Signed Out');
+                window.location.href = 'Login.html'
+              }, function(error) {
+                console.error('Sign Out Error', error);
+             
+              }))
+            })   
     // ==================================================================================================END OF USER AUTHENTICATION CODE===========================================================================================================
     //============================favorite mechanism===============================================\\
     $('#favoriteButton').on('click', function (e) {
