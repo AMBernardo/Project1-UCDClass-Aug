@@ -43,3 +43,40 @@ div#mainWrapper{
 .btn{
     background-color: #1c486b;
 }
+
+/* label focus color */
+.input-field input:focus + label {
+    color: #1c486bed !important;
+  }
+  /* label underline focus color */
+.input-field input:focus {
+    border-bottom: 1px solid #1c486b !important;
+    box-shadow: 0 1px 0 0 #1c486b !important
+  }
+
+ul.dropdown-content.select-dropdown li span {
+    color: black; 
+}
+
+input.select-dropdown{
+    margin-top: 1rem !important;
+}
+
+[type="radio"]:checked+span:after, [type="radio"].with-gap:checked+span:after {
+    background-color:#1c486b;
+}
+
+[type="radio"]:checked+span:after, [type="radio"].with-gap:checked+span:before, 
+[type="radio"].with-gap:checked+span:after {
+    border: 2px solid #1c486b;
+}
+
+#bedsLabel{
+    margin-top: 13px !important;
+}
+
+#bathLabel{
+    margin-top: 13px !important;
+}
+
+
