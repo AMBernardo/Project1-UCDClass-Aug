@@ -7,11 +7,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="assets/css/reset.css">
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
-    <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css">
     <link rel="stylesheet" type="text/css" media="screen" href="assets/css/materialize.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
-
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script src="https://www.gstatic.com/firebasejs/5.5.3/firebase.js"></script>
+    <script src="https://cdn.firebase.com/libs/firebaseui/3.4.1/firebaseui.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.4.1/firebaseui.css" />
+   
 </head>
 <body class="auth-false">
     <nav>
@@ -23,7 +26,8 @@
                 <ul class="right hide-on-med-and-down">
                     <li><a href="propertySearch.html">Property Search</a></li>
                     <li><a href="mapSearch.html">Map Search</a></li>
-                    <li><a href="Login.html">Log In</a></li>
+                    <li><a href="userPage.html" class="userDislay">profile</a></li>
+                    <li><a href="Login.html" class="loginNav">Log In</a></li>
                 </ul>
         </div>
     </nav>
@@ -31,7 +35,8 @@
                 <ul class="sidenav" id="mobile-demo">
                     <li><a href="propertySearch.html">Property Search</a></li>
                     <li><a href="mapSearch.html">Map Search</a></li>
-                    <li><a href="Login.html">Log In</a></li>
+                    <li><a href="userPage.html" class="userDislay">profile</a></li>
+                    <li><a href="Login.html" class="loginNav">Log In</a></li>
                 </ul>
     
     <h2>Organizer Login</h2>
@@ -52,7 +57,7 @@
                         <label for="password">Password</label>
                     </div>
                     <div class="col s4">
-                        <a class="waves-effect waves-light btn" id="btnLogIn" href="userPage.html">Sign in<i class="material-icons right">send</i></a>
+                        <a class="waves-effect waves-light btn" id="btnLogIn" >Sign in<i class="material-icons right">send</i></a>
                         <br><br>
                         <form action="#">
                             <p>
@@ -156,7 +161,7 @@
                       <p align="justify">If you have any questions about this privacy policy, please feel free to contact us by email at privacy@email.com.</p>
                 </div>
                     <div class="modal-footer">
-                      <a href="userPage.html" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+                      <a  class="modal-close waves-effect waves-green btn-flat">Agree</a>
                     </div>
             </div>
         </div>
@@ -176,6 +181,8 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="assets/javascript/materialize.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.5.3/firebase.js"></script>
+    <script src="https://cdn.firebase.com/libs/firebaseui/3.4.1/firebaseui.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.4.1/firebaseui.css" />
     <script src="assets/javascript/main.js"></script>
 
 </body>

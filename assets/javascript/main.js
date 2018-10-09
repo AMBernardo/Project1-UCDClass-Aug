@@ -44,12 +44,12 @@ jQuery(document).ready(function(){
 
  // Initialize Firebase
  var config = {
-    apiKey: "AIzaSyDR2-15Tdhu7iFhT4MbpbyoxP157PtISIk",
-    authDomain: "doorsteppe.firebaseapp.com",
-    databaseURL: "https://doorsteppe.firebaseio.com",
-    projectId: "doorsteppe",
-    storageBucket: "doorsteppe.appspot.com",
-    messagingSenderId: "808880878005"
+    apiKey: "AIzaSyDU1RNQPTorPNLi0J9wZYXJY_kOwa9_B60",
+    authDomain: "realestate-459b5.firebaseapp.com",
+    databaseURL: "https://realestate-459b5.firebaseio.com",
+    projectId: "realestate-459b5",
+    storageBucket: "realestate-459b5.appspot.com",
+    messagingSenderId: "770633504288"
   };
   firebase.initializeApp(config);
 
@@ -82,17 +82,12 @@ $('#submit').on('click',function (event){
 })
 // ==================================================================================================PROPERTY SEARCH CODE===========================================================================================================
 
-
-
-
-
-// ==================================================================================================MAP SEARCH CODE===========================================================================================================
-function newLocation(newLat,newLng)
-{
-map.setCenter({
-lat : newLat,
-lng : newLng
-});
+//Map api location data
+function newLocation(newLat,newLng){
+    map.setCenter({
+        lat : newLat,
+        lng : newLng
+    });
 }
 
 
@@ -112,14 +107,17 @@ $("#3").on('click', function ()
 newLocation(30.267153, -97.7430608);
 })
 
+
 var map;
 function initMap(){
+
 map = new google.maps.Map(document.getElementById('map'), {
 center: new google.maps.LatLng(37.774,-122.431297),
 zoom: 13
 })
 }
 
+//grab this code.....
 $('#1').on('click',function (event){
     event.preventDefault();
     $.ajax({
@@ -131,6 +129,7 @@ $('#1').on('click',function (event){
                 var coords = results.bundle[i].Coordinates;
                 var latLng = new google.maps.LatLng(coords[1],coords[0]);
                 var info = "<h5>" + "  Address  " + "</h5>" + results.bundle[i].UnparsedAddress + "<br>" + "<br>" +  "<h5>"+"  Listed Price  " + "</h5>"+ results.bundle[i].ListPrice +  "<br>" +   "<br>" +  "<h5>" + "  Square Foot  " + "</h5>" + results.bundle[i].LotSizeSquareFeet + "  Bedrooms  " + results.bundle[i].BedroomsTotal  + "  Full baths  " + results.bundle[i].BathroomsFull + "  Half baths  " + results.bundle[i].BathroomsHalf 
+
                 var marker = new google.maps.Marker({
                   position: latLng,
                   map: map,
@@ -193,6 +192,12 @@ $('#3').on('click',function (event){
 });
 });
 });
+$(".modal-close").on('click' , function(){
+    $("#modal-text").empty();
+})
+//end of what you need------------------------------------------------
+// end of Map script
+
 
 
 
@@ -260,13 +265,15 @@ $(".more").on('click' , function(Data){
         //image fallback
         if(result.Media[0]) {imgurl = result.Media[0].MediaURL;}
         //else if(street view) show street view
+
         else imgurl = './assets/images/placeholderhouse2.jpeg'      
+
         
     //card generation 
             a.append(
                 $('<div/>',{'class': 'col s10 m4 listCard'}).append(
                     $('<div/>',{'class':'card hoverable'}).append(
-                        $('<div/>',{'class':'card-image' /*waves-effect waves-block waves-light*/}).append(
+                        $('<div/>',{'class':'card-image waves-effect waves-block waves-light'}).append(
                         //image block=================
                             $('<img>', {'class':'responsive-img imageLink'}).attr('data-set',(result.OriginatingSystemKey)).attr('data-lid',(result.ListingKey)).attr('src',imgurl).attr('alt','test pic')
                         ).append(
@@ -370,14 +377,7 @@ $(".more").on('click' , function(Data){
 
 
 
-
-// ==================================================================================================PROPERTY PAGE CODE===========================================================================================================
-//image on click
-    //get data-lid from image and store in local storage
-//open property page
-//load data-lid from local storage plug it into an ajax call url designed for individual listings and populate the page
-
-//================================================property page code(ajax and population)
+//================================================property page code(ajax and population)============================================================
 //result image click gets the id, sends you to property page and calls ajax
 $(document).on('click', 'img.imageLink', function (){
     console.log($(this).attr('data-lid'));
@@ -439,6 +439,8 @@ function listPage(result){
         $('<div/>', {'class':'card-content'}).append(
                     $('<div/>',{'id': 'tab1'}).append(//house data
                         $('<ul/>').text(result.UnparsedAddress).append(
+                            $('<li/>').text('Listing Price: $' + result.ListPrice)
+                        ).append(
                             $('<li/>').text(' Beds: ' + result.BedroomsTotal)
                         ).append(
                             $('<li/>').text(' Full Baths: ' + result.BathroomsFull)
@@ -524,48 +526,50 @@ function listPage(result){
   var dbRef = firebase.database();
   var usersRef = dbRef.ref()
   var auth = null;
-  var name = $('#name').val();
-  var email = $('#email').val();
+  var user;
+  var name;
+  var email;
 
   //Register
   $('#signbtn').on('click', function (e) {
     e.preventDefault();
     var data = {
-      email: $('#email').val(), //get the email from Form
-      firstName: $('#name').val()
-    };
-    var passwords = {
-      password : $('#password').val(), //get the pass from Form
+      email: $('#email').val().trim(), //get the email from Form
+      firstName: $('#name').val().trim(),
+      password : $('#password').val().trim(), //get the pass from Form
     }
-    if( data.email != '' && passwords.password != '')
+    if( data.email != '' && data.password != '')
         //create the user
         firebase.auth()
-          .createUserWithEmailAndPassword(data.email, passwords.password)
+          .createUserWithEmailAndPassword(data.email, data.password)
           .then(function() {
-            var user = firebase.auth().currentUser; 
-            var user = firebase.auth().currentUser;
-        user.updateProfile(
-            firebase.database().ref('users/' + firebase.auth().currentUser.uid).set({
-           displayName: $('#name').val().trim(),
-                name : $('#name').val().trim(),
-            email : $('#email').val().trim(),
-            uid: firebase.auth().currentUser.uid
-        }));
+            user = firebase.auth().currentUser; 
+            user.updateProfile(
+                firebase.database().ref('users/' + firebase.auth().currentUser.uid).set({
+                    displayName: $('#name').val().trim(),
+                    name : $('#name').val().trim(),
+                    email : $('#email').val().trim(),
+                    uid: firebase.auth().currentUser.uid
+                })
+            );
+                
         if (firebase.auth().currentUser !== null) 
-        console.log("user id: " + firebase.auth().currentUser.uid);
-        localStorage.setItem('user id:', JSON.stringify(user));
-          })
-          .catch(function(error){
-            console.log("Error creating user:", error);
-          });
+            console.log("user id: " + firebase.auth().currentUser.uid);
+            localStorage.setItem('user id:', JSON.stringify(user));
+            name = dbRef.ref('users/' + firebase.auth().currentUser.uid).displayName;
+            email = Auth.currentUser.email;
+            console.log(name, email, user)
+            })
+                .catch(function(error){
+                    console.log("Error creating user:", error);
+                });
     });
-
-
+  
 
     $('#btnLogIn').on('click', function(e){
         e.preventDefault();
         var data = {
-          email: $('#logEmail').val(), //get the email from Form
+            email: $('#logEmail').val(), //get the email from Form
           password : $('#logPassword').val(), //get the pass from Form
         }
         firebase.auth().signInWithEmailAndPassword(data.email, data.password)
@@ -575,22 +579,66 @@ function listPage(result){
             } else {
               // No user is signed in.
             }
-          });
-          
+        });
+        
         
     })
+    // var user =JSON.parse(localStorage.getItem('user id:'));
+    // var email = user.email
+    $('#usergreet').text('Welcome    ' + email)
+    
+    
+    // ==================================================================================================END OF USER AUTHENTICATION CODE===========================================================================================================
+    //============================favorite mechanism===============================================\\
+    $('#favoriteButton').on('click', function (e) {
+        e.preventDefault();
+        var LID = $(this).attr('data-lid');
+        var ds =$(this).attr('data-set');
+        var user = firebase.auth().currentUser;
+        var faveLi = {
+            LID: LID,
+            dataSet: ds,
+        }
 
+        dbRef.ref('user/' + user).push({
+           faveLi: faveLi,
+        });
+    });
 
+    dbRef.ref('user/' + user).on('child_added', function(childSnapshot){
+        let LID = childSnapshot.LID;
+        let dataSet = childSnapshot.dataSet;    
+        let URL = 'https://rets.io/api/v2/'+ dataSet +'/listings/'+ LID +'?access_token=520a691140619b70d86de598796f13c1'
+        $.ajax({ 
+            url: URL,
+            type: "GET", /* or type:"GET" or type:"PUT" */
+            dataType: "json",
+            data: {
+            },
+            success: function (result) {
+                console.log(result); 
+                populateFavorites(result)
+            },
+            error: function () {
+                console.log("error");
+            }
+        });
         
-        
-   
-// ==================================================================================================END OF USER AUTHENTICATION CODE===========================================================================================================
+        function populateFavorites(result){
+            $('#favePost').append(
+                // all the fuckin info we need
+            )
+
+        }
+            
+    });
+    
+    //========================================end favoriting===========================\\
+    //=======================more firebase stufffffff=============================
 
 
 
-var user =JSON.parse(localStorage.getItem('user id:'));
-var email = user.email
-$('#usergreet').text('Welcome    ' + email)
+
 
 //=====================================================================================================USER PAGE CODE================================================================================================================
 
@@ -600,7 +648,7 @@ $('#usergreet').text('Welcome    ' + email)
 //==================================================================================================Index Code==================================================
 $('#indexSubmit').on('click',function (event){
     event.preventDefault();
-    var URL = 'https://rets.io/api/v2/' + $('#indexcity').val() + '/listings?access_token=520a691140619b70d86de598796f13c1&limit=25'
+    var URL = 'https://rets.io/api/v2/' + $('#city').val() + '/listings?access_token=520a691140619b70d86de598796f13c1&limit=25'
     $.ajax({ 
         url: URL,
         type: "GET", /* or type:"GET" or type:"PUT" */
@@ -618,12 +666,12 @@ $('#indexSubmit').on('click',function (event){
             console.log("error");
         }
     });
-        
-    });
+
+});
 
     $('#advanced').on('click',function (event){
         event.preventDefault();
 
-        window.location.href= "propertysearch.html"; 
+        window.location.href= "propertySearch.html"; 
 
     });
