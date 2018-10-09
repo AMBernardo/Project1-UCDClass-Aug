@@ -8,10 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="assets/css/reset.css">
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
-    <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
     <link rel="stylesheet" type="text/css" media="screen" href="assets/css/materialize.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css">
 
 
     <style>
@@ -41,7 +41,7 @@
 
     <nav>
         <div class="nav-wrapper">
-            <a href="index.html" class="brand-logo knockout">Doorsteppe.info</a>
+            <a href="index.html" class="brand-logo knockout">Doorstep</a>
             <a href="index.html" data-target="mobile-demo" class="sidenav-trigger">
                 <i class="material-icons">menu</i>
             </a>
@@ -123,23 +123,31 @@
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="https://www.gstatic.com/firebasejs/5.5.3/firebase.js"></script>
+    <script src="https://cdn.firebase.com/libs/firebaseui/3.4.1/firebaseui.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.4.1/firebaseui.css" />
+    <script src="https://cdn.firebase.com/libs/firebaseui/3.4.1/firebaseui.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.4.1/firebaseui.css" />
     <script src="assets/javascript/materialize.min.js"></script>
     <script src="assets/javascript/main.js"></script>
     <script
     async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIvN_N1h7gY8ih2nVVstwEwxqNDh1ktZY&callback=initMap"></script>
     <script>
-        function initMap() {
-          var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 12,
-            center: {lat: 37.774, lng: -122.431297}
-          });
+      var panorama;
+
+function initMap() {
+  var astorPlace = {lat: 40.729884, lng: -73.990988};
+  var map = new google.maps.Map(document.getElementById('map'), {
+    center: astorPlace,
+    zoom: 13,
+    streetViewControl: true
+  });
           var geocoder = new google.maps.Geocoder();
   
           document.getElementById('submitMap').addEventListener('click', function() {
             geocodeAddress(geocoder, map);
           });
-        }
+        
   
         function geocodeAddress(geocoder, resultsMap) {
           var address = document.getElementById('address').value;
@@ -155,6 +163,7 @@
             }
           });
         }
+    }
       </script>
 </body>
 </html>
