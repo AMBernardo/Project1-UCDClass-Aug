@@ -610,21 +610,21 @@ $('#indexSubmit').on('click',function (event){
             var object = {url: URL, response : result}
             localStorage.removeItem('result')
             localStorage.setItem('result', JSON.stringify(object));
-            window.location.href = 'results.html'
-            
+            window.location.href = 'results.html'         
         },
         error: function () {
             console.log("error");
         }
     });
-        
-    });
+
+});
 
     $('#advanced').on('click',function (){
         // event.preventDefault();
 
         window.location.href ="propertysearch.html"
 
-$('.carousel.carousel-slider').carousel({
-    fullWidth: true
-    })});
+        $('.carousel.carousel-slider').carousel({
+            fullWidth: true
+            })
+    });
