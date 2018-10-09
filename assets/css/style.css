@@ -6,9 +6,9 @@ body {
     background-position: center top;
 }
 
-.brand-logo {
+.slogan {
     font-weight: bold;
-    font-size: 3rem !important;
+    /* font-size: 3rem !important; */
     font-family: Verdana, Geneva, Tahoma, sans-serif;
    -webkit-text-stroke-width: 1px;
    -webkit-text-stroke-color: black;
@@ -43,6 +43,9 @@ nav{
 
 footer.page-footer {
     background-color: #1c746b;
+    clear: both;
+    position: fixed;
+    bottom: 0;
 }
 
 .cardContentUser {

@@ -1,4 +1,4 @@
-input[type=text] {
+/* input[type=text] {
     margin-top: 3px !important;
     -webkit-border-radius: 10px !important;
     -moz-border-radius: 10px !;
@@ -23,9 +23,24 @@ select{
     -moz-border-radius: 10px !;
     border-radius: 10px !important;
     background-color: White !important;
-}
+} */
 
 label{
-    font-size: 15px;
-    color: black;
+    font-size: 15px !important;
+    color: black !important;
+}
+
+p span{
+    margin-top: 24px !important;
+}
+
+div#mainWrapper{
+    background-color: white;
+    margin-top: 20px;
+    padding: 20px;
+
+}
+
+.btn{
+    background-color: #1c486b;
 }
