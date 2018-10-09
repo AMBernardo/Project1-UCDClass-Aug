@@ -588,7 +588,7 @@ $('#signbtn').on('click', e =>{
 
             });
         }
-        window.location.href='userPage.html'
+        
     });
 
         // TODO: store users name and favourited homes in realtime database using their unique UID
@@ -596,9 +596,6 @@ $('#signbtn').on('click', e =>{
 //=======================more firebase stufffffff=============================
  var database = firebase.database();
 
-    function favoriteProcess(){
-
-    };
 
 
 
