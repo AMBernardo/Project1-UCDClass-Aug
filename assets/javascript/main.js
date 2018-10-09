@@ -44,12 +44,12 @@ jQuery(document).ready(function(){
 
  // Initialize Firebase
  var config = {
-    apiKey: "AIzaSyDR2-15Tdhu7iFhT4MbpbyoxP157PtISIk",
-    authDomain: "doorsteppe.firebaseapp.com",
-    databaseURL: "https://doorsteppe.firebaseio.com",
-    projectId: "doorsteppe",
-    storageBucket: "doorsteppe.appspot.com",
-    messagingSenderId: "808880878005"
+    apiKey: "AIzaSyDU1RNQPTorPNLi0J9wZYXJY_kOwa9_B60",
+    authDomain: "realestate-459b5.firebaseapp.com",
+    databaseURL: "https://realestate-459b5.firebaseio.com",
+    projectId: "realestate-459b5",
+    storageBucket: "realestate-459b5.appspot.com",
+    messagingSenderId: "770633504288"
   };
   firebase.initializeApp(config);
 
@@ -526,43 +526,70 @@ function listPage(result){
   var dbRef = firebase.database();
   var usersRef = dbRef.ref()
   var auth = null;
-  var user = Auth.currentUser;
-  var name = $('#name').val();
-  var email = $('#email').val();
+  var user;
+  var name;
+  var email;
 
   //Register
   $('#signbtn').on('click', function (e) {
     e.preventDefault();
     var data = {
-      email: $('#email').val(), //get the email from Form
-      firstName: $('#name').val()
-    };
-    var passwords = {
-      password : $('#password').val(), //get the pass from Form
+      email: $('#email').val().trim(), //get the email from Form
+      firstName: $('#name').val().trim(),
+      password : $('#password').val().trim(), //get the pass from Form
     }
-    if( data.email != '' && passwords.password != '')
+    if( data.email != '' && data.password != '')
         //create the user
         firebase.auth()
-          .createUserWithEmailAndPassword(data.email, passwords.password)
+          .createUserWithEmailAndPassword(data.email, data.password)
           .then(function() {
-            var user = firebase.auth().currentUser; 
-            var user = firebase.auth().currentUser;
-        user.updateProfile(
-            firebase.database().ref('users/' + firebase.auth().currentUser.uid).set({
-                displayName: $('#name').val().trim(),
-                name : $('#name').val().trim(),
-                email : $('#email').val().trim(),
-                uid: firebase.auth().currentUser.uid
-        }));
+            user = firebase.auth().currentUser; 
+            user.updateProfile(
+                firebase.database().ref('users/' + firebase.auth().currentUser.uid).set({
+                    displayName: $('#name').val().trim(),
+                    name : $('#name').val().trim(),
+                    email : $('#email').val().trim(),
+                    uid: firebase.auth().currentUser.uid
+                })
+            );
+                
         if (firebase.auth().currentUser !== null) 
-        console.log("user id: " + firebase.auth().currentUser.uid);
-        localStorage.setItem('user id:', JSON.stringify(user));
-          })
-            .catch(function(error){
-                console.log("Error creating user:", error);
+            console.log("user id: " + firebase.auth().currentUser.uid);
+            localStorage.setItem('user id:', JSON.stringify(user));
+            name = dbRef.ref('users/' + firebase.auth().currentUser.uid).displayName;
+            email = Auth.currentUser.email;
+            console.log(name, email, user)
+            })
+                .catch(function(error){
+                    console.log("Error creating user:", error);
                 });
     });
   
+
+    $('#btnLogIn').on('click', function(e){
+        e.preventDefault();
+        var data = {
+            email: $('#logEmail').val(), //get the email from Form
+          password : $('#logPassword').val(), //get the pass from Form
+        }
+        firebase.auth().signInWithEmailAndPassword(data.email, data.password)
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+                localStorage.setItem('user id:', JSON.stringify(user));
+            } else {
+              // No user is signed in.
+            }
+        });
+        
+        
+    })
+    // var user =JSON.parse(localStorage.getItem('user id:'));
+    // var email = user.email
+    $('#usergreet').text('Welcome    ' + email)
+    
+    
+    // ==================================================================================================END OF USER AUTHENTICATION CODE===========================================================================================================
+    //============================favorite mechanism===============================================\\
     $('#favoriteButton').on('click', function (e) {
         e.preventDefault();
         var LID = $(this).attr('data-lid');
@@ -603,43 +630,15 @@ function listPage(result){
             )
 
         }
-        
-
-        
+            
     });
     
-
-    $('#btnLogIn').on('click', function(e){
-        e.preventDefault();
-        var data = {
-          email: $('#logEmail').val(), //get the email from Form
-          password : $('#logPassword').val(), //get the pass from Form
-        }
-        firebase.auth().signInWithEmailAndPassword(data.email, data.password)
-        firebase.auth().onAuthStateChanged(function(user) {
-            if (user) {
-                localStorage.setItem('user id:', JSON.stringify(user));
-            } else {
-              // No user is signed in.
-            }
-          });
-          
-        
-    })
-
-
-        
-        
-   
-// ==================================================================================================END OF USER AUTHENTICATION CODE===========================================================================================================
-//=======================more firebase stufffffff=============================
+    //========================================end favoriting===========================\\
+    //=======================more firebase stufffffff=============================
 
 
 
 
-var user =JSON.parse(localStorage.getItem('user id:'));
-var email = user.email
-$('#usergreet').text('Welcome    ' + email)
 
 //=====================================================================================================USER PAGE CODE================================================================================================================
 
@@ -649,7 +648,7 @@ $('#usergreet').text('Welcome    ' + email)
 //==================================================================================================Index Code==================================================
 $('#indexSubmit').on('click',function (event){
     event.preventDefault();
-    var URL = 'https://rets.io/api/v2/' + $('#indexcity').val() + '/listings?access_token=520a691140619b70d86de598796f13c1&limit=25'
+    var URL = 'https://rets.io/api/v2/' + $('#city').val() + '/listings?access_token=520a691140619b70d86de598796f13c1&limit=25'
     $.ajax({ 
         url: URL,
         type: "GET", /* or type:"GET" or type:"PUT" */
@@ -670,9 +669,9 @@ $('#indexSubmit').on('click',function (event){
 
 });
 
-    $('#advanced').on('click',function (){
-        // event.preventDefault();
+    $('#advanced').on('click',function (event){
+        event.preventDefault();
 
-        window.location.href= "propertysearch.html"; 
+        window.location.href= "propertySearch.html"; 
 
     });
