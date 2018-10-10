@@ -1,8 +1,6 @@
 M.AutoInit();
 jQuery(document).ready(function(){
-
-    // getDataBridge()
-   
+    
     $('.dropdown-trigger').dropdown();
     $(".sidenav").sidenav();
     $(".tabs").tabs();
@@ -19,47 +17,11 @@ jQuery(document).ready(function(){
         fullWidth: true
         });
     });
-//We will use this function once we have the pub dataset
-// $('#submit').on('click',function (event){
-//     event.preventDefault();
-//     var URL =  ' https://rets.io/api/v2/test/listings?access_token=520a691140619b70d86de598796f13c1&limit=9' 
-//     URL += '&' + $.param({
-//         'near': $('#city').val(),
-        
-//     });
-//     $.ajax({ 
-//         url: URL,
-//         type: "GET", /* or type:"GET" or type:"PUT" */
-//         dataType: "json",
-//         data: {
-//         },
-//         success: function (result) {
-//             console.log(result);    
-//         },
-//         error: function () {
-//             console.log("error");
-//         }
-//     });
-// });
-jQuery(document).ready(function(){
-    // getDataBridge()
-    M.AutoInit();
-    $('.dropdown-trigger').dropdown();
-    $(".sidenav").sidenav();
-    $(".tabs").tabs();
-    $(".modal").modal();
-    $(".parallax").parallax();
-    $('.dropdown-trigger').dropdown();
-    $(".sidenav").sidenav();
-    $(".tabs").tabs();
-    $('.parallax').parallax();
+    //landing page carousel timer
     $('.carousel').carousel();
-    $('.slider').slider({full_width: true});
-    $('.carousel-slider').slider({full_width: true});
-    $('.carousel.carousel-slider').carousel({
-        fullWidth: true
-        });
-    });
+setInterval (function(){
+    $('.carousel').carousel('next');
+}, 3000);
 
 
 
@@ -78,7 +40,9 @@ jQuery(document).ready(function(){
 
 // ================================================================================PROPERTY SEARCH CODE===========================================================================================================
 $('#submit').on('click',function (event){
+
     event.preventDefault();
+   
     if(!$('#city').val() || !$('#bathroom').val() || ! $('#bed').val() || !$('#minsqft').val() || !$('#maxprice').val()) return M.toast({html: 'PLEASE FILL OUT EVERYTHING', classes: 'errorToast ' });
     else{
     var URL = ' https://rets.io/api/v2/' + $('#city').val() + '/listings?access_token=520a691140619b70d86de598796f13c1&limit=100&BathroomsFull.eq=' + $('#bathroom').val() + '&BedroomsTotal.eq=' + $('#bed').val() + '&LotSizeSquareFeet.gte=' + $('#minsqft').val() + '&ListPrice.lte=' + $('#maxprice').val()
@@ -92,11 +56,10 @@ $('#submit').on('click',function (event){
             var object = {url: URL, response : result}
             localStorage.removeItem('result')
             localStorage.setItem('result', JSON.stringify(object));
-            
+          
             if(result.bundle.length <= 0){
                 M.toast({html: 'ERROR NO RESULTS', classes: 'errorToast ' })
               
-               
                 
             }else{
                 window.location.href = 'results.html'
@@ -122,18 +85,10 @@ function newLocation(newLat,newLng){
         lng : newLng
     });
 }
-$('.dropdown-trigger').dropdown();
-$(".sidenav").sidenav();
-$(".tabs").tabs();
-$('.parallax').parallax();
-$('.slider').slider({full_width: true});
-$('.carousel-slider').slider({full_width: true});
 
-$('.carousel').carousel();
-setInterval (function(){
-    $('.carousel').carousel('next');
-}, 2000);
-// autoplay function for carousel
+
+
+
 
 
 
@@ -289,15 +244,18 @@ function booleanArrayDisplay(bln, arry){
 };
 var x = 0;
 $(".more").on('click' , function(Data){
+   
+
     x += 18
     getDataBridge();
      $(".tabs").tabs();
+   
      
 });
    
 
 function generateCards(Data){
-    console.log(x)
+    
     var a = $('div#rowPost');
     for(var i = x; i < x + 18; i++){
         var result = Data.bundle[i];
@@ -314,7 +272,8 @@ function generateCards(Data){
 
         else imgurl = './assets/images/placeholderHouse2.jpeg'      
 
-        
+        var number = result.ListPrice;
+ 
     //card generation 
             a.append(
                 $('<div/>',{'class': 'col s10 m4 listCard'}).append(
@@ -324,7 +283,7 @@ function generateCards(Data){
                             $('<img>', {'class':'responsive-img imageLink'}).attr('data-set',(result.OriginatingSystemKey)).attr('data-lid',(result.ListingKey)).attr('src',imgurl).attr('alt','test pic')
                         ).append(
                             $('<div/>', {'class': 'caption white black-text text-lighten-2 right-align'}).append(
-                                $('<h4/>').text('$'+result.ListPrice  )//Price Header 
+                                $('<h4/>').html('$' + number.toLocaleString() )//Price Header 
                             )
                         )
                 //data catagories
@@ -453,6 +412,7 @@ function populateInfo(){
     });
 };
 function listPage(result){
+    var number = result.ListPrice;
     $('#propertyAdd').attr('value', result.UnparsedAddress).text(result.UnparsedAddress)
     $('#address').attr('value', result.UnparsedAddress)
     for( var i =0; i < result.Media.length; i++){
@@ -485,7 +445,7 @@ function listPage(result){
         $('<div/>', {'class':'card-content'}).append(
                     $('<div/>',{'id': 'tab1'}).append(//house data
                         $('<ul/>').text(result.UnparsedAddress).append(
-                            $('<li/>').text('Listing Price: $' + result.ListPrice)
+                            $('<li/>').text('Listing Price: $' + number.toLocaleString())
                         ).append(
                             $('<li/>').text(' Beds: ' + result.BedroomsTotal)
                         ).append(
