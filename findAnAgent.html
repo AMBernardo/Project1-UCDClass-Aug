@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>index of Project1</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/css/reset.css">
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="assets/css/findAnAgentCSS.css">
+</head>
+<body>
+    <nav>
+        <div class="nav-wrapper">
+            <a href="index.html" class="brand-logo knockout">Doorstep</a>
+            <a href="index.html" data-target="mobile-demo" class="sidenav-trigger">
+                <i class="material-icons">menu</i>
+            </a>
+                <ul class="right hide-on-med-and-down">
+                    <li><a href="propertySearch.html">Property Search</a></li>
+                    <li><a href="mapSearch.html">Map Search</a></li>
+                    <li><a href="findAnAgent.html">Find An Agent</a></li>
+                    <li><a href="Login.html">Log In</a></li>
+                </ul>
+        </div>
+    </nav>
+                    
+                <ul class="sidenav" id="mobile-demo">
+                    <li><a href="propertySearch.html">Property Search</a></li>
+                    <li><a href="mapSearch.html">Map Search</a></li>
+                    <li><a href="findAnAgent.html">Find An Agent</a></li>
+                    <li><a href="Login.html">Log In</a></li>
+                </ul>
+
+
+    
+    <div class="container">
+        <div class="row">
+            <h5>Find a Real Estate Agent</h5>
+            <br>
+            <button class="waves-effect waves-light btn">Find an Agent</button>
+            <button class="waves-effect waves-light btn">Find an Office</button>
+            
+        </div>
+        
+        <div class="row">
+            <br>
+            <div class="col s12">
+                <h6>Agent Search</h6>
+                <br>
+            </div>
+            
+            <div class="col s4">
+                <form>
+                    First Name:<br>
+                    <input type="text" name="firstname" value><br>
+                </form>
+            </div>
+            <div class="col s4">
+                <form>
+                    Last Name:<br>
+                    <input type="text" name="lastname" value><br>
+                </form>
+            </div>
+            <div class="col s4">
+                <form>
+                    Office Name:<br>
+                    <input type="text" name="officename" value><br>
+                </form>
+            </div>
+        </div>
+
+        <div class="row">
+            <hr>
+            <div class="col s12">
+                    <form>
+                        <br>
+                        City, State- OR -Zipcode<br>
+                        <input type="text" name="locationname" value><br>
+                    </form>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col s12">
+                <input class="waves-effect waves-light btn" type="submit">
+            </div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+
+        
+    </div>
+
+
+    <footer class="page-footer">
+            <div class="container">
+                <div class="col s12">
+              © 2018 Copyright
+              <a class="grey-text text-lighten-4 right" href="results.html">Results</a>
+                </div>
+            </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="assets/javascript/materialize.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.5.3/firebase.js"></script>
+    <script src="assets/javascript/main.js"></script>
+</body>
+</html>
