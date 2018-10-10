@@ -47,10 +47,20 @@ jQuery(document).ready(function(){
     $('.carousel.carousel-slider').carousel({
         fullWidth: true
     });
+
     $('.carousel').carousel();
-    setInterval (function(){
+    // setInterval (function(){
+    //     $('.carousel').carousel('next');
+    // }, 3000);
+    $('.carousel.carousel-slider').carousel({
+        fullWidth: true,
+        padding: 200
+      }, setTimeout(autoplay, 4500));
+     
+      function autoplay() {
         $('.carousel').carousel('next');
-    }, 3000);
+        setTimeout(autoplay, 4500);
+      }
     });
 
 

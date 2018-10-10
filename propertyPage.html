@@ -8,8 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="assets/css/reset.css">
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
-    <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css">
     <link rel="stylesheet" type="text/css" media="screen" href="assets/css/materialize.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
 
@@ -20,9 +20,14 @@
             background-color: white;
         }
 
-        img{
+        #propCarousel img{
            height: 100% !important;
            width: 100% !important;
+        }
+
+        img.brandLogoPic{
+            height: 60px !important;
+            width: 100px !important;
         }
 
         #propCarousel{
@@ -40,10 +45,11 @@
            color: white;
         }
 
-        .nav-wrapper{
-        background-color: #1c486b;
-    }
+        
 
+    
+
+    
 
     
     </style>
@@ -55,20 +61,21 @@
         
     
 
-    <nav>
-        <div class="nav-wrapper">
-                <a href="index.html" class="brand-logo"><img class="brandLogoPic" src="assets/images/doorstepimage.png" height="65px" width="100px"></a>
-            <a href="index.html" data-target="mobile-demo" class="sidenav-trigger">
-                <i class="material-icons">menu</i>
-            </a>
-                <ul class="right hide-on-med-and-down">
-                    <li><a href="propertySearch.html">Property Search</a></li>
-                    <li><a href="mapSearch.html">Map Search</a></li>
-                    <li><a href="findAnAgent.html">Find An Agent</a></li>
-                    <li><a href="Login.html">Log In</a></li>
-                </ul>
-        </div>
-    </nav>
+        <nav>
+                <div class="nav-wrapper">
+        
+                    <a href="index.html" class="brand-logo"><img class="brandLogoPic" src="assets/images/doorstepimage.png"></a>
+                    <a href="index.html" data-target="mobile-demo" class="sidenav-trigger">
+                        <i class="material-icons">menu</i>
+                    </a>
+                        <ul class="right hide-on-med-and-down">
+                            <li><a href="propertySearch.html">Property Search</a></li>
+                            <li><a href="mapSearch.html">Map Search</a></li>
+                            <li><a href="index.html">Sign Out</a></li>
+                        </ul>
+                    
+                </div>
+            </nav>
             
               <ul class="sidenav" id="mobile-demo">
                     <li><a href="propertySearch.html">Property Search</a></li>
@@ -171,6 +178,14 @@
             }
           });
         }
+
+        
+
+        $(document).ready(function(){
+            setInterval (function(){
+        $('.carousel').carousel('next');
+        }, 3000);
+        });
       </script>
 </body>
 </html>

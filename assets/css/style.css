@@ -38,11 +38,25 @@ body {
 }
 
 nav{
-    background-color: #1c486b !important;
+    background-color: #1c486b;
+    height: 60px;
+    line-height: 60px;
+    margin-bottom: 2rem;
 }
 
+div.nav-wrapper{
+    padding-bottom: -10px !important;
+}
+
+/* property page header */
+#propertyAdd{
+    margin-left: -1rem !important;
+}
+
+
+
 footer.page-footer {
-    background-color: #1c746b;
+    background-color: #1c486b;
     clear: both;
     position: fixed;
     bottom: 0;
@@ -52,3 +66,58 @@ footer.page-footer {
     padding-bottom: 0 !important;
 }
 
+.btn{
+    background-color: #1c486b;
+}
+
+
+/* label focus color */
+.input-field input:focus + label {
+    color: #1c486bed !important;
+  }
+  /* label underline focus color */
+.input-field input:focus {
+    border-bottom: 1px solid #1c486b !important;
+    box-shadow: 0 1px 0 0 #1c486b !important
+  }
+
+ul.dropdown-content.select-dropdown li span {
+    color: black; 
+}
+
+input.select-dropdown{
+    margin-top: 1rem !important;
+}
+
+[type="radio"]:checked+span:after, [type="radio"].with-gap:checked+span:after {
+    background-color:#1c486b;
+}
+
+[type="radio"]:checked+span:after, [type="radio"].with-gap:checked+span:before, 
+[type="radio"].with-gap:checked+span:after {
+    border: 2px solid #1c486b;
+}
+
+.tabs .tab a{
+    color:#000 !important;
+} /*Black color to the text*/
+
+.tabs .tab a:hover {
+    background-color:#eee;
+    color:#000 !important;
+} /*Text color on hover*/
+
+.tabs .tab a.active {
+    background-color:white !important;
+    color:#000 !important;
+} /*Background and text color when a tab is active*/
+
+.tabs .indicator {
+    background-color:#1c486b !important;
+} /*Color of underline*/
+
+
+.pagination li.active a {
+    background: #1c486b;
+    color: #fff;
+}

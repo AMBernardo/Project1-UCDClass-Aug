@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
     <style>
         #paraImg1{
-            height: 370px !important;
+            height: 200px !important;
         }
 
         button{
@@ -22,6 +22,7 @@
 
         label{
             font-size: 20px !important;
+            color: black !important;
         }
 
         .section{
@@ -32,10 +33,41 @@
             display: none !important;
         }
 
+        li img{
+            height: 450px !important;
+        }
+
+        .slogan{
+            font-weight: bold;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            -webkit-text-stroke-width: 1px;
+            -webkit-text-stroke-color: black;
+            color: white;
+              }
+
+
         footer.page-footer {
-    background-color: #1c746b;
-    padding-bottom: 5px;
-    }
+        background-color: #1c746b;
+        padding-bottom: 5px;
+        }
+
+        /* label focus color */
+        .input-field input:focus + label {
+         color: #1c486bed !important;
+         }
+         /* label underline focus color */
+        .input-field input:focus {
+         border-bottom: 1px solid #1c486b !important;
+        box-shadow: 0 1px 0 0 #1c486b !important
+         }
+
+        ul.dropdown-content.select-dropdown li span {
+        color: black; 
+        }
+
+        footer.page-footer{
+            background-color: #1c486b;
+        }
     </style>
 </head>
 <body>
@@ -72,7 +104,7 @@
                     <div class="slider">
                             <ul class="slides">
                                 <li>
-                                <img src="assets/images/finder.jpg">
+                                <img src="assets/images/finder.jpg" width="100%" height="300">
                                 <div class="caption center-align">
                                   <h3 class="slogan">Make your dream home come true</h3>
                                   <h5 class="light grey-text text-lighten-3 slogan">Let us help you</h5>
@@ -168,7 +200,7 @@
 
                       </div>
                       <div class="parallax-container">
-                        <div class="parallax"><img src="assets/images/landing1.jpg" width="100%" height="550"></div>
+                        <div class="parallax"><img src="assets/images/landing1.jpg" width="100%" height="400"></div>
                       </div>
                    
                 
