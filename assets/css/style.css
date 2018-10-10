@@ -39,6 +39,7 @@ body {
 
 nav{
     background-color: #1c486b;
+<<<<<<< HEAD
     height: 60px;
     line-height: 60px;
     margin-bottom: 2rem;
@@ -60,11 +61,18 @@ footer.page-footer {
     clear: both;
     position: fixed;
     bottom: 0;
+=======
+}
+
+footer.page-footer {
+    background-color: #1c746b;
+>>>>>>> e5fb62ac79f5fc419fa87e3e62f8ceecae3540f2
 }
 
 .cardContentUser {
     padding-bottom: 0 !important;
 }
+<<<<<<< HEAD
 
 .btn{
     background-color: #1c486b;
@@ -121,3 +129,16 @@ input.select-dropdown{
     background: #1c486b;
     color: #fff;
 }
+=======
+
+#indexSubmit{
+    height: 3.2em;
+}
+.errorToast{
+    background-color: orange;
+}
+.more-homes{
+margin-top: -2rem;
+background-color: #1c486b;
+}
+>>>>>>> e5fb62ac79f5fc419fa87e3e62f8ceecae3540f2

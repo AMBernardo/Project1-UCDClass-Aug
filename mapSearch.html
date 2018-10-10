@@ -3,15 +3,17 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Map Search - Doorstep.info</title>
+    <title>Map Search</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="assets/css/reset.css">
-    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
     <link rel="stylesheet" type="text/css" media="screen" href="assets/css/materialize.min.css">
     <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
     <script src="https://www.gstatic.com/firebasejs/5.5.3/firebase.js"></script>
+    <script src="https://cdn.firebase.com/libs/firebaseui/3.4.1/firebaseui.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.4.1/firebaseui.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css">
 
     <style>
     input[type=text] {
@@ -52,8 +54,8 @@
                 <ul class="right hide-on-med-and-down">
                     <li><a href="propertySearch.html">Property Search</a></li>
                     <li><a href="mapSearch.html">Map Search</a></li>
-                    <li><a href="findAnAgent.html">Find An Agent</a></li>
-                    <li><a href="Login.html">Log In</a></li>
+                    <li><a href="userPage.html" class="userDislay">Profile</a></li>
+                    <li><a href="Login.html" class="loginNav">Log In</a></li>
                 </ul>
         </div>
     </nav>
@@ -61,8 +63,8 @@
                 <ul class="sidenav" id="mobile-demo">
                     <li><a href="propertySearch.html">Property Search</a></li>
                     <li><a href="mapSearch.html">Map Search</a></li>
-                    <li><a href="findAnAgent.html">Find An Agent</a></li>
-                    <li><a href="Login.html">Log In</a></li>
+                    <li><a href="userPage.html" class="userDislay">Profile</a></li>
+                    <li><a href="Login.html" class="loginNav">Log In</a></li>
                 </ul>
 
 
@@ -104,7 +106,9 @@
         
       </div>
       <div class="modal-footer">
-        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">close</a>
+
       </div>
     </div>
 

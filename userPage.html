@@ -6,14 +6,15 @@
     <title>User Page - Doorstep.info</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="assets/css/reset.css">
-    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
     <link rel="stylesheet" type="text/css" media="screen" href="assets/css/materialize.min.css">
     <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
     <script src="https://www.gstatic.com/firebasejs/5.5.3/firebase.js"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css">
 </head>
 <body>
+    <header>
     <nav>
         <div class="nav-wrapper">
 
@@ -24,26 +25,27 @@
                 <ul class="right hide-on-med-and-down">
                     <li><a href="propertySearch.html">Property Search</a></li>
                     <li><a href="mapSearch.html">Map Search</a></li>
-                    <li><a href="index.html">Sign Out</a></li>
+                    <li><a id="logout" href="index.html">Sign Out</a></li>
                 </ul>
             
         </div>
     </nav>
-                    
+                
                 <ul class="sidenav" id="mobile-demo">
                     <li><a href="propertySearch.html">Property Search</a></li>
                     <li><a href="mapSearch.html">Map Search</a></li>
                     <li><a href="Sign Out.html">Sign Out</a></li>
                 </ul>
-
+</header>
+<main>
                 <ul id="slide-out" class="sidenav">
                     <li><div class="user-view">
                       <div class="background">
                         <img src="assets/images/dream-home-profile.jpg" height="100%" width="100%">
                       </div>
                       <a href="#user"><img class="circle" src="assets/images/Anonymous.jpg"></a>
-                      <a href="#name"><span class="black-text name">First Name Last Name</span></a>
-                      <a href="#email"><span class="black-text email">email@email.com</span></a>
+                      <a href="#name"><span class="black-text name" id='sideNavName'></span></a>
+                      <a href="#email"><span class="black-text email" id='sideNavEmail'></span></a>
                     </div></li>
                     <!-- <li><a href="userPage.html"><i class="material-icons">grade</i>Saved Searches</a></li> -->
                     <li><a href="userPage.html" class="sidenav-close"><i class="material-icons">home</i>My Page</a></li>
@@ -62,7 +64,7 @@
     
     <div class="container">
         <div class="row">
-            <h3>Welcome</h3>
+            <h3 id="usergreet"></h3>
                 <div class="card">
                 <div class="card-content">
                     <a href="#" data-target="slide-out" class="sidenav-trigger"><button class="btn waves-effect waves-light" type="submit" name="action">View Profile</button></a>
@@ -87,7 +89,11 @@
                                 </ul>
                             </div>
                             <h5>0 saved searches</h5>
-                            <br><br>
+                            <br>
+                            <span id='favePost'>
+                                
+                            </span>
+                            <br>
                             <ul class="pagination">
                                 <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
                                 <li class="active"><a href="#!">1</a></li>
@@ -129,47 +135,29 @@
                                     <div class="row">
                                         <div class="col s12">
                                         <div class="input-field col s6">
-                                            <input id="first_name" type="text" class="validate">
-                                            <label for="first_name">First Name* <i class="tiny material-icons">account_circle</i></label>
-                                        </div>
-                                        <div class=" input-field col s6">
-                                            <input id="last_name" type="text" class="validate">
-                                            <label for="last_name">Last Name* <i class="tiny material-icons">account_circle</i></label>
+                                            <input id="full_name" type="text" class="validate">
+                                            <label for="full_name">Name* <i class="tiny material-icons">account_circle</i></label>
                                         </div>
                                         <div class="input-field col s6">
-                                            <input id="email" type="email" class="validate">
-                                            <label for="email">Email* <i class="tiny material-icons">email</i></label>
-                                        </div>
-                                        <div class="input-field col s6">
-                                            <input id="password" type="password" class="validate">
-                                            <label for="password">Password* <i class="tiny material-icons">security</i></label>
+                                            <input id="updateEmail" type="email" class="validate">
+                                            <label for="updateEmail">Email* <i class="tiny material-icons">email</i></label>
                                         </div>
                                     <div class="row">
                                         <div class="col s12">
-                                        <div class="input-field col s8">
-                                            <input id="additionalEmail" type="email" class="validate">
-                                            <label for="additionalEmail">Additional Email <i class="tiny material-icons">create</i></label>
+
+                                        <div class="input-field col s3">
+                                            <input id="updateNumber" type="text" class="validate">
+                                            <label for="updateNumber">Phone Number <i class="tiny material-icons">phone</i></label>
                                         </div>
-                                        <div class="input-field col s4">
-                                            <input id="phoneNumber" type="text" class="validate">
-                                            <label for="phoneNumber">Phone Number <i class="tiny material-icons">phone</i></label>
+                                        <div class="input-field col s5">
+                                            <input id="updateAddress" type="text" class="validate">
+                                            <label for="updateAddress">Address <i class="tiny material-icons">create</i></label>
                                         </div>
-                                        <div class="input-field col s8">
-                                            <input id="userAddress" type="text" class="validate">
-                                            <label for="userAddress">Address <i class="tiny material-icons">create</i></label>
+                                        <div class="input-field col s3">
+                                            <input id="updateState" type="text" class="validate">
+                                            <label for="updateState">State <i class="tiny material-icons">create</i></label>
                                         </div>
-                                        <div class="input-field col s4">
-                                            <input id="userCity" type="text" class="validate">
-                                            <label for="userCity">City <i class="tiny material-icons">create</i></label>
-                                        </div>
-                                        <div class="input-field col s4">
-                                            <input id="userState" type="text" class="validate">
-                                            <label for="userState">State <i class="tiny material-icons">create</i></label>
-                                        </div>
-                                        <div class="input-field col s4">
-                                            <input id="userZipCode" type="text" class="validate">
-                                            <label for="userZipCode">Zip Code <i class="tiny material-icons">create</i></label>
-                                        </div>
+                                      
                                         <div class="col s12">
                                             <p align="justify">*Required Fields. Your personal information is strictly confidential and will not be shared with any outside organization.</p><br>
                                             <p align="justify">By submitting this form with your telephone number you are consenting and authorizing representatives to contact you even if your name is on the Federal "Do-not-call-list"</p> 
@@ -179,8 +167,9 @@
                                             <a class="waves-effect" href="#!">Delete this Account</a>
                                         </div>
                                         <div class="col s4">
-                                            <button class="btn waves-effect waves-light" type="submit" name="action">Save Settings<i class="material-icons right">save</i>
-                                            </button>   
+                                                <button class="btn waves-effect waves-light modal-trigger" id="update" data-target="modal1" type="submit" name="action">Sign Up!
+                                                        <i class="material-icons right"></i>
+                                                    </button> 
                                         </div>
                                         </div>
                                     </div>
@@ -303,7 +292,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+                <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
             </div>
         </div>
 
@@ -340,7 +329,7 @@
 
     </div>
 </div>
-    
+</main> 
 
     <footer class="page-footer">
         <div class="container">
