@@ -6,51 +6,50 @@
     <title>index of Project1</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="assets/css/reset.css">
-    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
     <link rel="stylesheet" type="text/css" media="screen" href="assets/css/materialize.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
     <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css">
 </head>
 <body onload='getDataBridge()'>
-        <nav>
-                <div class="nav-wrapper">
-        
-                    <a href="index.html" class="brand-logo"><img class="brandLogoPic" src="assets/images/doorstepimage.png" height="65px" width="100px"></a>
-                    <a href="index.html" data-target="mobile-demo" class="sidenav-trigger">
-                        <i class="material-icons">menu</i>
-                    </a>
-                        <ul class="right hide-on-med-and-down">
-                            <li><a href="propertySearch.html">Property Search</a></li>
-                            <li><a href="mapSearch.html">Map Search</a></li>
-                            <li><a href="index.html">Sign Out</a></li>
-                        </ul>
-                    
-                </div>
-            </nav>
+       
+          
+    <nav>
+        <div class="nav-wrapper">
+            <a href="index.html" class="brand-logo knockout">Doorsteppe.info</a>
+            <a href="index.html" data-target="mobile-demo" class="sidenav-trigger">
+                <i class="material-icons">menu</i>
+            </a>
+                <ul class="right hide-on-med-and-down">
+                    <li><a href="propertySearch.html">Property Search</a></li>
+                    <li><a href="mapSearch.html">Map Search</a></li>
+                    <li><a href="findAnAgent.html">Find An Agent</a></li>
+                    <li><a href="userPage.html" class="userDislay">Profile</a></li>
+                    <li><a href="Login.html" class="loginNav">Log In</a></li>
+                </ul>
+        </div>
+    </nav>
             
               <ul class="sidenav" id="mobile-demo">
                     <li><a href="propertySearch.html">Property Search</a></li>
                     <li><a href="mapSearch.html">Map Search</a></li>
                     <li><a href="findAnAgent.html">Find An Agent</a></li>
-                    <li><a href="Login.html">Log In</a></li>
+                    <li><a href="userPage.html" class="userDislay">Profile</a></li>
+                    <li><a href="Login.html" class="loginNav">Log In</a></li>
               </ul>
     <div class="row" id='rowPost'>
         <!-- the search results go here -->
     </div>
-    
+  
+   
       
     <div class="center-align">  
-        
             <!-- <a class="btn tooltipped" data-position="left" data-tooltip="I am a tooltip">Hover me!</a> -->
      <a class="btn-floating btn-small waves-effect waves-light more-homes pulse tooltipped more" data-position="left" data-tooltip="More Homes"> <i class="material-icons">arrow_drop_down</i></a>
     </div>  
     </div>
-   <div class="center-align"></div>
-    <div id="loader">
-
-    </div>
-</div>
+    
+    
 
     <footer class="page-footer">
         <div class="container">
@@ -60,8 +59,7 @@
                 </div>
             </div>
     </footer>
-   
-        
+    
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="assets/javascript/materialize.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.5.3/firebase.js"></script>

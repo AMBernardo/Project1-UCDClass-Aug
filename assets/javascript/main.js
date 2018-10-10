@@ -55,7 +55,6 @@ setInterval (function(){
 $('#submit').on('click',function (event){
 
     event.preventDefault();
-   
     if(!$('#city').val() || !$('#bathroom').val() || ! $('#bed').val() || !$('#minsqft').val() || !$('#maxprice').val()) return M.toast({html: 'PLEASE FILL OUT EVERYTHING', classes: 'errorToast ' });
     else{
     var URL = ' https://rets.io/api/v2/' + $('#city').val() + '/listings?access_token=520a691140619b70d86de598796f13c1&limit=100&BathroomsFull.eq=' + $('#bathroom').val() + '&BedroomsTotal.eq=' + $('#bed').val() + '&LotSizeSquareFeet.gte=' + $('#minsqft').val() + '&ListPrice.lte=' + $('#maxprice').val()
@@ -99,12 +98,6 @@ function newLocation(newLat,newLng){
     });
 }
 
-
-
-
-
-
-
 $("#1").on('click', function ()
 {
     newLocation(37.773972,-122.431297);
@@ -119,6 +112,7 @@ $("#3").on('click', function ()
 {
 newLocation(30.267153, -97.7430608);
 });
+
 
 var map;
 function initMap(){
@@ -257,16 +251,12 @@ function booleanArrayDisplay(bln, arry){
 };
 var x = 0;
 $(".more").on('click' , function(Data){
-   
-
     x += 18
     getDataBridge();
      $(".tabs").tabs();
-   
-     
+      
 });
    
-
 function generateCards(Data){
     
     var a = $('div#rowPost');
@@ -296,7 +286,7 @@ function generateCards(Data){
                             $('<img>', {'class':'responsive-img imageLink'}).attr('data-set',(result.OriginatingSystemKey)).attr('data-lid',(result.ListingKey)).attr('src',imgurl).attr('alt','test pic')
                         ).append(
                             $('<div/>', {'class': 'caption white black-text text-lighten-2 right-align'}).append(
-                                $('<h4/>').html('$' + number.toLocaleString() )//Price Header 
+                                $('<h4/>').text('$'+ number.toLocaleString()  )//Price Header 
                             )
                         )
                 //data catagories
@@ -426,15 +416,29 @@ function populateInfo(){
 };
 function listPage(result){
     var number = result.ListPrice;
-    $('#propertyAdd').attr('value', result.UnparsedAddress).text(result.UnparsedAddress)
-    $('#address').attr('value', result.UnparsedAddress)
-    for( var i =0; i < result.Media.length; i++){
+    $('#propertyAdd').attr('value', result.UnparsedAddress).text(result.UnparsedAddress);
+    $('#address').attr('value', result.UnparsedAddress);
+    $('#favoriteButton').attr('data-set',(result.OriginatingSystemKey)).attr('data-lid',(result.ListingKey))
+    
+    if (result.Media[0]){
+        // image fallback
+        for( var i =0; i < result.Media.length; i++){
+            $('#propCarousel').append(
+                $('<a/>',{'class':'carousel-item'}).append(
+                    $('<img>').attr('src', result.Media[i].MediaURL)
+                )
+              )
+          }$('.carousel').carousel();
+        }
+    else {
         $('#propCarousel').append(
           $('<a/>',{'class':'carousel-item'}).append(
-              $('<img>').attr('src', result.Media[i].MediaURL)
+              $('<img>').attr('src','./assets/images/placeholderHouse2.jpeg')
           )
         )
     }$('.carousel').carousel();
+
+    var number = result.ListPrice
 
     let a = $('#propPostPoint')
     a.append(
@@ -538,85 +542,248 @@ function listPage(result){
 
 
 // ==================================================================================================USER AUTHENTICATION CODE===========================================================================================================
-// user sign up/in
-// get user login elements
-var txtEmail = $('#logemail');
-var txtPass =  $('#logpassword');
-var loginBtn =  $('#btnLogIn');
 
-// get user sign up elements
-var txtSEmail = $('#email');
-var txtSPass = $('#password');
-var userName = $('#name')
-var btnSignIn = $('#signbtn')
-var displayName = $('#name')
-// add login event
-$('#btnLogIn').on('click', e =>{
-// get email and password fields
-    if(!txtEmail.val() || !txtPass.val()) return M.toast({html: 'ERROR PLEASE FILL OUT EVERYTHING', classes: 'errorToast ' });
-    else{  
-        var email = txtEmail.val()
-        var pass = txtPass.val()
-        var auth = firebase.auth()
-        // sign in
-        var promise = auth.signInWithEmailAndPassword(email, pass)
-        promise.catch(e => console.log(e.message));
-        window.location.href='userPage.html';
+
+//create firebase references
+var Auth = firebase.auth(); 
+var dbRef = firebase.database();
+var usersRef = dbRef.ref()
+var auth = null;
+var activeUser;
+var uid;
+var name;
+var email;
+
+
+// current user check
+firebase.auth().onAuthStateChanged(user=> {
+    if (user) {
+        //if there is a signed in user
+      activeUser = user;
+      uid = activeUser.uid;
+      email = activeUser.email;
+      console.log(email, activeUser, uid);
+      $('#sideNavEmail').text(email);
+      $('#usergreet').text('Welcome    ' + email);
+      $('.loginNav').attr('style', 'display: none');
+      $('.userDisplay').attr('style', 'display: inline');
+      $('#favoriteButton').attr('style', 'display: inline')
+    } else {
+        console.log('no user signed in')
+        localStorage.removeItem('user id:')
+        $('.loginNav').attr('style', 'display: inline');
+        $('.userDislay').attr('style', 'display: none');
+        $('#favoriteButton').attr('style', 'display: none')
     }
+  });
+
+  $('#logout').on('click', function(e){
+    e.preventDefault()
+    firebase.auth().signOut()
+      .then(function() {
+        console.log('user signed out')
+        localStorage.removeItem('user id:');
+        window.location.replace('Login.html')
+        window.location.replace('Login.html')
+      })
+      .catch(function(error) {
+        console.log(error)
+      });
+  })
+
+
+  //Register
+  $('#signbtn').on('click', function (e) {
+    e.preventDefault();
+    if(!$('#email').val().trim() || !$('#password').val().trim()) return M.toast({html: 'ERROR PLEASE FILL OUT EVERYTHING', classes: 'errorToast ' });
+    
+    var data = {
+      email: $('#email').val().trim(), //get the email from Form
+      displayName: $('#displayName').val().trim(),
+      password : $('#password').val().trim(), //get the pass from Form
+      phoneNumber: $('#poneNumber').val(),
+      address: $('#userAddress').val(),
+      state: $('#userState').val()
+    }
+    if( data.email != '' && data.password != '')
+        //create the user
+        firebase.auth()
+          .createUserWithEmailAndPassword(data.email, data.password)
+          .then(function() {
+            activeUser = firebase.auth().currentUser; 
+            activeUser.updateProfile(
+                firebase.database().ref('users' + firebase.auth().currentUser.uid).set({
+                    displayName: $('#displayName').val(),
+                    email : $('#email').val(),  
+                    Number: $('#phoneNumber').val(),
+                    address: $('#userAddress').val(), 
+                    state: $('#userState').val(),
+                    uid: firebase.auth().currentUser.uid
+                })
+            );
+                
+        if (firebase.auth().currentUser !== null) 
+            console.log("user id: " + firebase.auth().currentUser.uid);
+            localStorage.setItem('user id:', JSON.stringify(activeUser));
+            name = dbRef.ref(firebase.auth().currentUser.uid).displayName;
+            email = Auth.currentUser.email;
+            console.log(name, email, activeUser)
+            window.location.href = 'userPage.html'
+            })
+                .catch(function(error){
+                    console.log("Error creating user:", error);
+                });
+    });
+  
+
+    $('#btnLogIn').on('click', function(e){
+        e.preventDefault();
+        if (!$('#logEmail').val()|| !$('#logPassword').val())return  M.toast({html: 'ERROR PLEASE FILL OUT EVERYTHING', classes: 'errorToast '}); 
+        var data = {
+            email: $('#logEmail').val(), //get the email from Form
+          password : $('#logPassword').val(), //get the pass from Form
+        }
+        firebase.auth().signInWithEmailAndPassword(data.email, data.password)
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+                localStorage.setItem('user id:', JSON.stringify(user));
+                window.location.href = 'userPage.html'
+            } else {
+              // No user is signed in.
+            }
+        });
+        
+        
+    })
+    
+    
+    
+    // ==================================================================================================END OF USER AUTHENTICATION CODE===========================================================================================================
+    
+    
+  //============================favorite mechanism===============================================\\
+  firebase.auth().onAuthStateChanged(function(user) {
+    activeUser = user;
+    uid = activeUser.uid 
+    if (user) {
+        firebase.database().ref('users/' + uid +  '/favorites' ).on('child_added',function(snapshot){
+            
+            console.log(snapshot.val())
+            
+            let LID = snapshot.val().LID;
+            let dataSet =snapshot.val().ds;    
+            let URL = 'https://rets.io/api/v2/'+ dataSet +'/listings/'+ LID +'?access_token=520a691140619b70d86de598796f13c1'
+            $.ajax({ 
+                url: URL,
+                type: "GET", /* or type:"GET" or type:"PUT" */
+                dataType: "json",
+                data: {
+                },
+                success: function (result) {
+                    console.log(result)
+                    populateFavorites(result.bundle)
+                },
+                error: function () {
+                    console.log("error");
+                }
+            });
+            // 
+            
+        });
+    }
+    else{ return}
 });
 
-// add signup event 
-//modal 
-$('#signbtn').on('click', e =>{
-    // get email and password fields
-    if (!txtSEmail.val() || !txtSPass.val() || !displayName.val()){
-        e.preventDefault();
-        return  M.toast({html: 'ERROR PLEASE FILL OUT EVERYTHING', classes: 'errorToast '});  
-    }
-    else{
-         $('#modal2').modal('open');
-        var email = txtSEmail.val()
-        var pass = txtSPass.val()
-        var auth = firebase.auth()
-        var userName = displayName.val()
-        // sign in
-        var promise = auth.createUserWithEmailAndPassword(email, pass).then(function(user) {
-            user.firebase.auth()({
-                displayName: userName   
-            });   
-        promise.catch(e => console.log(e.message));
-        
-        });
-
-        // add a realtime listener to detect user suthentication state changes
-        firebase.auth().onAuthStateChanged(firebaseUser =>{
-                if(firebaseUser){
-                    console.log(firebaseUser);
-                } else {
-                    console.log('not logged in');
-                }
-
-            });
-        }
-        window.location.href='userPage.html'
-    });
-
-        // TODO: store users name and favourited homes in realtime database using their unique UID
-// ==================================================================================================END OF USER AUTHENTICATION CODE===========================================================================================================
-//=======================more firebase stufffffff=============================
- var database = firebase.database();
-
-    function favoriteProcess(){
-
+function newFavorite(LID, uid, ds){
+    var newFavoriteData =   {
+        LID: LID,
+        ds: ds
     };
 
+    var newFavoriteKey = firebase.database().ref('users/' + uid).child('favorites').push().key;
 
+    var updates = {};
+    updates['/favorites/' + newFavoriteKey] = newFavoriteData;
+
+    return  firebase.database().ref('users/' + uid).update(updates);
+
+}
+
+function populateFavorites(result){
+    if(result.Media[0]) {imgurl = result.Media[0].MediaURL;}
+    else imgurl = './assets/images/placeholderhouse2.jpeg';
+
+    $('#favePost').append(
+         $('<div/>',{'class': 'card col s3 m3 '}).append(
+            $('<div/>',{'class':'card-image waves-effect waves-block waves-light'}).append(
+                //image block=================
+                    $('<img>', {'class':'responsive-img imageLink'}).attr('data-set',(result.OriginatingSystemKey)).attr('data-lid',(result.ListingKey)).attr('src',imgurl).attr('alt','test pic')
+                ).append(
+                    $('<div/>', {'class': 'caption white black-text text-lighten-2 right-align'}).append(
+                        $('<h4/>').text('$'+result.ListPrice)//Price Header 
+                    )
+                )
+         )
+    )             
+};
+
+
+
+$('#favoriteButton').on('click', function (e) {
+    e.preventDefault();
+    var LID = $(this).attr('data-lid');
+    var ds =$(this).attr('data-set');
+    console.log('ON CLICK DS AND LID= ' + ds, LID)
+    // var user = firebase.auth().currentUser;
+    newFavorite(LID, uid, ds)
+   
+});
+
+//========================================end favoriting===========================\\
+    //=======================more firebase stufffffff=============================
+
+
+
+
+
+//=====================================================================================================USER PAGE CODE================================================================================================================
+
+$('#update').on('click',function updateUser(e, uid) {
+e.preventDefault()
+firebase.auth().onAuthStateChanged(function(user) {
+    activeUser = user;
+    uid = activeUser.uid
+if(user){
+    var postData = {
+      displayName: $('#full_name').val(),
+      uid: uid,
+      email: $('#updateEmail').val(),
+      Number: $('#updateNumber').val(),
+      address: $('#updateAddress').val(),
+      state: $('#updateState').val()
+    };
+    var user = firebase.auth().currentUser;
+    user.updateProfile({
+        displayName:$('#full_name').val(),
+        email: $('#updateEmail').val()
+      }).then(function() {
+        // Update successful.
+      })
+    var newUpdateKey = firebase.database().ref(uid).push().key;
+  
+    // Write the new post's data simultaneously in the posts list and the user's post list.
+    var updates = {};
+    updates[newUpdateKey] = postData;
+  
+    return firebase.database().ref(uid).update(updates);
+    
+  }})})
 
 
 //==================================================================================================Index Code==================================================
 $('#indexSubmit').on('click',function (event){
     event.preventDefault();
-    var URL = 'https://rets.io/api/v2/' + $('#indexcity').val() + '/listings?access_token=520a691140619b70d86de598796f13c1&limit=100'
+    var URL = 'https://rets.io/api/v2/' + $('#city').val() + '/listings?access_token=520a691140619b70d86de598796f13c1&limit=100'
     $.ajax({ 
         url: URL,
         type: "GET", /* or type:"GET" or type:"PUT" */
@@ -634,12 +801,12 @@ $('#indexSubmit').on('click',function (event){
             console.log("error");
         }
     });
-        
-    });
+
+});
 
     $('#advanced').on('click',function (){
         // event.preventDefault();
 
-        window.location.href= "propertysearch.html"; 
+        window.location.href= "propertySearch.html"; 
 
     });
