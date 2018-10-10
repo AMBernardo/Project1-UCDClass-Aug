@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="assets/css/reset.css">
     <link rel="stylesheet" type="text/css" media="screen" href="assets/css/materialize.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
     <script src="https://www.gstatic.com/firebasejs/5.5.3/firebase.js"></script>
@@ -24,6 +25,22 @@
     }
     #map{
         margin-bottom: 60px;
+    }
+
+    .btn{
+        background-color: #1c486b !important;
+    }
+
+    input{
+        color: white !important;
+    }
+
+    #buttonRow{
+        margin-left: -0.8rem;
+    }
+
+    .nav-wrapper{
+        background-color: #1c486b;
     }
     </style>
 </head>
@@ -54,13 +71,13 @@
 
     <div class="container">
         <div class="row">
-            <div class="col s12">
+            <div class="col s6 offset-s3 center-align">
                 <h4>Map Search</h4>
             </div>
         </div>
 
         <div class="row">
-            <div class="col s8">
+            <div class="col s8" id="buttonRow">
                     <input class="waves-effect waves-light btn" id="1" type="submit" value="San Francisco">    
                     <input class="waves-effect waves-light btn" id="2" type="submit" value="San Diego">  
                     <input class="waves-effect waves-light btn" id="3" type="submit" value="Texas">  
@@ -89,9 +106,7 @@
         
       </div>
       <div class="modal-footer">
-
-        <a href="#!" class="modal-close waves-effect waves-green btn-flat">close</a>
-
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
       </div>
     </div>
 

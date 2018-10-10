@@ -52,12 +52,25 @@ jQuery(document).ready(function(){
     $(".sidenav").sidenav();
     $(".tabs").tabs();
     $('.parallax').parallax();
-    $('.carousel').carousel();
     $('.slider').slider({full_width: true});
     $('.carousel-slider').slider({full_width: true});
     $('.carousel.carousel-slider').carousel({
         fullWidth: true
-        });
+    });
+
+    $('.carousel').carousel();
+    // setInterval (function(){
+    //     $('.carousel').carousel('next');
+    // }, 3000);
+    $('.carousel.carousel-slider').carousel({
+        fullWidth: true,
+        padding: 200
+      }, setTimeout(autoplay, 4500));
+     
+      function autoplay() {
+        $('.carousel').carousel('next');
+        setTimeout(autoplay, 4500);
+      }
     });
 
 
@@ -161,7 +174,7 @@ $('#1').on('click',function (event){
                 var coords = results.bundle[i].Coordinates;
                 var latLng = new google.maps.LatLng(coords[1],coords[0]);
                 var info = "<h5>" + "  Address  " + "</h5>" + results.bundle[i].UnparsedAddress + "<br>" + "<br>" +  "<h5>"+"  Listed Price  " + "</h5>"+ results.bundle[i].ListPrice +  "<br>" +   "<br>" +  "<h5>" + "  Square Foot  " + "</h5>" + results.bundle[i].LotSizeSquareFeet + "  Bedrooms  " + results.bundle[i].BedroomsTotal  + "  Full baths  " + results.bundle[i].BathroomsFull + "  Half baths  " + results.bundle[i].BathroomsHalf 
-
+                // var imgurl = results.bundle[1].Media[1].MediaURL;
                 var marker = new google.maps.Marker({
                   position: latLng,
                   map: map,
@@ -282,6 +295,7 @@ $(".more").on('click' , function(Data){
      
 });
    
+
 
 function generateCards(Data){
     console.log(x)

@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="assets/css/reset.css">
     <link rel="stylesheet" type="text/css" media="screen" href="assets/css/materialize.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
@@ -14,7 +15,21 @@
     <script src="https://cdn.firebase.com/libs/firebaseui/3.4.1/firebaseui.js"></script>
     <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.4.1/firebaseui.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css">
-   
+    <style>
+        .material-icons.left{
+            margin-top: 7px;
+        }
+
+        #btnLogIn{
+            margin-top: 10px;
+        }
+
+    .btn{
+        background-color: #1c486b;
+    }
+        
+ 
+    </style>
 </head>
 <body class="auth-false">
     <nav>
@@ -39,9 +54,9 @@
                     <li><a href="Login.html" class="loginNav">Log In</a></li>
                 </ul>
     
-    <h2>Organizer Login</h2>
-
-    <div class="container">
+                
+                <div class="container">
+                        <h2>Organizer Login</h2>
 
     <div class="card-panel white">
         <div class="row">
@@ -50,9 +65,11 @@
                     <div class="col s4">
                         <h4><span class="grey-text"><i class="material-icons small left">person</i>Users Login</span></h4>
                     </div>
-                    <div class="col s4">
+                    <div class="col s5 input-field ">
                         <input id="logEmail" type="email" class="validate">
                         <label for="email">Email</label>
+                    </div>
+                    <div class="col s5 offset-s4 input-field ">
                         <input id="logPassword" type="password" class="validate">
                         <label for="password">Password</label>
                     </div>
@@ -212,10 +229,6 @@
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="assets/javascript/materialize.min.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/5.5.3/firebase.js"></script>
     <script src="https://cdn.firebase.com/libs/firebaseui/3.4.1/firebaseui.js"></script>
     <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.4.1/firebaseui.css" />
     <script src="assets/javascript/main.js"></script>
-
-</body>
-</html>
