@@ -1,4 +1,3 @@
-M.AutoInit();
 jQuery(document).ready(function(){
 
     // getDataBridge()
@@ -610,7 +609,8 @@ firebase.auth().onAuthStateChanged(user=> {
       .then(function() {
         console.log('user signed out')
         localStorage.removeItem('user id:');
-        window.location.href = 'Login.html'
+        window.location.replace('Login.html')
+        window.location.replace('Login.html')
       })
       .catch(function(error) {
         console.log(error)
@@ -713,6 +713,7 @@ firebase.auth().onAuthStateChanged(user=> {
                     console.log("error");
                 }
             });
+            // 
             
         });
     }
