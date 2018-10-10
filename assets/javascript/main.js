@@ -581,6 +581,7 @@ var uid;
 var name;
 var email;
 
+
 // current user check
 firebase.auth().onAuthStateChanged(user=> {
     if (user) {
@@ -598,14 +599,14 @@ firebase.auth().onAuthStateChanged(user=> {
         console.log('no user signed in')
         localStorage.removeItem('user id:')
         $('.loginNav').attr('style', 'display: inline');
-        $('.userDisplay').attr('style', 'display: none');
+        $('.userDislay').attr('style', 'display: none');
         $('#favoriteButton').attr('style', 'display: none')
     }
   });
 
   $('#logout').on('click', function(e){
     e.preventDefault()
-    firebase.auth().signOut(user)
+    firebase.auth().signOut()
       .then(function() {
         console.log('user signed out')
         localStorage.removeItem('user id:');
@@ -672,6 +673,7 @@ firebase.auth().onAuthStateChanged(user=> {
         firebase.auth().onAuthStateChanged(function(user) {
             if (user) {
                 localStorage.setItem('user id:', JSON.stringify(user));
+                window.location.href = 'userPage.html'
             } else {
               // No user is signed in.
             }
@@ -685,85 +687,84 @@ firebase.auth().onAuthStateChanged(user=> {
     // ==================================================================================================END OF USER AUTHENTICATION CODE===========================================================================================================
     
     
-    //============================favorite mechanism===============================================\\
-    firebase.auth().onAuthStateChanged(function(user) {
-        activeUser = user;
-        uid = activeUser.uid 
-        if (user) {
-            firebase.database().ref('users/' + uid +  '/favorites' ).on('child_added',function(snapshot){
-                
-                console.log(snapshot.val())
-                
-                let LID = snapshot.val().LID;
-                let dataSet =snapshot.val().ds;    
-                let URL = 'https://rets.io/api/v2/'+ dataSet +'/listings/'+ LID +'?access_token=520a691140619b70d86de598796f13c1'
-                $.ajax({ 
-                    url: URL,
-                    type: "GET", /* or type:"GET" or type:"PUT" */
-                    dataType: "json",
-                    data: {
-                    },
-                    success: function (result) {
-                        console.log(result)
-                        populateFavorites(result.bundle)
-                    },
-                    error: function () {
-                        console.log("error");
-                    }
-                });
-                // 
-                
+  //============================favorite mechanism===============================================\\
+  firebase.auth().onAuthStateChanged(function(user) {
+    activeUser = user;
+    uid = activeUser.uid 
+    if (user) {
+        firebase.database().ref('users/' + uid +  '/favorites' ).on('child_added',function(snapshot){
+            
+            console.log(snapshot.val())
+            
+            let LID = snapshot.val().LID;
+            let dataSet =snapshot.val().ds;    
+            let URL = 'https://rets.io/api/v2/'+ dataSet +'/listings/'+ LID +'?access_token=520a691140619b70d86de598796f13c1'
+            $.ajax({ 
+                url: URL,
+                type: "GET", /* or type:"GET" or type:"PUT" */
+                dataType: "json",
+                data: {
+                },
+                success: function (result) {
+                    console.log(result)
+                    populateFavorites(result.bundle)
+                },
+                error: function () {
+                    console.log("error");
+                }
             });
-        }
-        else{ return}
-    });
-
-    function newFavorite(LID, uid, ds){
-        var newFavoriteData =   {
-            LID: LID,
-            ds: ds
-        };
-
-        var newFavoriteKey = firebase.database().ref('users/' + uid).child('favorites').push().key;
-
-        var updates = {};
-        updates['/favorites/' + newFavoriteKey] = newFavoriteData;
-
-        return  firebase.database().ref('users/' + uid).update(updates);
-
+            
+        });
     }
+    else{ return}
+});
 
-    function populateFavorites(result){
-        if(result.Media[0]) {imgurl = result.Media[0].MediaURL;}
-        else imgurl = './assets/images/placeholderhouse2.jpeg';
-
-        $('#favePost').append(
-             $('<div/>',{'class': 'card col s3 m3 '}).append(
-                $('<div/>',{'class':'card-image waves-effect waves-block waves-light'}).append(
-                    //image block=================
-                        $('<img>', {'class':'responsive-img imageLink'}).attr('data-set',(result.OriginatingSystemKey)).attr('data-lid',(result.ListingKey)).attr('src',imgurl).attr('alt','test pic')
-                    ).append(
-                        $('<div/>', {'class': 'caption white black-text text-lighten-2 right-align'}).append(
-                            $('<h4/>').text('$'+result.ListPrice)//Price Header 
-                        )
-                    )
-             )
-        ).append()               
+function newFavorite(LID, uid, ds){
+    var newFavoriteData =   {
+        LID: LID,
+        ds: ds
     };
 
+    var newFavoriteKey = firebase.database().ref('users/' + uid).child('favorites').push().key;
+
+    var updates = {};
+    updates['/favorites/' + newFavoriteKey] = newFavoriteData;
+
+    return  firebase.database().ref('users/' + uid).update(updates);
+
+}
+
+function populateFavorites(result){
+    if(result.Media[0]) {imgurl = result.Media[0].MediaURL;}
+    else imgurl = './assets/images/placeholderhouse2.jpeg';
+
+    $('#favePost').append(
+         $('<div/>',{'class': 'card col s3 m3 '}).append(
+            $('<div/>',{'class':'card-image waves-effect waves-block waves-light'}).append(
+                //image block=================
+                    $('<img>', {'class':'responsive-img imageLink'}).attr('data-set',(result.OriginatingSystemKey)).attr('data-lid',(result.ListingKey)).attr('src',imgurl).attr('alt','test pic')
+                ).append(
+                    $('<div/>', {'class': 'caption white black-text text-lighten-2 right-align'}).append(
+                        $('<h4/>').text('$'+result.ListPrice)//Price Header 
+                    )
+                )
+         )
+    )             
+};
 
 
-    $('#favoriteButton').on('click', function (e) {
-        e.preventDefault();
-        var LID = $(this).attr('data-lid');
-        var ds =$(this).attr('data-set');
-        console.log('ON CLICK DS AND LID= ' + ds, LID)
-        // var user = firebase.auth().currentUser;
-        newFavorite(LID, uid, ds)
-       
-    });
-    
-    //========================================end favoriting===========================\\
+
+$('#favoriteButton').on('click', function (e) {
+    e.preventDefault();
+    var LID = $(this).attr('data-lid');
+    var ds =$(this).attr('data-set');
+    console.log('ON CLICK DS AND LID= ' + ds, LID)
+    // var user = firebase.auth().currentUser;
+    newFavorite(LID, uid, ds)
+   
+});
+
+//========================================end favoriting===========================\\
     //=======================more firebase stufffffff=============================
 
 
