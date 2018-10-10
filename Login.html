@@ -10,34 +10,45 @@
     <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
-    <link rel="stylesheet" href="assets/css/style.css">
     <script src="https://www.gstatic.com/firebasejs/5.5.3/firebase.js"></script>
-    <script src="https://cdn.firebase.com/libs/firebaseui/3.4.1/firebaseui.js"></script>
-    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.4.1/firebaseui.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css">
-   
+
+    <style>
+        .material-icons.left{
+            margin-top: 7px;
+        }
+
+        #btnLogIn{
+            margin-top: 10px;
+        }
+
+    .btn{
+        background-color: #1c486b;
+    }
+        
+ 
+    </style>
+
 </head>
-<body class="auth-false">
-    <nav>
-        <div class="nav-wrapper">
-            <a href="index.html" class="brand-logo"><img class="brandLogoPic" src="assets/images/doorstepimage.png" height="65px" width="100px"></a>
-            <a href="index.html" data-target="mobile-demo" class="sidenav-trigger">
-                <i class="material-icons">menu</i>
-            </a>
-                <ul class="right hide-on-med-and-down">
-                    <li><a href="propertySearch.html">Property Search</a></li>
-                    <li><a href="mapSearch.html">Map Search</a></li>
-                    <li><a href="userPage.html" class="userDislay">Profile</a></li>
-                    <li><a href="Login.html" class="loginNav">Log In</a></li>
-                </ul>
-        </div>
-    </nav>
+<body>
+        <nav>
+                <div class="nav-wrapper">
+                    <a href="index.html" class="brand-logo"><img class="brandLogoPic" src="assets/images/doorstepimage.png" height="65px" width="100px"></a>
+                    <a href="#" data-target="mobile-demo" class="sidenav-trigger">
+                        <i class="material-icons">menu</i>
+                    </a>
+                        <ul class="right hide-on-med-and-down">
+                            <li><a href="propertySearch.html">Property Search</a></li>
+                            <li><a href="mapSearch.html">Map Search</a></li>
+                            <li><a href="findAnAgent.html">Find An Agent</a></li>
+                            <li><a href="Login.html">Log In</a></li>
+                        </ul>
+                </div>
+            </nav>
                     
                 <ul class="sidenav" id="mobile-demo">
                     <li><a href="propertySearch.html">Property Search</a></li>
                     <li><a href="mapSearch.html">Map Search</a></li>
-                    <li><a href="userPage.html" class="userDislay">Profile</a></li>
-                    <li><a href="Login.html" class="loginNav">Log In</a></li>
+                    <li><a href="Login.html">Log In</a></li>
                 </ul>
     
                 
@@ -49,7 +60,7 @@
             <div class="col s12">
                 <div class="row">
                     <div class="col s4">
-                        <h4><span class="grey-text"><i class="material-icons small left">person</i>Users Login</span></h4>
+                        <h4><span><i class="material-icons small left">person</i>Users Login</span></h4>
                     </div>
                     <div class="col s5 input-field ">
                         <input id="logEmail" type="email" class="validate">
@@ -59,8 +70,8 @@
                         <input id="logPassword" type="password" class="validate">
                         <label for="password">Password</label>
                     </div>
-                    <div class="col s4">
-                        <a class="waves-effect waves-light btn" id="btnLogIn" >Sign in<i class="material-icons right">send</i></a>
+                    <div class="col s4 offset-s4">
+                        <a class="waves-effect waves-light btn" id="btnLogIn" href="userPage.html">Sign in<i class="material-icons right">send</i></a>
                         <br><br>
                         <form action="#">
                             <p>
@@ -86,40 +97,23 @@
                     <p>Create and Manage saved searches and properties with the Property Organizer</p>
                 </div>
                 <div class="input-field col s4">
-                    <input id="displayName" type="text" class="validate">
-                    <label for="displayName">Name <i class="tiny material-icons"></i></label>
+                    <input id="name" type="text" class="validate">
+                    <label for="name">Name <i class="tiny material-icons">create</i></label>
                 </div>
                 <div class="col s4"></div>
                 <div class="input-field col s8">
                     <input id="email" type="email" class="validate">
-                    <label for="email">Email <i class="tiny material-icons"></i></label>
+                    <label for="email">Email <i class="tiny material-icons">create</i></label>
                 </div>
                 <div class="col s4"></div>
                 <div class="input-field col s8">
                         <input id="password" type="password" class="validate">
-                        <label for="password">Password <i class="tiny material-icons"></i></label>
+                        <label for="password">Password <i class="tiny material-icons">create</i></label>
                 </div>
-                <div class="col s4"></div>
-                <div class="input-field col s8">
-                        <input id="phoneNumber" type="text" class="validate">
-                        <label for="phoneNumber">Phone Number <i class="tiny material-icons"></i></label>
-                    </div>
-                    <div class="col s4"></div>
-                    <div class="input-field col s8">
-                        <input id="userAddress" type="text" class="validate">
-                        <label for="userAddress">Address <i class="tiny material-icons"></i></label>
-                    </div>
-                    <div class="col s4"></div>
-                    <div class="input-field col s3">
-                            <input id="userState" type="text" class="validate">
-                            <label for="userState">State <i class="tiny material-icons">create</i></label>
-                        </div>
-                    <div class="col s4"></div>
-                   
             <div class="row">
                 <div class="col s4"></div>
                 <div class="col s4">
-                    <button class="btn waves-effect waves-light modal-trigger" id="signbtn"  type="submit" name="action">Sign Up!
+                    <button class="btn waves-effect waves-light modal-trigger" id="signbtn" data-target="modal2" type="submit" name="action">Sign Up!
                         <i class="material-icons right">create</i>
                     </button>
                 </div>
@@ -181,28 +175,13 @@
                       <p align="justify">If you have any questions about this privacy policy, please feel free to contact us by email at privacy@email.com.</p>
                 </div>
                     <div class="modal-footer">
-                      <a  class="modal-close waves-effect waves-green btn-flat">Agree</a>
+                      <a href="userPage.html" class="modal-close waves-effect waves-green btn-flat">Agree</a>
                     </div>
             </div>
         </div>
     </div>
 
     </div>
-
-  <!-- Modal Trigger -->
-  
-
-  <!-- Modal Structure -->
-  <div id="modal3" class="modal modal-fixed-footer">
-    <div class="modal-content">
-      <h4>Modal Header</h4>
-      <p>A bunch of text</p>
-    </div>
-    <div class="modal-footer">
-      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
-    </div>
-  </div>
-         
 
     <footer class="page-footer">
             <div class="container">
@@ -215,13 +194,7 @@
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="assets/javascript/materialize.min.js"></script>
-<<<<<<< HEAD
     <script src="https://www.gstatic.com/firebasejs/5.5.2/firebase.js"></script>
-=======
-    <script src="https://www.gstatic.com/firebasejs/5.5.3/firebase.js"></script>
-    <script src="https://cdn.firebase.com/libs/firebaseui/3.4.1/firebaseui.js"></script>
-    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.4.1/firebaseui.css" />
->>>>>>> e5fb62ac79f5fc419fa87e3e62f8ceecae3540f2
     <script src="assets/javascript/main.js"></script>
 
 </body>

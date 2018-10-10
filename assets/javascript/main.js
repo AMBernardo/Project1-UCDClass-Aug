@@ -1,24 +1,13 @@
-M.AutoInit();
-jQuery(document).ready(function(){
-
-    // getDataBridge()
-   
-    $('.dropdown-trigger').dropdown();
-    $(".sidenav").sidenav();
-    $(".tabs").tabs();
-    $(".modal").modal();
-    $(".parallax").parallax();
-    $('.dropdown-trigger').dropdown();
-    $(".sidenav").sidenav();
-    $(".tabs").tabs();
-    $('.parallax').parallax();
-    $('.carousel').carousel();
-    $('.slider').slider({full_width: true});
-    $('.carousel-slider').slider({full_width: true});
-    $('.carousel.carousel-slider').carousel({
-        fullWidth: true
-        });
-    });
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyDR2-15Tdhu7iFhT4MbpbyoxP157PtISIk",
+    authDomain: "doorsteppe.firebaseapp.com",
+    databaseURL: "https://doorsteppe.firebaseio.com",
+    projectId: "doorsteppe",
+    storageBucket: "doorsteppe.appspot.com",
+    messagingSenderId: "808880878005"
+  };
+  firebase.initializeApp(config);
 //We will use this function once we have the pub dataset
 // $('#submit').on('click',function (event){
 //     event.preventDefault();
@@ -76,25 +65,12 @@ jQuery(document).ready(function(){
 
 
 
- // Initialize Firebase
- // Initialize Firebase
- var config = {
-    apiKey: "AIzaSyDR2-15Tdhu7iFhT4MbpbyoxP157PtISIk",
-    authDomain: "doorsteppe.firebaseapp.com",
-    databaseURL: "https://doorsteppe.firebaseio.com",
-    projectId: "doorsteppe",
-    storageBucket: "doorsteppe.appspot.com",
-    messagingSenderId: "808880878005"
-  };
-  firebase.initializeApp(config);
 
 
 // ================================================================================PROPERTY SEARCH CODE===========================================================================================================
 $('#submit').on('click',function (event){
     event.preventDefault();
-    if(!$('#city').val() || !$('#bathroom').val() || ! $('#bed').val() || !$('#minsqft').val() || !$('#maxprice').val()) return M.toast({html: 'PLEASE FILL OUT EVERYTHING', classes: 'errorToast ' });
-    else{
-    var URL = ' https://rets.io/api/v2/' + $('#city').val() + '/listings?access_token=520a691140619b70d86de598796f13c1&limit=100&BathroomsFull.eq=' + $('#bathroom').val() + '&BedroomsTotal.eq=' + $('#bed').val() + '&LotSizeSquareFeet.gte=' + $('#minsqft').val() + '&ListPrice.lte=' + $('#maxprice').val()
+    var URL = ' https://rets.io/api/v2/' + $('#city').val() + '/listings?access_token=520a691140619b70d86de598796f13c1&limit=25&BathroomsFull.eq=' + $('#bathroom').val() + '&BedroomsTotal.eq=' + $('#bed').val() + '&LotSizeSquareFeet.gte=' + $('#minsqft').val() + '&ListPrice.lte=' + $('#maxprice').val()
     $.ajax({ 
         url: URL,
         type: "GET", /* or type:"GET" or type:"PUT" */
@@ -105,35 +81,28 @@ $('#submit').on('click',function (event){
             var object = {url: URL, response : result}
             localStorage.removeItem('result')
             localStorage.setItem('result', JSON.stringify(object));
+            window.location.replace("results.html"); 
             
-            if(result.bundle.length <= 0){
-                M.toast({html: 'ERROR NO RESULTS', classes: 'errorToast ' })
-              
-               
-                
-            }else{
-                window.location.href = 'results.html'
-               
-            }
-
         },
         error: function () {
             console.log("error");
         }
     });
         
-    }
-})
+    });
 // ==================================================================================================PROPERTY SEARCH CODE===========================================================================================================
 
 
+
+
+
 // ==================================================================================================MAP SEARCH CODE===========================================================================================================
-//Map api location data
-function newLocation(newLat,newLng){
-    map.setCenter({
-        lat : newLat,
-        lng : newLng
-    });
+function newLocation(newLat,newLng)
+{
+map.setCenter({
+lat : newLat,
+lng : newLng
+});
 }
 
 
@@ -153,17 +122,14 @@ $("#3").on('click', function ()
 newLocation(30.267153, -97.7430608);
 })
 
-
 var map;
 function initMap(){
-
 map = new google.maps.Map(document.getElementById('map'), {
-center: new google.maps.LatLng(37.774,-122.431297),
-zoom: 13
+center: new google.maps.LatLng(37.773972,-122.431297),
+zoom: 12
 })
 }
 
-//grab this code.....
 $('#1').on('click',function (event){
     event.preventDefault();
     $.ajax({
@@ -175,15 +141,24 @@ $('#1').on('click',function (event){
                 var coords = results.bundle[i].Coordinates;
                 var latLng = new google.maps.LatLng(coords[1],coords[0]);
                 var info = "<h5>" + "  Address  " + "</h5>" + results.bundle[i].UnparsedAddress + "<br>" + "<br>" +  "<h5>"+"  Listed Price  " + "</h5>"+ results.bundle[i].ListPrice +  "<br>" +   "<br>" +  "<h5>" + "  Square Foot  " + "</h5>" + results.bundle[i].LotSizeSquareFeet + "  Bedrooms  " + results.bundle[i].BedroomsTotal  + "  Full baths  " + results.bundle[i].BathroomsFull + "  Half baths  " + results.bundle[i].BathroomsHalf 
+                // var imgurl = results.bundle[1].Media[1].MediaURL;
                 var marker = new google.maps.Marker({
                   position: latLng,
                   map: map,
-                  customInfo: info
+                  customInfo:"  Address  " + results.bundle[i].UnparsedAddress + "  Listed Price  "+ results.bundle[i].ListPrice + "  Lot size sqft.  " +  results.bundle[i].LotSizeSquareFeet + "  Bedrooms  " + results.bundle[i].BedroomsTotal  + "  Full baths  " + results.bundle[i].BathroomsFull + "  Half baths  " + results.bundle[i].BathroomsHalf 
             });
             google.maps.event.addListener(marker, 'click', function() {
                 //TODO: append clicked house markers in cards below the map
+                alert(this.customInfo);
+            });
+            google.maps.event.addListener(marker,  'click', function() {
+               
                 $('#modal1').modal('open'); 
-                $("#modal-text").html(this.customInfo) 
+                $("#modal-text").append(this.customInfo).append(
+                    $('<img>', {'class':'responsive-img ' }).attr('src', imgurl).attr('alt','test pic')
+                )
+               
+               
             });
 
         }
@@ -199,15 +174,13 @@ $('#2').on('click',function (event){
             for (var i = 0; i < results.bundle.length; i++) {
                 var coords = results.bundle[i].Coordinates;
                 var latLng = new google.maps.LatLng(coords[1],coords[0]);
-                var info = "<h5>" + "  Address  " + "</h5>" + results.bundle[i].UnparsedAddress + "<br>" + "<br>" +  "<h5>"+"  Listed Price  " + "</h5>"+ results.bundle[i].ListPrice +  "<br>" +   "<br>" +  "<h5>" + "  Square Foot  " + "</h5>" + results.bundle[i].LotSizeSquareFeet + "  Bedrooms  " + results.bundle[i].BedroomsTotal  + "  Full baths  " + results.bundle[i].BathroomsFull + "  Half baths  " + results.bundle[i].BathroomsHalf 
                 var marker = new google.maps.Marker({
                   position: latLng,
                   map: map,
-                  customInfo:info
+                  customInfo:"  Address  " + results.bundle[i].UnparsedAddress + "  Listed Price  "+ results.bundle[i].ListPrice + "  Lot size sqft.  " +  results.bundle[i].LotSizeSquareFeet + "  Bedrooms  " + results.bundle[i].BedroomsTotal  + "  Full baths  " + results.bundle[i].BathroomsFull + "  Half baths  " + results.bundle[i].BathroomsHalf 
             });
             google.maps.event.addListener(marker, 'click', function() {
-                $('#modal1').modal('open'); 
-                $("#modal-text").html(this.customInfo)
+                alert(this.customInfo);
             });
         }
 }});
@@ -222,50 +195,37 @@ $('#3').on('click',function (event){
             for (var i = 0; i < results.bundle.length; i++) {
                 var coords = results.bundle[i].Coordinates;
                 var latLng = new google.maps.LatLng(coords[1],coords[0]);
-                var info = "<h5>" + "  Address  " + "</h5>" + results.bundle[i].UnparsedAddress + "<br>" + "<br>" +  "<h5>"+"  Listed Price  " + "</h5>"+ results.bundle[i].ListPrice +  "<br>" +   "<br>" +  "<h5>" + "  Square Foot  " + "</h5>" + results.bundle[i].LotSizeSquareFeet + "  Bedrooms  " + results.bundle[i].BedroomsTotal  + "  Full baths  " + results.bundle[i].BathroomsFull + "  Half baths  " + results.bundle[i].BathroomsHalf 
                 var marker = new google.maps.Marker({
                   position: latLng,
                   map: map,
-                  customInfo:info
+                  customInfo:"  Address  " + results.bundle[i].UnparsedAddress + "  Listed Price  "+ results.bundle[i].ListPrice + "  Lot size sqft.  " +  results.bundle[i].LotSizeSquareFeet + "  Bedrooms  " + results.bundle[i].BedroomsTotal  + "  Full baths  " + results.bundle[i].BathroomsFull + "  Half baths  " + results.bundle[i].BathroomsHalf 
             });
             google.maps.event.addListener(marker, 'click', function() {
-                $('#modal1').modal('open'); 
-                $("#modal-text").html(this.customInfo)
+                alert(this.customInfo);
             });
         }
 }});
 });
 });
 });
-$(".modal-close").on('click' , function(){
-    $("#modal-text").empty();
-})
-
 
 
 
 
 // ==================================================================================================END OF MAP SEARCH CODE===========================================================================================================
 
-//adds more cards
+
+
 
 
 // ==================================================================================================RESULTS CODE===========================================================================================================
-
-
-// ==================================================================================================RESULTS CODE===========================================================================================================
-
-var Data =JSON.parse(localStorage.getItem('result'));
 // no need for ajax call getting data from local storage
 // //Text Search Ajax Call
 function getDataBridge(){
     var Data =JSON.parse(localStorage.getItem('result'));
     console.log(Data)
     generateCards(Data.response)
-
-};
-
-
+     };
 
 //Functions for displaying arrays 
     //ex. el.text(arrayDisplay(arry))
@@ -287,47 +247,50 @@ function booleanArrayDisplay(bln, arry){
         };
     }else return 'N/A';
 };
-var x = 0;
-$(".more").on('click' , function(Data){
-    x += 18
-    getDataBridge();
-     $(".tabs").tabs();
-     
-});
-   
 
 
 function generateCards(Data){
-    console.log(x)
-    var a = $('div#rowPost');
-    for(var i = x; i < x + 18; i++){
-        var result = Data.bundle[i];
-       console.log(i)
+//     var a = $('div#rowPost');
+//     for(var i = 0; i < Data.bundle.length; i++){
+//         var result = Data.bundle[i];
+// =======
+//my code for more cards
+}
+$(".more").on('click' , function(Data){
 
-       if (x >= 100){
-        M.toast({html: 'ERROR NO MORE HOMES', classes: 'errorToast ' });
-     }
-        
+    getDataBridge();
+});
+    function generateCards(Data){
+    
+   
+
+    var a = $('div#rowPost');
   
+    for(var i = 0; i < 12; i++){
+       
+        var result = Data.bundle[i];
+
         //image fallback
-        if(result.Media[0]) {imgurl = result.Media[0].MediaURL;}
+        if(result.Media[0]) {var imgurl = result.Media[0].MediaURL;}
         //else if(street view) show street view
 
-        else imgurl = './assets/images/placeholderHouse2.jpeg'      
-
-        //price format
-        var number = result.ListPrice;
-            
+        else function streetview() {
+            var address = result.UnparsedAddress
+            $('.responsive-img').html('<img src="http://maps.googleapis.com/maps/api/streetview?size=500x500&sensor=false&location='+address+'">');
+                
+        };
+        
+        
     //card generation 
             a.append(
                 $('<div/>',{'class': 'col s10 m4 listCard'}).append(
                     $('<div/>',{'class':'card hoverable'}).append(
-                        $('<div/>',{'class':'card-image waves-effect waves-block waves-light'}).append(
+                        $('<div/>',{'class':'card-image' /*waves-effect waves-block waves-light*/}).append(
                         //image block=================
                             $('<img>', {'class':'responsive-img imageLink'}).attr('data-set',(result.OriginatingSystemKey)).attr('data-lid',(result.ListingKey)).attr('src',imgurl).attr('alt','test pic')
                         ).append(
                             $('<div/>', {'class': 'caption white black-text text-lighten-2 right-align'}).append(
-                                $('<h4/>').text('$'+ number.toLocaleString()  )//Price Header 
+                                $('<h4/>').text('$'+result.ListPrice  )//Price Header 
                             )
                         )
                 //data catagories
@@ -426,14 +389,21 @@ function generateCards(Data){
 
 
 
-//================================================property page code(ajax and population)============================================================
+
+// ==================================================================================================PROPERTY PAGE CODE===========================================================================================================
+//image on click
+    //get data-lid from image and store in local storage
+//open property page
+//load data-lid from local storage plug it into an ajax call url designed for individual listings and populate the page
+
+//================================================property page code(ajax and population)
 //result image click gets the id, sends you to property page and calls ajax
 $(document).on('click', 'img.imageLink', function (){
     console.log($(this).attr('data-lid'));
     localStorage.removeItem('lid','dataset')
     localStorage.setItem('lid', $(this).attr('data-lid'))
     localStorage.setItem('dataset', $(this).attr('data-set'))
-    window.location.href='propertyPage.html'
+    window.location.replace('propertyPage.html')
 });
 function populateInfo(){
     let lid = localStorage.getItem('lid');
@@ -456,29 +426,15 @@ function populateInfo(){
     });
 };
 function listPage(result){
-    $('#propertyAdd').attr('value', result.UnparsedAddress).text(result.UnparsedAddress);
-    $('#address').attr('value', result.UnparsedAddress);
-    $('#favoriteButton').attr('data-set',(result.OriginatingSystemKey)).attr('data-lid',(result.ListingKey))
-    
-    if (result.Media[0]){
-        // image fallback
-        for( var i =0; i < result.Media.length; i++){
-            $('#propCarousel').append(
-                $('<a/>',{'class':'carousel-item'}).append(
-                    $('<img>').attr('src', result.Media[i].MediaURL)
-                )
-              )
-          }$('.carousel').carousel();
-        }
-    else {
+    $('#propertyAdd').attr('value', result.UnparsedAddress).text(result.UnparsedAddress)
+    $('#address').attr('value', result.UnparsedAddress)
+    for( var i =0; i < result.Media.length; i++){
         $('#propCarousel').append(
           $('<a/>',{'class':'carousel-item'}).append(
-              $('<img>').attr('src','./assets/images/placeholderHouse2.jpeg')
+              $('<img>').attr('src', result.Media[i].MediaURL)
           )
         )
     }$('.carousel').carousel();
-
-    var number = result.ListPrice
 
     let a = $('#propPostPoint')
     a.append(
@@ -502,8 +458,6 @@ function listPage(result){
         $('<div/>', {'class':'card-content'}).append(
                     $('<div/>',{'id': 'tab1'}).append(//house data
                         $('<ul/>').text(result.UnparsedAddress).append(
-                            $('<li/>').text('Listing Price: $' + number.toLocaleString())
-                        ).append(
                             $('<li/>').text(' Beds: ' + result.BedroomsTotal)
                         ).append(
                             $('<li/>').text(' Full Baths: ' + result.BathroomsFull)
@@ -582,245 +536,74 @@ function listPage(result){
 
 
 // ==================================================================================================USER AUTHENTICATION CODE===========================================================================================================
+// user sign up/in
+// get user login elements
+var txtEmail = $('#logemail');
+var txtPass =  $('#logpassword');
+var loginBtn =  $('#btnLogIn');
 
+// get user sign up elements
+var txtSEmail = $('#email');
+var txtSPass = $('#password');
+var userName = $('#name')
+var btnSignIn = $('#signbtn')
+var displayName = $('#name')
+// add login event
+$('#btnLogIn').on('click', e =>{
+// get email and password fields
+var email = txtEmail.val()
+var pass = txtPass.val()
+var auth = firebase.auth()
+// sign in
+var promise = auth.signInWithEmailAndPassword(email, pass)
+promise.catch(e => console.log(e.message));
 
-//create firebase references
-var Auth = firebase.auth(); 
-var dbRef = firebase.database();
-var usersRef = dbRef.ref()
-var auth = null;
-var activeUser;
-var uid;
-var name;
-var email;
+});
 
-// current user check
-firebase.auth().onAuthStateChanged(user=> {
-    if (user) {
-        //if there is a signed in user
-      activeUser = user;
-      uid = activeUser.uid;
-      email = activeUser.email;
-      console.log(email, activeUser, uid);
-      $('#sideNavEmail').text(email);
-      $('#usergreet').text('Welcome    ' + email);
-      $('.loginNav').attr('style', 'display: none');
-      $('.userDisplay').attr('style', 'display: inline');
-      $('#favoriteButton').attr('style', 'display: inline')
-    } else {
-        console.log('no user signed in')
-        localStorage.removeItem('user id:')
-        $('.loginNav').attr('style', 'display: inline');
-        $('.userDisplay').attr('style', 'display: none');
-        $('#favoriteButton').attr('style', 'display: none')
-    }
-  });
+// add signup event 
 
-  $('#logout').on('click', function(e){
-    e.preventDefault()
-    firebase.auth().signOut(user)
-      .then(function() {
-        console.log('user signed out')
-        localStorage.removeItem('user id:');
-        window.location.href = 'Login.html'
-      })
-      .catch(function(error) {
-        console.log(error)
-      });
-  })
-
-
-  //Register
-  $('#signbtn').on('click', function (e) {
-    e.preventDefault();
-    if(!$('#email').val().trim() || !$('#password').val().trim()) return M.toast({html: 'ERROR PLEASE FILL OUT EVERYTHING', classes: 'errorToast ' });
+$('#signbtn').on('click', e =>{
+    // get email and password fields
+    var email = txtSEmail.val()
+    var pass = txtSPass.val()
+    var auth = firebase.auth()
+    var userName = displayName.val()
+    // sign in
+    var promise = auth.createUserWithEmailAndPassword(email, pass).then(function(user) {
+        user.firebase.auth()({
+            displayName: userName   
+        });   
+    promise.catch(e => console.log(e.message));
     
-    var data = {
-      email: $('#email').val().trim(), //get the email from Form
-      displayName: $('#displayName').val().trim(),
-      password : $('#password').val().trim(), //get the pass from Form
-      phoneNumber: $('#poneNumber').val(),
-      address: $('#userAddress').val(),
-      state: $('#userState').val()
-    }
-    if( data.email != '' && data.password != '')
-        //create the user
-        firebase.auth()
-          .createUserWithEmailAndPassword(data.email, data.password)
-          .then(function() {
-            activeUser = firebase.auth().currentUser; 
-            activeUser.updateProfile(
-                firebase.database().ref('users' + firebase.auth().currentUser.uid).set({
-                    displayName: $('#displayName').val(),
-                    email : $('#email').val(),  
-                    Number: $('#phoneNumber').val(),
-                    address: $('#userAddress').val(), 
-                    state: $('#userState').val(),
-                    uid: firebase.auth().currentUser.uid
-                })
-            );
-                
-        if (firebase.auth().currentUser !== null) 
-            console.log("user id: " + firebase.auth().currentUser.uid);
-            localStorage.setItem('user id:', JSON.stringify(activeUser));
-            name = dbRef.ref(firebase.auth().currentUser.uid).displayName;
-            email = Auth.currentUser.email;
-            console.log(name, email, activeUser)
-            window.location.href = 'userPage.html'
-            })
-                .catch(function(error){
-                    console.log("Error creating user:", error);
-                });
     });
-  
 
-    $('#btnLogIn').on('click', function(e){
-        e.preventDefault();
-        if (!$('#logEmail').val()|| !$('#logPassword').val())return  M.toast({html: 'ERROR PLEASE FILL OUT EVERYTHING', classes: 'errorToast '}); 
-        var data = {
-            email: $('#logEmail').val(), //get the email from Form
-          password : $('#logPassword').val(), //get the pass from Form
+    // add a realtime listener to detect user suthentication state changes
+    firebase.auth().onAuthStateChanged(firebaseUser =>{
+        if(firebaseUser){
+            console.log(firebaseUser)
+        } else {
+            console.log('not logged in');
         }
-        firebase.auth().signInWithEmailAndPassword(data.email, data.password)
-        firebase.auth().onAuthStateChanged(function(user) {
-            if (user) {
-                localStorage.setItem('user id:', JSON.stringify(user));
-            } else {
-              // No user is signed in.
-            }
+
         });
-        
-        
-    })
-    
-    
-    
-    // ==================================================================================================END OF USER AUTHENTICATION CODE===========================================================================================================
-    
-    
-    //============================favorite mechanism===============================================\\
-    firebase.auth().onAuthStateChanged(function(user) {
-        activeUser = user;
-        uid = activeUser.uid 
-        if (user) {
-            firebase.database().ref('users/' + uid +  '/favorites' ).on('child_added',function(snapshot){
-                
-                console.log(snapshot.val())
-                
-                let LID = snapshot.val().LID;
-                let dataSet =snapshot.val().ds;    
-                let URL = 'https://rets.io/api/v2/'+ dataSet +'/listings/'+ LID +'?access_token=520a691140619b70d86de598796f13c1'
-                $.ajax({ 
-                    url: URL,
-                    type: "GET", /* or type:"GET" or type:"PUT" */
-                    dataType: "json",
-                    data: {
-                    },
-                    success: function (result) {
-                        console.log(result)
-                        populateFavorites(result.bundle)
-                    },
-                    error: function () {
-                        console.log("error");
-                    }
-                });
-                // 
-                
-            });
-        }
-        else{ return}
     });
 
-    function newFavorite(LID, uid, ds){
-        var newFavoriteData =   {
-            LID: LID,
-            ds: ds
-        };
-
-        var newFavoriteKey = firebase.database().ref('users/' + uid).child('favorites').push().key;
-
-        var updates = {};
-        updates['/favorites/' + newFavoriteKey] = newFavoriteData;
-
-        return  firebase.database().ref('users/' + uid).update(updates);
-
-    }
-
-    function populateFavorites(result){
-        if(result.Media[0]) {imgurl = result.Media[0].MediaURL;}
-        else imgurl = './assets/images/placeholderhouse2.jpeg';
-
-        $('#favePost').append(
-             $('<div/>',{'class': 'card col s3 m3 '}).append(
-                $('<div/>',{'class':'card-image waves-effect waves-block waves-light'}).append(
-                    //image block=================
-                        $('<img>', {'class':'responsive-img imageLink'}).attr('data-set',(result.OriginatingSystemKey)).attr('data-lid',(result.ListingKey)).attr('src',imgurl).attr('alt','test pic')
-                    ).append(
-                        $('<div/>', {'class': 'caption white black-text text-lighten-2 right-align'}).append(
-                            $('<h4/>').text('$'+result.ListPrice)//Price Header 
-                        )
-                    )
-             )
-        ).append()               
-    };
-
-
-
-    $('#favoriteButton').on('click', function (e) {
-        e.preventDefault();
-        var LID = $(this).attr('data-lid');
-        var ds =$(this).attr('data-set');
-        console.log('ON CLICK DS AND LID= ' + ds, LID)
-        // var user = firebase.auth().currentUser;
-        newFavorite(LID, uid, ds)
-       
-    });
-    
-    //========================================end favoriting===========================\\
-    //=======================more firebase stufffffff=============================
+        // TODO: store users name and favourited homes in realtime database using their unique UID
 
 
 
 
 
-//=====================================================================================================USER PAGE CODE================================================================================================================
+// ==================================================================================================END OF USER AUTHENTICATION CODE===========================================================================================================
 
-$('#update').on('click',function updateUser(e, uid) {
-e.preventDefault()
-firebase.auth().onAuthStateChanged(function(user) {
-    activeUser = user;
-    uid = activeUser.uid
-if(user){
-    var postData = {
-      displayName: $('#full_name').val(),
-      uid: uid,
-      email: $('#updateEmail').val(),
-      Number: $('#updateNumber').val(),
-      address: $('#updateAddress').val(),
-      state: $('#updateState').val()
-    };
-    var user = firebase.auth().currentUser;
-    user.updateProfile({
-        displayName:$('#full_name').val(),
-        email: $('#updateEmail').val()
-      }).then(function() {
-        // Update successful.
-      })
-    var newUpdateKey = firebase.database().ref(uid).push().key;
-  
-    // Write the new post's data simultaneously in the posts list and the user's post list.
-    var updates = {};
-    updates[newUpdateKey] = postData;
-  
-    return firebase.database().ref(uid).update(updates);
-    
-  }})})
+
+
 
 
 //==================================================================================================Index Code==================================================
 $('#indexSubmit').on('click',function (event){
     event.preventDefault();
-    var URL = 'https://rets.io/api/v2/' + $('#city').val() + '/listings?access_token=520a691140619b70d86de598796f13c1&limit=100'
+    var URL = 'https://rets.io/api/v2/' + $('#indexcity').val() + '/listings?access_token=520a691140619b70d86de598796f13c1&limit=25'
     $.ajax({ 
         url: URL,
         type: "GET", /* or type:"GET" or type:"PUT" */
@@ -831,19 +614,19 @@ $('#indexSubmit').on('click',function (event){
             var object = {url: URL, response : result}
             localStorage.removeItem('result')
             localStorage.setItem('result', JSON.stringify(object));
-            window.location.href = "results.html"; 
+            window.location.replace("results.html"); 
             
         },
         error: function () {
             console.log("error");
         }
     });
-
-});
+        
+    });
 
     $('#advanced').on('click',function (event){
         event.preventDefault();
 
-        window.location.href= "propertySearch.html"; 
+        window.location.replace("propertysearch.html"); 
 
     });
