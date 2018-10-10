@@ -10,12 +10,25 @@ jQuery(document).ready(function(){
     $(".sidenav").sidenav();
     $(".tabs").tabs();
     $('.parallax').parallax();
-    $('.carousel').carousel();
     $('.slider').slider({full_width: true});
     $('.carousel-slider').slider({full_width: true});
     $('.carousel.carousel-slider').carousel({
         fullWidth: true
-        });
+    });
+
+    $('.carousel').carousel();
+    // setInterval (function(){
+    //     $('.carousel').carousel('next');
+    // }, 3000);
+    $('.carousel.carousel-slider').carousel({
+        fullWidth: true,
+        padding: 200
+      }, setTimeout(autoplay, 4500));
+     
+      function autoplay() {
+        $('.carousel').carousel('next');
+        setTimeout(autoplay, 4500);
+      }
     });
     //landing page carousel timer
     $('.carousel').carousel();
