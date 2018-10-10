@@ -302,7 +302,9 @@ function generateCards(Data){
 
         else imgurl = './assets/images/placeholderHouse2.jpeg'      
 
-        
+        //price format
+        var number = result.ListPrice;
+            
     //card generation 
             a.append(
                 $('<div/>',{'class': 'col s10 m4 listCard'}).append(
@@ -312,7 +314,7 @@ function generateCards(Data){
                             $('<img>', {'class':'responsive-img imageLink'}).attr('data-set',(result.OriginatingSystemKey)).attr('data-lid',(result.ListingKey)).attr('src',imgurl).attr('alt','test pic')
                         ).append(
                             $('<div/>', {'class': 'caption white black-text text-lighten-2 right-align'}).append(
-                                $('<h4/>').text('$'+result.ListPrice  )//Price Header 
+                                $('<h4/>').text('$'+ number.toLocaleString()  )//Price Header 
                             )
                         )
                 //data catagories
@@ -444,13 +446,26 @@ function listPage(result){
     $('#propertyAdd').attr('value', result.UnparsedAddress).text(result.UnparsedAddress);
     $('#address').attr('value', result.UnparsedAddress);
     $('#favoriteButton').attr('data-set',(result.OriginatingSystemKey)).attr('data-lid',(result.ListingKey))
-    for( var i =0; i < result.Media.length; i++){
+    
+    if (result.Media[0]){
+        // image fallback
+        for( var i =0; i < result.Media.length; i++){
+            $('#propCarousel').append(
+                $('<a/>',{'class':'carousel-item'}).append(
+                    $('<img>').attr('src', result.Media[i].MediaURL)
+                )
+              )
+          }$('.carousel').carousel();
+        }
+    else {
         $('#propCarousel').append(
           $('<a/>',{'class':'carousel-item'}).append(
-              $('<img>').attr('src', result.Media[i].MediaURL)
+              $('<img>').attr('src','./assets/images/placeholderHouse2.jpeg')
           )
         )
     }$('.carousel').carousel();
+
+    var number = result.ListPrice
 
     let a = $('#propPostPoint')
     a.append(
@@ -474,7 +489,7 @@ function listPage(result){
         $('<div/>', {'class':'card-content'}).append(
                     $('<div/>',{'id': 'tab1'}).append(//house data
                         $('<ul/>').text(result.UnparsedAddress).append(
-                            $('<li/>').text('Listing Price: $' + result.ListPrice)
+                            $('<li/>').text('Listing Price: $' + number.toLocaleString())
                         ).append(
                             $('<li/>').text(' Beds: ' + result.BedroomsTotal)
                         ).append(
@@ -567,11 +582,11 @@ var name;
 var email;
 
 // current user check
-firebase.auth().onAuthStateChanged(function(user) {
+firebase.auth().onAuthStateChanged(user=> {
     if (user) {
         //if there is a signed in user
       activeUser = user;
-      uid = activeUser.uid 
+      uid = activeUser.uid;
       email = activeUser.email;
       console.log(email, activeUser, uid);
       $('#sideNavEmail').text(email);
@@ -580,17 +595,32 @@ firebase.auth().onAuthStateChanged(function(user) {
       $('.userDisplay').attr('style', 'display: inline');
       $('#favoriteButton').attr('style', 'display: inline')
     } else {
-        // No user is signed in.
+        console.log('no user signed in')
+        localStorage.removeItem('user id:')
         $('.loginNav').attr('style', 'display: inline');
         $('.userDisplay').attr('style', 'display: none');
         $('#favoriteButton').attr('style', 'display: none')
     }
   });
 
+  $('#logout').on('click', function(e){
+    e.preventDefault()
+    firebase.auth().signOut(user)
+      .then(function() {
+        console.log('user signed out')
+        localStorage.removeItem('user id:');
+        window.location.href = 'Login.html'
+      })
+      .catch(function(error) {
+        console.log(error)
+      });
+  })
+
+
   //Register
   $('#signbtn').on('click', function (e) {
     e.preventDefault();
-    if(!txtEmail.val() || !txtPass.val()) return M.toast({html: 'ERROR PLEASE FILL OUT EVERYTHING', classes: 'errorToast ' });
+    if(!$('#email').val().trim() || !$('#password').val().trim()) return M.toast({html: 'ERROR PLEASE FILL OUT EVERYTHING', classes: 'errorToast ' });
     
     var data = {
       email: $('#email').val().trim(), //get the email from Form
@@ -598,7 +628,8 @@ firebase.auth().onAuthStateChanged(function(user) {
       password : $('#password').val().trim(), //get the pass from Form
       phoneNumber: $('#poneNumber').val(),
       address: $('#userAddress').val(),
-        state: $('#userState').val() }
+      state: $('#userState').val()
+    }
     if( data.email != '' && data.password != '')
         //create the user
         firebase.auth()
@@ -632,7 +663,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 
     $('#btnLogIn').on('click', function(e){
         e.preventDefault();
-        if (!txtSEmail.val() || !txtSPass.val() || !displayName.val())return  M.toast({html: 'ERROR PLEASE FILL OUT EVERYTHING', classes: 'errorToast '}); 
+        if (!$('#logEmail').val()|| !$('#logPassword').val())return  M.toast({html: 'ERROR PLEASE FILL OUT EVERYTHING', classes: 'errorToast '}); 
         var data = {
             email: $('#logEmail').val(), //get the email from Form
           password : $('#logPassword').val(), //get the pass from Form
